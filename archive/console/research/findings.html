@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-ed="motion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
+<title>Findings ledger — what the measurements actually say · Jason Ou · console edition</title>
+<meta name="description" content="Eight measured findings from the life-insurance A/E benchmark and its neighbouring repositories: harness transfer, the optimism gap, over-claiming versus mislabelling, identifiability, and output variance in underwriting.">
+<meta property="og:title" content="Findings ledger — measured results from the actuarial AI ecosystem">
+<meta property="og:description" content="Each finding states the number, what it changes in practice, and the file it came from.">
+<meta property="og:url" content="https://jasonzheshiou.github.io/archive/console/research/findings.html">
+<meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<link rel="canonical" href="https://jasonzheshiou.github.io/archive/console/research/findings.html">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/motion.css">
+<script src="/assets/site.js" defer></script>
+<script src="/assets/motion.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="/archive/console/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <nav class="main">
+    <a href="/archive/console/">Home</a>
+    <a href="/archive/console/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/archive/console/research/underwriting-output-variance.html">Variance</a>
+    <a href="/archive/console/research/findings.html" aria-current="page">Findings</a>
+    <a href="/archive/console/ecosystem.html">Ecosystem</a>
+    <a href="/archive/console/projects.html">Projects</a>    <a href="/archive/console/method.html">Method</a>
+
+    <a href="/writing.html">Writing</a>
+    <a href="/archive/console/about.html">About</a>
+    <a class="ed-link" href="/" title="The published site">&#9664; Published site</a>
+    <button class="theme-btn" type="button">☾</button>
+  </nav>
+</div></header>
+
+<main id="main">
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+
+  <symbol id="i-seed" viewBox="0 0 48 48">
+    <rect x="7" y="7" width="14" height="14" rx="2" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M14 21v6h8" stroke="var(--ic-cyan)" fill="none"/>
+    <g stroke-dasharray="1 3">
+      <path d="M27 27h14M27 33h14M27 39h14" stroke="var(--ic-dim)" fill="none"/>
+    </g>
+    <circle cx="34" cy="33" r="3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-target" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="24" cy="24" r="9" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="24" r="2.5" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M33 33l6 6M39 33l-6 6" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-agents" viewBox="0 0 48 48">
+    <rect x="6" y="8" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="6" y="32" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="19" y="20" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M16 12c6 0 3 12 3 12M16 36c6 0 3-8 3-8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M29 24h5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M34 17l7 7-7 7-7-7z" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-trend" viewBox="0 0 48 48">
+    <path d="M8 38h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M10 32l7-6 6 4 8-11 6 5" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="31" cy="19" r="6" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M35 23l4 4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-standard" viewBox="0 0 48 48">
+    <path d="M12 6h18l6 6v30H12z" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M30 6v6h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M17 20h14M17 26h14M17 32h8" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M30 33l3 3 6-7" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-gauge" viewBox="0 0 48 48">
+    <path d="M9 33a15 15 0 0 1 30 0" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 33l8-9" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="33" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M9 39h30" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M40 12l3 3-3 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-schema" viewBox="0 0 48 48">
+    <rect x="6" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="27" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="16" y="29" width="16" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M13 20v4h22v-4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 24v5" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-sheet" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 17h32M8 26h32M8 34h32M19 17v23M30 17v23" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M19 26l5 4 6-8" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-loop" viewBox="0 0 48 48">
+    <path d="M24 9a15 15 0 1 1-10.6 25.6" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M13 27v8h8" stroke="var(--ic-cyan)" fill="none"/>
+    <rect x="18" y="19" width="12" height="10" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M21 24h6" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-particles" viewBox="0 0 48 48">
+    <rect x="7" y="7" width="34" height="34" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="17" cy="18" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="30" cy="16" r="2" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="30" r="3" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="34" cy="30" r="1.5" stroke="var(--ic-amber)" fill="none"/>
+    <circle cx="15" cy="32" r="1.5" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M17 18l7 12 10-14" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-pixel" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 24h32M24 8v32" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="15" y="15" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <rect x="27" y="27" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <rect x="27" y="15" width="6" height="6" stroke="var(--ic-amber)" fill="var(--ic-amber)"/>
+  </symbol>
+
+  <symbol id="i-puzzle" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="26" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="8" y="26" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="26" y="26" width="14" height="14" rx="1" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M15 15h0M33 33h0" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-id" viewBox="0 0 48 48">
+    <rect x="6" y="11" width="36" height="26" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="16" cy="22" r="4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M10 32c1-4 4-5 6-5s5 1 6 5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M27 20h9M27 26h9" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-ruler" viewBox="0 0 48 48">
+    <rect x="6" y="18" width="36" height="12" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M13 18v6M20 18v4M27 18v6M34 18v4" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M24 12v4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M6 12h36" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-shield" viewBox="0 0 48 48">
+    <path d="M24 7l14 5v12c0 9-6 14-14 17-8-3-14-8-14-17V12z" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M18 23l5 5 8-9" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-sign" viewBox="0 0 48 48">
+    <path d="M8 34h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M12 26c4-10 8 6 12-2s6 4 10-2" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M34 12l4 4-10 10-5 1 1-5z" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-clock" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="16" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M24 14v10l7 4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 8v-0M40 24h0" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M36 10l4 4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-blackbox" viewBox="0 0 48 48">
+    <rect x="14" y="14" width="20" height="20" rx="1" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M6 24h8M34 24h8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M42 20l0 8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M10 12h10M10 36h10" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-handoff" viewBox="0 0 48 48">
+    <path d="M12 8h14l6 6v26H12z" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M26 8v6h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M17 22h10M17 28h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M32 24h10M38 20l4 4-4 4" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M42 32v6" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-architect" viewBox="0 0 48 48">
+    <path d="M24 6l16 8-16 8-16-8z" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M8 24l16 8 16-8" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 32l16 8 16-8" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-queue" viewBox="0 0 48 48">
+    <rect x="7" y="10" width="8" height="28" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="19" y="10" width="8" height="28" rx="1" stroke="var(--ic-cyan)" fill="none"/>
+    <rect x="31" y="10" width="8" height="28" rx="1" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M19 24h-4M31 24h-4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-delta" viewBox="0 0 48 48">
+    <path d="M8 40h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M14 40V22M22 40V14M30 40V26M38 40V18" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M12 12h26" stroke-dasharray="3 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+</defs></svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="wrap hero">
+  <p class="eyebrow">Research · Findings</p>
+  <h1>The ledger, not the brochure</h1>
+  <p class="lede">Eight findings from the A/E benchmark, and five from the underwriting output-variance study —
+  all of them produced by measurements rather than asserted before them. Each states the number, what it changes
+  in practice, and the file it came from, so a reader can argue with the evidence instead of with a summary of
+  it.</p>
+  <div class="hero-meta">
+    <span class="chip">2 models × 2 harnesses</span>
+    <span class="chip">23–24 held-out books × 3 runs</span>
+    <span class="chip">temperature <span class="num">1.0</span></span>
+    <span class="chip">every cell has a denominator</span>
+  </div>
+</div>
+
+<div class="wrap band"><div class="split-32">
+<article class="prose">
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-ruler"/></svg><h2 id="f1">1 · A harness is part of the deployment, not neutral infrastructure</h2>
+<p><strong>Measured:</strong> the same wrapper was worth <span class="num">≈24</span> points of precision to
+Qwen3.8-27B and <span class="num">≈6</span> points of accuracy to Qwen3.6-27B. Unaided, 3.8 posted
+<span class="num">65.7 %</span> FP/claim — <span class="num">34.3 %</span> precision — on the same books it
+reached 58.1 % precision with its harness.</p>
+<p><strong>What it changes:</strong> what a harness compensates for — how eagerly a model asserts, how much
+it verifies, whether it reaches for a tool — is behaviour, and behaviour moves when a model is retrained even
+when its architecture does not. So the artefact under governance is the <em>pair</em>: model plus harness,
+versioned together, with the harness bytes snapshotted next to every result.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-delta"/></svg><h2 id="f2">2 · A harness does not transfer</h2>
+<p><strong>Measured:</strong> every cross-loaded cell scored below the tuned one. Handing 3.8 the harness
+built for 3.6 cost <span class="num">−0.9</span> accuracy and <span class="num">−1.2</span> precision points.
+Early in the campaign cross-loading looked like an <span class="num">+8.3</span>-point gain at 9 books;
+it decayed to <span class="num">−1</span> by 23 and the claim was withdrawn.</p>
+<p><strong>What it changes:</strong> a new model version inherits an <em>unproven</em> harness, not a working
+one. The boring procedure — tune on the optimization split, re-measure the pair, report only held-out — is
+the whole finding. The 2 × 2 that supports it is two subjects on one serving stack: a real signal, not a
+general theory.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-target"/></svg><h2 id="f3">3 · The optimism gap is about 30 points, for both models</h2>
+<p><strong>Measured:</strong> 3.6 <span class="num">95.5 % → 63.4 %</span> (<span class="num">−32.1</span>),
+3.8 <span class="num">97.7 % → 69.1 %</span> (<span class="num">−28.6</span>) moving from the 23 books it was
+tuned on to 24 unseen books. This is a property of the benchmark and harness, not of either model.</p>
+<p><strong>What it changes:</strong> optimization-split scores are a ranking device. Quoting them as expected
+production performance overstates by roughly a third of the scale — which is how a model that looks excellent
+in a pilot turns mediocre in a portfolio. The held-out split here is spent and published with its answers, so
+it can never be reused as an unseen exam.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-schema"/></svg><h2 id="f4">4 · Over-claiming and mislabelling are different diseases</h2>
+<p><strong>Measured:</strong> decomposing false alarms into mislabels plus inventions: 3.8 emitted
+<span class="num">154</span> claims for <span class="num">123</span> truths with
+<span class="num">+31</span> pure inventions; 3.6 emitted <span class="num">129</span> claims with
+<span class="num">+6</span>. 3.6's errors are almost entirely mislabels — the right line, the wrong word.</p>
+<p><strong>What it changes:</strong> the remedy must match the disease. Over-claiming needs discipline
+(“do not report what is not there”); mislabelling needs vocabulary work. Confirmed experimentally: the
+3.6-specific pattern-vocabulary edits helped, and attempts to make 3.6 report less made it worse. A single
+blended score would have hidden both the diagnosis and the failed cure.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-gauge"/></svg><h2 id="f5">5 · Cost changes the ranking, so it sits beside the score</h2>
+<p><strong>Measured:</strong> the same 72-call exam cost 3.6 <span class="num">0.89 M</span> tokens and
+<span class="num">5.9 h</span>, and 3.8 <span class="num">1.95 M</span> and <span class="num">21.9 h</span>.
+At median per answer — <span class="num">289 s</span> versus <span class="num">813 s</span> — that is about
+6 hours against about 16.</p>
+<p><strong>What it changes:</strong> 3.6 reaches roughly 93 % of 3.8's accuracy for about a third of the time
+and tokens, at better precision. Which model is “better” depends on whether a miss or a false alarm costs more
+where you intend to use it. Any governance pack that quotes accuracy without per-answer cost is quoting half a
+number.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-seed"/></svg><h2 id="f6">6 · The models differ almost entirely in one scenario family</h2>
+<p><strong>Measured:</strong> drift, recovery and volatility saturate at <span class="num">100 %</span>
+accuracy for every harnessed configuration. The recall gap lives in <code>systemic</code> (44 % vs 56 %) and
+<code>noise_trap</code> (both 50 %, worst case 0 % with 100 % FP/claim unharnessed). Unharnessed, 3.8 falsely
+accused the CLEAN book — nothing planted at all.</p>
+<p><strong>What it changes:</strong> a benchmark's discriminating power can hide in a minority of its own
+questions, so a single blended number tells you almost nothing about where a model will fail. Report by
+family; build lookalike traps; include a clean book; treat “the clean book was accused” as a headline
+event.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-sheet"/></svg><h2 id="f7">7 · Not every miss is a model failure</h2>
+<p><strong>Measured:</strong> <code>sc-d72b95</code> planted a Death drift of 0.05/yr; fitted from the data it
+is <span class="num">+0.0253</span> with SE <span class="num">0.0251</span>, <span class="num">t = 1.01</span>
+against a critical 3.18 — the minimum detectable slope at 80 % power is
+<span class="num">+0.088/yr</span>, roughly twice what was planted. In <code>sc-f520e5</code> the volatility is
+real (<span class="num">F = 17.1</span>) and the competing “drift” reading is defensible from the same data.</p>
+<p><strong>What it changes:</strong> two “failures” were actually benchmark defects, and the model was at
+ceiling on the units the data support. Experience analysis has the same property on the other side of the
+table: some years you cannot tell, and the professional act is to say so. Auditing a miss before fixing a
+model is cheaper than the other way round.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-blackbox"/></svg><h2 id="f8">8 · A tool offered is not a tool used</h2>
+<p><strong>Measured:</strong> four sandboxed Python calls were offered to both models. 3.8 used them in
+about <span class="num">24 %</span> of held-out runs; 3.6 used them <span class="num">0 of 144</span>, after
+two deliberate activation attempts including mandatory-use wording. Its reasoning is sound — the evidence pack
+already contains the arithmetic.</p>
+<p><strong>What it changes:</strong> tool availability is an affordance, not a behaviour, and the asymmetry had
+consequences: the one hard failure in the whole study was a malformed tool request, which 3.6 structurally
+cannot produce. Dormant capability is sometimes a robustness advantage.</p>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-loop"/></svg><h2 id="growth">The harness did not arrive finished</h2>
+<p>Qwen3.8's harness grew <span class="mono">v1.0 → v1.1 → v1.2 → v1.3 → v1.4 → v1.5 → v1.6e</span> over seven
+optimization passes and <span class="num">307</span> per-scenario diary entries, <span class="num">268</span>
+of which involved a harness review or edit. Every pass from p3 to p7 changed both harness files;
+<code>stats_pack.py</code> grew <span class="num">27,229 → 38,490</span> bytes in that span. The frozen bytes
+of v1.6e are preserved twice (<span class="mono">stats_pack.py 16e53e0ef0b097ab</span>,
+<span class="mono">run_zero_shot.py a4b967de975625f9</span>), and each corpus carries a
+<code>harness_snapshot/</code> so the comparison can be checked rather than trusted.</p>
+<div class="note"><h4>The edits that mattered were taxonomy, not phrasing</h4>
+<p>Not “be more careful”, but: a trend that reverts at the end is still drift; a one-year spike inside a
+swinging line is volatility; mild overdispersion is the normal texture of these scenarios; tiny age or
+duration cells are unreliable however extreme their A/E looks; Poisson z-scores are invalid on an
+overdispersed line.</p></div>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-ruler"/></svg><h2 id="reading">How to read a number from this project</h2>
+<div class="flow">
+  <div class="step"><div class="n">1</div><p><b>Name the denominator.</b> Accuracy is over units, FP/claim is
+  over claims. They never add to 100 % with each other, and the 23-book and 24-book views differ by whether the
+  recorded failure is counted.</p></div>
+  <div class="step"><div class="n">2</div><p><b>Quote accuracy and false alarms together.</b> Either can be
+  raised by behaviour that makes the other worse.</p></div>
+  <div class="step"><div class="n">3</div><p><b>Put cost beside the result it bought</b> — tokens and wall time
+  per answer, not just in an appendix.</p></div>
+  <div class="step"><div class="n">4</div><p><b>Report held-out only.</b> Tuning scores rank; they do not
+  predict.</p></div>
+  <div class="step"><div class="n">5</div><p><b>Cite the bytes.</b> A number should name the corpus, the harness
+  snapshot and the prompt that produced it.</p></div>
+</div>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-delta"/></svg><h2 id="study02">The other study: five findings on output variance</h2>
+<p>The benchmark asks whether a model is <em>right</em>. The second study asks the question a regulator asks
+first: is it the <em>same model twice</em>? Repeated-invocation testing of the multi-agent underwriter — the
+same applicant run through the LLM path about a hundred times, Wilson intervals on every proportion. Full
+write-up: <a href="/archive/console/research/underwriting-output-variance.html">output variance in LLM underwriting</a>.</p>
+<div class="flow">
+  <div class="step"><div class="n">1</div><p><b>Variance concentrates at the decision boundary, not across the
+  book.</b> Medical agent spread: <span class="num">0 %</span> healthy → <span class="num">26 %</span>
+  borderline → <span class="num">42 %</span> high-risk; a separate 50-run session put the widest evidence path
+  at a <span class="num">47 %</span> spread. Uncertainty that clusters on hard cases is predictable, which makes
+  it routable — route by distance from the threshold, not by case type.</p></div>
+  <div class="step"><div class="n">2</div><p><b>Temperature is a decision control, not a noise dial.</b> On the
+  high-risk profile T<span class="num">0.1</span> gave decline 58 % / loading 42 %; T<span class="num">0.0</span>
+  gave a flat <code>loading</code>. Zeroing the dial changed <em>which decision</em> the system makes, and
+  T<span class="num">0.1</span> — the production setting — is where the spread peaked.</p></div>
+  <div class="step"><div class="n">3</div><p><b>Architecture beat the model.</b> On the doubly-uncertain profile
+  the debate returned <code>loading</code> in <span class="num">100/100</span> runs while the Medical agent alone
+  varied ~<span class="num">20 %</span>. A most-conservative combine rule absorbed the variance — and bought
+  conservatism with it, which is a risk-appetite decision, not a free lunch.</p></div>
+  <div class="step"><div class="n">4</div><p><b>Failures are stochastic too.</b> Unparseable output fell back to
+  <code>refer</code> — safe, but the same input sometimes answered and sometimes fell back. Under parallel load
+  the reasoning model entered a thinking loop and returned nothing; sequential calls were clean. A fallback rate
+  and a concurrency limit belong in the decision distribution.</p></div>
+  <div class="step"><div class="n">5</div><p><b>The largest variance is the part you do not control.</b> Model
+  developers, inference providers and the deploying company each hold a dial — which is why even a hosted
+  T<span class="num">0</span> endpoint is rarely bit-reproducible. <em>The variance you measured is only valid for
+  the configuration you tested</em>: the same rule finding&nbsp;1 and finding&nbsp;2 forced, arrived at from an
+  entirely different direction.</p></div>
+</div>
+
+<svg class="ic sm" aria-hidden="true"><use href="#i-particles"/></svg><h2 id="elsewhere">Findings outside the benchmark</h2>
+<p>The rest of the portfolio is not all measured to the same standard, and saying which parts are is part of
+the point.</p>
+<div class="cards">
+  <div class="card"><span class="id">Piticle_Life · measured</span>
+    <h3>Two of three claims died at their own noise floor</h3>
+    <p>Questions were written into <code>SPEC.md</code> <b>before</b> the sweeps that answered them: 48 runs
+    against pre-registered questions, and two of the three claims did not survive contact with their own noise
+    floor. The same discipline the benchmark applies to models, applied to my own hypotheses.</p>
+    <div class="row"><span class="tag">docs/findings.md</span><a href="https://github.com/jasonzheshiou/Piticle_Life" class="small">repo</a></div></div>
+
+  <div class="card"><span class="id">Bench · measured</span>
+    <h3>Two units are unidentifiable, and one failure is on the record</h3>
+    <p><code>sc-d72b95</code> and <code>sc-f520e5</code> are documented benchmark artefacts, not model
+    failures. <code>sc-e6ffa4</code> never completed under one configuration: excluded from every like-for-like
+    cell, diagnosed in full, and deliberately <b>not</b> patched.</p>
+    <div class="row"><span class="tag">docs/EXPERIMENT_INDEX.md §8</span></div></div>
+
+  <div class="card flat"><span class="id">Not yet measured — stated as a gap</span>
+    <h3>Three repos carry claims without evidence</h3>
+    <p>The experience-analysis dashboard, Standard_Inquirer and the data-schema analyser ship features and
+    architecture, and no measured accuracy or variance study. Under the standard above, that makes them
+    demonstrations for now. The benchmark's scoring harness is the template for fixing that, and the order is
+    deliberate: prove the measurement first, then the applications.</p>
+    <div class="row"><span class="tag">open gap</span></div></div>
+</div>
+
+<div class="fn">
+<strong>Sources</strong>
+<p class="prov">All numbers on this page are drawn from
+<a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench/blob/8067f00/docs/MODEL_AND_HARNESS_EVOLUTION.md">MODEL_AND_HARNESS_EVOLUTION.md</a>
+(§1.4, §3.2, §3.5–3.11),
+<a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench/blob/8067f00/docs/EXPERIMENT_INDEX.md">EXPERIMENT_INDEX.md</a>
+(§3, §6, §8) and <code>results/harness_final/</code> / <code>results/harness_q36_final/</code> at
+<span class="mono">8067f00</span>; and from
+<a href="https://github.com/jasonzheshiou/Multi-Agents_Underwriter">Multi-Agents_Underwriter</a> at
+<span class="mono">cbedb1b</span> (variance tables and <code>tests/stability/</code>).</p>
+</div>
+
+</article>
+
+<aside><div class="toc" role="navigation" aria-label="Findings">
+<h4 style="margin-top:0">Findings</h4>
+<a href="#f1">1 · harness is deployment</a><br>
+<a href="#f2">2 · it does not transfer</a><br>
+<a href="#f3">3 · the −30-point gap</a><br>
+<a href="#f4">4 · over-claim vs mislabel</a><br>
+<a href="#f5">5 · cost changes the ranking</a><br>
+<a href="#f6">6 · one family separates them</a><br>
+<a href="#f7">7 · not every miss is a miss</a><br>
+<a href="#f8">8 · tools go unused</a><br>
+<h4>Study 02</h4>
+<a href="#study02">Five variance findings</a><br>
+<h4>Context</h4>
+<a href="#growth">How the harness grew</a><br>
+<a href="#reading">How to read a number</a><br>
+<a href="#elsewhere">Findings elsewhere</a>
+</div></aside>
+</div></div>
+
+</main>
+
+<footer class="site"><div class="wrap cols">
+  <div><h4>About this site</h4>
+    <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary. Open-source
+    life-insurance data tools, benchmarks and governance patterns for actuarial work with AI.</p></div>
+  <div><h4>Research</h4><ul>
+    <li><a href="/archive/console/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/archive/console/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/archive/console/research/findings.html">Findings ledger</a></li>
+    <li><a href="/archive/console/ecosystem.html">Ecosystem map</a></li>
+    <li><a href="/writing.html">Writing</a></li></ul></div>
+  <div><h4>Elsewhere</h4><ul>
+    <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
+    <li><a href="/archive/console/method.html">How I work</a></li>
+    <li><a href="/">Reading edition</a></li>
+      <li><span aria-current="page">Console edition (you are here)</span></li>
+      <li><a href="/archive/line/">Static edition</a></li>
+    <li><a href="/archive/pixel/">Pixel edition</a></li>
+    <li><a href="/archive/console/projects.html">All repositories</a></li></ul></div>
+</div><div class="wrap fine">
+  <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
+  <span class="prov">© 2026 Jason Ou · content MIT-licensed</span>
+</div></footer>
+</body>
+</html>

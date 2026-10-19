@@ -1,0 +1,210 @@
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   note.css — the reading edition of the front page (html[data-ed="note"]).
+   Written against four sources rather than a mood board:
+     · Butterick, Practical Typography — body text decides the page; measure 45–90 characters,
+       leading 120–145 %, body 15–25 px.
+     · Tufte CSS — off-black and off-white, never pure; greyscale everywhere, colour only where
+       there is a measurement; sidenotes close to the sentence and out of the eye's way; figures
+       inside the measure; two heading levels and small-caps lead-ins after that.
+     · Nielsen Norman Group, Progressive Disclosure — what appears on the first display is what
+       you are saying is important, so the first display carries the claim and nothing else.
+     · Running heads from book typography — the corner word says which part of the argument you
+       are in, in place of navigation chrome.
+   Everything here is a print idiom moved onto a screen. Motion is a soft arrival and the running
+   head; under prefers-reduced-motion the page is the same page.
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+
+html[data-ed="note"] {
+  --paper:#121310; --ink:#e9e5db; --prose:#ded9cd; --soft:#a9a497; --dim:#8d897b; --faint:#878372;
+  --hair:#292922; --hair2:#393930; --amber:#e2a63f; --bar:rgba(18,19,16,.86); --sel:rgba(226,166,63,.26);
+}
+html[data-ed="note"][data-theme="light"] {
+  --paper:#f6f3ea; --ink:#171a14; --prose:#2b2e27; --soft:#5c6154; --dim:#6c7161; --faint:#7b8071;
+  --hair:#dedccf; --hair2:#c7c5b4; --amber:#8a5410; --bar:rgba(246,243,234,.88); --sel:rgba(138,84,16,.2);
+}
+
+html[data-ed="note"] body {
+  margin:0; background:var(--paper); color:var(--prose);
+  font:400 19px/1.72 "Spectral",Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+html[data-ed="note"] ::selection { background:var(--sel); }
+html[data-ed="note"] img, html[data-ed="note"] svg { max-width:100%; height:auto; }
+html[data-ed="note"] a { color:inherit; }
+
+/* ── the skip link: hidden until it has focus ─────────────────────────────────────────────── */
+html[data-ed="note"] .skip {
+  position:absolute; left:-9999px; top:0; z-index:9; padding:.55rem .8rem; background:var(--ink);
+  color:var(--paper); text-decoration:none; font:500 11px/1 "JetBrains Mono",monospace;
+}
+html[data-ed="note"] .skip:focus { left:1rem; top:1rem; }
+
+/* ── the running head ─────────────────────────────────────────────────────────────────────── */
+html[data-ed="note"] .nhead {
+  position:fixed; top:0; left:0; right:0; z-index:6; display:flex; align-items:center; gap:1.4rem;
+  padding:.85rem clamp(1.1rem,4vw,2.6rem); background:var(--bar); border-bottom:1px solid var(--hair);
+  -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px);
+}
+html[data-ed="note"] .nhead .mark {
+  font:500 10px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--soft); white-space:nowrap;
+}
+html[data-ed="note"] .nhead .now {
+  font:400 13.5px/1 "Spectral",Georgia,serif; font-style:italic; color:var(--amber); white-space:nowrap;
+}
+html[data-ed="note"] .nhead nav { margin-left:auto; display:flex; align-items:center; gap:1.15rem; }
+html[data-ed="note"] .nhead nav a {
+  color:var(--dim); text-decoration:none; font:400 12.5px/1 "Spectral",Georgia,serif; white-space:nowrap;
+}
+html[data-ed="note"] .nhead nav a:hover { color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
+html[data-ed="note"] .nhead nav a.on { color:var(--amber); }
+html[data-ed="note"] .theme-btn {
+  background:none; border:1px solid var(--hair2); color:var(--soft); cursor:pointer;
+  width:26px; height:26px; border-radius:50%; font:400 11px/1 "JetBrains Mono",monospace; padding:0;
+}
+html[data-ed="note"] .theme-btn:hover { color:var(--ink); border-color:var(--faint); }
+
+/* ── the sheet ────────────────────────────────────────────────────────────────────────────── */
+html[data-ed="note"] main {
+  max-width:calc(38rem + 21rem); margin:0 auto; padding:8rem clamp(1.1rem,4vw,2.6rem) 2.5rem;
+}
+html[data-ed="note"] .look {
+  display:grid; grid-template-columns:38rem 19rem; gap:3rem; align-items:start;
+  padding:5.5rem 0; border-top:1px solid var(--hair);
+}
+html[data-ed="note"] .look:first-of-type { border-top:0; padding-top:1.5rem; }
+html[data-ed="note"] .look > .art { max-width:38rem; min-width:0; }
+
+/* ── type ─────────────────────────────────────────────────────────────────────────────────── */
+html[data-ed="note"] .kicker {
+  display:block; margin-bottom:1.5rem;
+  font:500 10px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--faint);
+}
+html[data-ed="note"] h1 {
+  margin:0 0 1.4rem; font-weight:300; font-size:clamp(2.35rem,4.4vw,3.5rem); line-height:1.1;
+  letter-spacing:-.018em; color:var(--ink);
+}
+html[data-ed="note"] .look h2 {
+  margin:0 0 1.2rem; max-width:34ch; font-weight:400; font-size:clamp(1.5rem,2.5vw,2.05rem);
+  line-height:1.28; letter-spacing:-.01em; color:var(--ink);
+}
+html[data-ed="note"] p { margin:0 0 1.1rem; max-width:38rem; }
+html[data-ed="note"] p.lead { font-size:21px; color:var(--ink); }
+html[data-ed="note"] strong { font-weight:600; color:var(--ink); }
+html[data-ed="note"] .ns {
+  font-variant:small-caps; letter-spacing:.05em; font-weight:500; font-size:1.06em; color:var(--ink);
+}
+html[data-ed="note"] a.in {
+  color:var(--ink); text-decoration:underline; text-decoration-color:var(--hair2); text-underline-offset:4px;
+}
+html[data-ed="note"] a.in:hover { text-decoration-color:var(--amber); }
+html[data-ed="note"] .mono { font-family:"JetBrains Mono",ui-monospace,monospace; font-size:.78em; color:var(--dim); }
+
+/* ── the receipt in the margin ────────────────────────────────────────────────────────────── */
+html[data-ed="note"] aside {
+  position:sticky; top:5.4rem; align-self:start; padding-left:1.1rem; border-left:1px solid var(--hair2);
+  font:400 12.5px/1.62 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
+}
+html[data-ed="note"] aside .t {
+  display:block; margin-bottom:.7rem; font-size:9.5px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--faint);
+}
+html[data-ed="note"] aside .r { display:block; margin-bottom:.55rem; overflow-wrap:anywhere; }
+html[data-ed="note"] aside .r b { font-weight:500; color:var(--soft); }
+html[data-ed="note"] aside .st {
+  display:block; margin-top:1rem; padding-top:.85rem; border-top:1px solid var(--hair); color:var(--amber);
+}
+
+/* ── figures live in the measure, not beside it ───────────────────────────────────────────── */
+html[data-ed="note"] figure { margin:2.1rem 0; max-width:38rem; }
+html[data-ed="note"] figure figcaption {
+  margin-top:.85rem; font:400 12px/1.6 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
+}
+html[data-ed="note"] figure figcaption b { color:var(--amber); font-weight:500; }
+html[data-ed="note"] .bars { display:flex; gap:6px; height:26px; }
+html[data-ed="note"] .bars i { flex:1 1 0; border:1px solid var(--hair2); }
+html[data-ed="note"] .bars i.on { background:var(--amber); border-color:var(--amber); }
+html[data-ed="note"] .big {
+  font-weight:300; font-size:clamp(2.6rem,6vw,3.9rem); line-height:.94; letter-spacing:-.028em;
+  color:var(--amber); margin:0 0 .6rem;
+}
+
+/* ── lists, in the same two registers ─────────────────────────────────────────────────────── */
+html[data-ed="note"] dl.chain { margin:.4rem 0 0; }
+html[data-ed="note"] dl.chain > div {
+  display:flex; gap:1rem; align-items:baseline; padding:.6rem 0; border-top:1px solid var(--hair);
+}
+html[data-ed="note"] dl.chain dt { flex:0 0 11rem; font:400 13.5px/1.5 "Spectral",Georgia,serif; color:var(--ink); }
+html[data-ed="note"] dl.chain dd {
+  margin:0; font:400 12px/1.6 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
+}
+html[data-ed="note"] dl.chain dd em { font-style:normal; color:var(--amber); }
+html[data-ed="note"] ul.not { list-style:none; margin:0; padding:0; }
+html[data-ed="note"] ul.not li {
+  position:relative; padding:.7rem 0 .7rem 1.4rem; border-top:1px solid var(--hair); color:var(--soft);
+}
+html[data-ed="note"] ul.not li:last-child { border-bottom:1px solid var(--hair); }
+html[data-ed="note"] ul.not li::before {
+  content:""; position:absolute; left:0; top:1.15rem; width:.6rem; height:1px; background:var(--faint);
+}
+html[data-ed="note"] ol.work { list-style:none; counter-reset:w; margin:0; padding:0; }
+html[data-ed="note"] ol.work > li {
+  counter-increment:w; border-top:1px solid var(--hair); padding:1.05rem 0;
+  display:grid; grid-template-columns:2rem 1fr; gap:.4rem 1rem;
+}
+html[data-ed="note"] ol.work > li::before {
+  content:counter(w,decimal-leading-zero); grid-row:span 2;
+  font:500 11px/1.9 "JetBrains Mono",ui-monospace,monospace; color:var(--faint);
+}
+html[data-ed="note"] ol.work b { font-weight:600; color:var(--ink); font-size:17px; }
+html[data-ed="note"] ol.work b a { text-decoration:underline; text-decoration-color:var(--hair2); text-underline-offset:4px; }
+html[data-ed="note"] ol.work span { font-size:14.5px; color:var(--soft); }
+
+/* ── footer ───────────────────────────────────────────────────────────────────────────────── */
+html[data-ed="note"] footer.nfoot {
+  border-top:1px solid var(--hair); margin-top:3rem; padding:2.2rem 0 0;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr)); gap:1.6rem 2rem;
+}
+html[data-ed="note"] footer.nfoot h3 {
+  margin:0 0 .7rem; font:500 9.5px/1.6 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--faint); font-weight:500;
+}
+html[data-ed="note"] footer.nfoot ul { list-style:none; margin:0; padding:0; }
+html[data-ed="note"] footer.nfoot li { margin-bottom:.35rem; }
+html[data-ed="note"] footer.nfoot a {
+  color:var(--dim); text-decoration:none; font:400 13px/1.7 "Spectral",Georgia,serif;
+}
+html[data-ed="note"] footer.nfoot a:hover { color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
+html[data-ed="note"] p.nfine {
+  margin:2.4rem 0 0; padding-top:1rem; border-top:1px solid var(--hair);
+  font:400 11.5px/1.7 "JetBrains Mono",ui-monospace,monospace; color:var(--faint);
+  display:flex; gap:2rem; justify-content:space-between; flex-wrap:wrap;
+}
+
+/* ── the only motion ──────────────────────────────────────────────────────────────────────── */
+@keyframes note-rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+@media (prefers-reduced-motion:no-preference) {
+  @supports (animation-timeline: view()) {
+    html[data-ed="note"] .look > .art, html[data-ed="note"] .look > aside {
+      animation:note-rise linear both; animation-timeline:view(); animation-range:entry 0% cover 26%;
+    }
+  }
+}
+
+/* ── narrow: the margin drops below its sentence ──────────────────────────────────────────── */
+@media (max-width:1080px) {
+  html[data-ed="note"] main { padding-top:6.4rem; }
+  html[data-ed="note"] .look { grid-template-columns:1fr; gap:1.5rem; padding:3.6rem 0; }
+  html[data-ed="note"] .look > .art, html[data-ed="note"] p, html[data-ed="note"] figure { max-width:none; }
+  html[data-ed="note"] aside { position:static; border-left:0; border-top:1px solid var(--hair); padding:1.05rem 0 0; }
+  html[data-ed="note"] .nhead nav a.hide-n { display:none; }
+  html[data-ed="note"] dl.chain > div { display:block; }
+  html[data-ed="note"] dl.chain dt { flex:none; }
+}
+
+/* on a phone the running head is the only chrome worth keeping */
+@media (max-width:560px) {
+  html[data-ed="note"] .nhead nav a { display:none; }
+  html[data-ed="note"] main { padding-top:5.6rem; }
+}

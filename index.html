@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-ed="motion">
+<html lang="en" data-theme="dark" data-ed="note">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
 <title>Jason Ou — actuary building inspectable AI for life insurance</title>
-<meta name="description" content="Jason Ou, FIAA, Sydney. Senior data scientist in life reinsurance. Open-source life-insurance data tools, two measured studies of LLMs in actuarial work, and what thirteen public repositories taught me about building in broken time.">
+<meta name="description" content="Jason Ou, FIAA, Sydney. Senior data scientist in life reinsurance. Two measured studies of LLMs in actuarial work, thirteen public repositories, and the method the open-source journey forced along the way. No figure without a denominator.">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Jason Ou — actuary building inspectable AI for life insurance">
-<meta property="og:description" content="What I do, the projects and why they matter, and what the open-source journey has meant. Two measured studies, thirteen repositories, no analytics.">
+<meta property="og:description" content="Two measured studies, thirteen repositories, and what an inspectable AI decision actually requires. No analytics, no figures without a denominator.">
 <meta property="og:url" content="https://jasonzheshiou.github.io/">
 <meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,502 +17,291 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/motion.css">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/note.css">
 <script src="/assets/site.js" defer></script>
-<script src="/assets/motion.js" defer></script>
+<script src="/assets/note.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Jason Ou","jobTitle":"Senior Data Scientist and Strategic Analytic Actuary (FIAA)","url":"https://jasonzheshiou.github.io/","sameAs":["https://github.com/jasonzheshiou","https://www.linkedin.com/in/zheshi-jason-ou-8780203a"],
 "hasCredential":{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","credentialCategory":"Fellow of the Institute of Actuaries of Australia (FIAA)","recognizedBy":{"name":"Actuaries Institute"},"dateCreated":"2021-12"}}
 </script>
-<style>
-.hero{position:relative;overflow:hidden}
-.hero .lede + .lede{margin-top:.85rem}
-.hero .figscroll{margin-top:1.3rem;padding:.85rem .95rem .95rem}
-.hero-line{position:absolute;right:0;top:12%;width:min(42%,480px);opacity:.15;pointer-events:none;filter:drop-shadow(0 0 12px rgba(53,214,255,.55))}
-.hero-line polyline{fill:none;stroke:var(--cyan);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
-.hero-line .base{stroke:var(--violet);stroke-width:1.1;opacity:.7;stroke-dasharray:4 5}
-@media (max-width:900px){ .hero-line{top:auto;bottom:1rem;opacity:.08} }
-.what{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.what > div{background:var(--panel-2);padding:1.15rem 1.15rem 1.25rem}
-.what .n{font:500 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
-.what b{display:block;font-family:var(--disp);font-size:1.05rem;margin:.55rem 0 .3rem}
-.what p{margin:0;font-size:14.2px;color:var(--muted)}
-.plain{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(9px);margin-top:1.8rem}
-.plain .row{display:grid;grid-template-columns:250px 1fr 1fr;gap:1.3rem;padding:1.15rem 1.2rem;border-bottom:1px solid var(--line);transition:background .16s ease}
-.plain .row:last-child{border-bottom:0}
-.plain .row:hover{background:var(--cyan-bg)}
-.plain .t{font:500 10.5px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
-.plain .t b{display:block;font-family:var(--disp);font-size:1.06rem;letter-spacing:-.01em;text-transform:none;color:var(--ink);margin-top:.4rem}
-.plain .t a{color:var(--muted);text-decoration:none;font:400 12px/1.6 var(--mono)}
-.plain .t a:hover{color:var(--cyan)}
-.plain .w{font-size:14.3px;color:var(--muted);margin:0}
-.plain .w em{display:block;font:500 9.5px/1.8 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-style:normal}
-@media (max-width:940px){ .plain .row{grid-template-columns:1fr;gap:.55rem} }
-.two{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.8rem}
-@media (min-width:860px){ .two{grid-template-columns:1fr 1fr} }
-.two > a{background:var(--panel-2);padding:1.3rem 1.35rem;text-decoration:none;color:inherit;display:block}
-.two > a:hover{background:var(--cyan-bg)}
-.two .k{font:500 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
-.two .big{font:500 clamp(1.6rem,3vw,2rem)/1 var(--mono);color:var(--cyan);text-shadow:var(--glow);margin:.75rem 0 .3rem}
-.two h3{margin:0 0 .3rem;font-size:1.15rem}
-.two p{margin:0;font-size:14.3px;color:var(--muted)}
-.mean{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:1.8rem}
-.mean > div{background:var(--panel-2);padding:1.1rem 1.15rem 1.2rem}
-.mean b{display:block;font-family:var(--disp);font-size:1rem;margin:.4rem 0 .3rem}
-.mean p{margin:0;font-size:13.9px;color:var(--muted)}
-.mean .n{font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
-</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="top"><div class="wrap bar">
-  <a class="brand" href="/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
-  <nav class="main">
-    <a href="/" aria-current="page">Home</a>
-    <a href="/research/life-insurance-experience-bench.html">A/E Bench</a>
-    <a href="/research/underwriting-output-variance.html">Variance</a>
-    <a href="/research/findings.html">Findings</a>
-    <a href="/ecosystem.html">Ecosystem</a>
-    <a href="/projects.html">Projects</a>
-    <a href="/method.html">Method</a>
-    <a href="/writing.html">Writing</a>
-    <a href="/about.html">About</a>
-    <button class="theme-btn" type="button">☾</button>
+<div class="nhead">
+  <span class="mark">Jason Ou · FIAA</span>
+  <span class="now">the claim</span>
+  <nav aria-label="On this page">
+    <a href="#finding">finding</a>
+    <a href="#cost">variance</a>
+    <a class="hide-n" href="#making">method</a>
+    <a href="#work">work</a>
+    <a class="hide-n" href="#next">hello</a>
+    <button class="theme-btn" type="button">☀</button>
   </nav>
-</div></header>
+</div>
 
 <main id="main">
-<svg class="sprite" aria-hidden="true" focusable="false"><defs>
 
-  <symbol id="i-seed" viewBox="0 0 48 48">
-    <rect x="7" y="7" width="14" height="14" rx="2" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M14 21v6h8" stroke="var(--ic-cyan)" fill="none"/>
-    <g stroke-dasharray="1 3">
-      <path d="M27 27h14M27 33h14M27 39h14" stroke="var(--ic-dim)" fill="none"/>
-    </g>
-    <circle cx="34" cy="33" r="3" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
+<!-- ── the claim ─────────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="claim" data-head="the claim">
+  <div class="art">
+    <span class="kicker">Life reinsurance · actuarial AI · Sydney</span>
+    <h1>An actuary cannot sign a decision the actuary cannot inspect.</h1>
+    <p class="lead">So I build the inspectable version, in the open: a book of synthetic lives with a known answer,
+    a sealed exam for the models, and engines whose reasoning an auditor could actually read.</p>
+    <p>I am a qualified actuary and a data scientist, thirteen years in life insurance and now in life reinsurance,
+    building predictive underwriting that runs in production. In the open I build the things that question is short
+    of: <strong>data with a known answer</strong>, tests that count mistakes, and engines whose reasoning a person
+    other than its author can follow.</p>
+  </div>
+  <aside>
+    <span class="t">In one line</span>
+    <span class="r"><b>role</b> Pacific Life Re · predictive underwriting in production</span>
+    <span class="r"><b>credential</b> FIAA · 19258 · in the industry since 2013</span>
+    <span class="r"><b>open work</b> 13 public repositories, MIT</span>
+    <span class="r"><b>figures</b> none without a denominator</span>
+    <span class="st">status · open to collaborate</span>
+  </aside>
+</section>
 
-  <symbol id="i-target" viewBox="0 0 48 48">
-    <rect x="8" y="8" width="32" height="32" rx="2" stroke="var(--ic-dim)" fill="none"/>
-    <circle cx="24" cy="24" r="9" stroke="var(--ic-cyan)" fill="none"/>
-    <circle cx="24" cy="24" r="2.5" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
-    <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M33 33l6 6M39 33l-6 6" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
+<!-- ── the finding ───────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="finding" data-head="the finding">
+  <div class="art">
+    <span class="kicker">Study one · can a model read an experience study</span>
+    <h2>Two in five of the model's flags were false alarms.</h2>
+    <p><span class="ns">Before the benchmark</span> existed, &ldquo;an LLM can do experience analysis&rdquo; was a
+    vibe. After it there was a number with a denominator: of everything the harness flagged,
+    <strong>41.9&nbsp;%</strong> pointed at nothing planted, with precision of <strong>58.1&nbsp;%</strong> against a
+    sealed key. Best cell on a held-out split, <strong>71.2&nbsp;%</strong>. Every flag costs an analyst an hour, so
+    that figure is not a score. It is a price.</p>
+    <figure>
+      <div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+      <figcaption>Two in five, rounded for the eye. The measured figure is <b>41.9 %</b>, not 40 %.</figcaption>
+    </figure>
+    <p>The uncomfortable parts are on the record too: tuning scores ran <strong>30 points optimistic</strong> against
+    the held-out split, and the two models cost <strong>3.4&times;</strong> different amounts to run for
+    near-identical answers. <a class="in" href="/research/life-insurance-experience-bench.html">Read the study</a>.</p>
+  </div>
+  <aside>
+    <span class="t">Receipt</span>
+    <span class="r"><b>figure</b> 41.9 % false alarms</span>
+    <span class="r"><b>denominator</b> 47 sealed exams</span>
+    <span class="r"><b>models</b> two Qwen 27B &times; two harnesses</span>
+    <span class="r"><b>book</b> 250 000 seeded lives, four benefit lines</span>
+    <span class="r"><b>scorer</b> counts inventions as well as misses</span>
+    <span class="r"><b>commit</b> 8067f00</span>
+    <span class="st">standing · measured, on synthetic data</span>
+  </aside>
+</section>
 
-  <symbol id="i-agents" viewBox="0 0 48 48">
-    <rect x="6" y="8" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="6" y="32" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="19" y="20" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M16 12c6 0 3 12 3 12M16 36c6 0 3-8 3-8" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M29 24h5" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M34 17l7 7-7 7-7-7z" stroke="var(--ic-cyan)" fill="none"/>
-  </symbol>
+<!-- ── what it costs ─────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="cost" data-head="the variance">
+  <div class="art">
+    <span class="kicker">Study two · the same applicant, decided twice</span>
+    <h2>The spread ran from nothing at all to 47&nbsp;%, and it concentrated where the rules are ambiguous.</h2>
+    <p><span class="ns">One synthetic case file,</span> one underwriting agent, the same rules and the same
+    documents each time. The offered sum assured moved <strong>0&ndash;47&nbsp;%</strong> across repeat decisions:
+    zero on the rule-based path, up to 47&nbsp;% where the case is genuinely hard. Setting temperature to zero
+    changed which decision came back. The plumbing is deterministic &mdash; <strong>600</strong> repeat runs of the
+    suite, <strong>0</strong> divergence &mdash; so the variance is judgement, not code. That is the useful split,
+    and it is the one people usually conflate.</p>
+    <p>Three agent roles sit in the loop &mdash; the analyst who reads the file, the challenger who argues the adverse
+    case, and the engine that applies the fixed rules on top. A named actuary signs the outcome; the model never
+    does. <a class="in" href="/research/underwriting-output-variance.html">Read the study</a>.</p>
+  </div>
+  <aside>
+    <span class="t">Receipt</span>
+    <span class="r"><b>spread</b> 0&ndash;47 %</span>
+    <span class="r"><b>where it bites</b> at rule boundaries</span>
+    <span class="r"><b>re-runs</b> 600 · 0 diverged</span>
+    <span class="r"><b>tests</b> 228 offline, no network</span>
+    <span class="r"><b>commit</b> cbedb1b · engine 66a73d0</span>
+    <span class="st">standing · measured, verified determinism</span>
+  </aside>
+</section>
 
-  <symbol id="i-trend" viewBox="0 0 48 48">
-    <path d="M8 38h32" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M10 32l7-6 6 4 8-11 6 5" stroke="var(--ic-cyan)" fill="none"/>
-    <circle cx="31" cy="19" r="6" stroke="var(--ic-amber)" fill="none"/>
-    <path d="M35 23l4 4" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-standard" viewBox="0 0 48 48">
-    <path d="M12 6h18l6 6v30H12z" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M30 6v6h6" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M17 20h14M17 26h14M17 32h8" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M30 33l3 3 6-7" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-gauge" viewBox="0 0 48 48">
-    <path d="M9 33a15 15 0 0 1 30 0" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M24 33l8-9" stroke="var(--ic-cyan)" fill="none"/>
-    <circle cx="24" cy="33" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M9 39h30" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M40 12l3 3-3 3" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-schema" viewBox="0 0 48 48">
-    <rect x="6" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="27" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="16" y="29" width="16" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M13 20v4h22v-4" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M24 24v5" stroke="var(--ic-cyan)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-sheet" viewBox="0 0 48 48">
-    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M8 17h32M8 26h32M8 34h32M19 17v23M30 17v23" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M19 26l5 4 6-8" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-loop" viewBox="0 0 48 48">
-    <path d="M24 9a15 15 0 1 1-10.6 25.6" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M13 27v8h8" stroke="var(--ic-cyan)" fill="none"/>
-    <rect x="18" y="19" width="12" height="10" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M21 24h6" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-particles" viewBox="0 0 48 48">
-    <rect x="7" y="7" width="34" height="34" rx="2" stroke="var(--ic-dim)" fill="none"/>
-    <circle cx="17" cy="18" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
-    <circle cx="30" cy="16" r="2" stroke="var(--ic-cyan)" fill="none"/>
-    <circle cx="24" cy="30" r="3" stroke="var(--ic-cyan)" fill="none"/>
-    <circle cx="34" cy="30" r="1.5" stroke="var(--ic-amber)" fill="none"/>
-    <circle cx="15" cy="32" r="1.5" stroke="var(--ic-amber)" fill="none"/>
-    <path d="M17 18l7 12 10-14" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-pixel" viewBox="0 0 48 48">
-    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M8 24h32M24 8v32" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="15" y="15" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
-    <rect x="27" y="27" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
-    <rect x="27" y="15" width="6" height="6" stroke="var(--ic-amber)" fill="var(--ic-amber)"/>
-  </symbol>
-
-  <symbol id="i-puzzle" viewBox="0 0 48 48">
-    <rect x="8" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="26" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="8" y="26" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="26" y="26" width="14" height="14" rx="1" stroke="var(--ic-amber)" fill="none"/>
-    <path d="M15 15h0M33 33h0" stroke="var(--ic-dim)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-id" viewBox="0 0 48 48">
-    <rect x="6" y="11" width="36" height="26" rx="2" stroke="var(--ic-dim)" fill="none"/>
-    <circle cx="16" cy="22" r="4" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M10 32c1-4 4-5 6-5s5 1 6 5" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M27 20h9M27 26h9" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-ruler" viewBox="0 0 48 48">
-    <rect x="6" y="18" width="36" height="12" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M13 18v6M20 18v4M27 18v6M34 18v4" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M24 12v4" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M6 12h36" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-shield" viewBox="0 0 48 48">
-    <path d="M24 7l14 5v12c0 9-6 14-14 17-8-3-14-8-14-17V12z" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M18 23l5 5 8-9" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-sign" viewBox="0 0 48 48">
-    <path d="M8 34h32" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M12 26c4-10 8 6 12-2s6 4 10-2" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M34 12l4 4-10 10-5 1 1-5z" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-clock" viewBox="0 0 48 48">
-    <circle cx="24" cy="24" r="16" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M24 14v10l7 4" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M24 8v-0M40 24h0" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M36 10l4 4" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-blackbox" viewBox="0 0 48 48">
-    <rect x="14" y="14" width="20" height="20" rx="1" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M6 24h8M34 24h8" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M42 20l0 8" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M10 12h10M10 36h10" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-handoff" viewBox="0 0 48 48">
-    <path d="M12 8h14l6 6v26H12z" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M26 8v6h6" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M17 22h10M17 28h6" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M32 24h10M38 20l4 4-4 4" stroke="var(--ic-amber)" fill="none"/>
-    <path d="M42 32v6" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-architect" viewBox="0 0 48 48">
-    <path d="M24 6l16 8-16 8-16-8z" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M8 24l16 8 16-8" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M8 32l16 8 16-8" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-queue" viewBox="0 0 48 48">
-    <rect x="7" y="10" width="8" height="28" rx="1" stroke="var(--ic-dim)" fill="none"/>
-    <rect x="19" y="10" width="8" height="28" rx="1" stroke="var(--ic-cyan)" fill="none"/>
-    <rect x="31" y="10" width="8" height="28" rx="1" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M19 24h-4M31 24h-4" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-  <symbol id="i-delta" viewBox="0 0 48 48">
-    <path d="M8 40h32" stroke="var(--ic-dim)" fill="none"/>
-    <path d="M14 40V22M22 40V14M30 40V26M38 40V18" stroke="var(--ic-cyan)" fill="none"/>
-    <path d="M12 12h26" stroke-dasharray="3 3" stroke="var(--ic-amber)" fill="none"/>
-  </symbol>
-
-</defs></svg>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="hero"><div class="wrap">
-  <svg class="hero-line" viewBox="0 0 400 115" aria-hidden="true">
-    <polyline class="base" points="0,52 400,52"/>
-    <polyline points="0,106 44,96 89,105 133,102 178,84 222,55 267,43 311,36 356,15 400,8"/>
-  </svg>
-
-  <div class="idcard">
-    <div class="who">Jason Ou <span>· FIAA · Sydney</span></div>
-    <dl>
-      <div><dt>Role</dt><dd>Senior Data Scientist / Analytic Actuary</dd></div>
-      <div><dt>Credential</dt><dd>FIAA · 19258</dd></div>
-      <div><dt>In the industry</dt><dd>since 2013</dd></div>
-      <div><dt>Status</dt><dd><span class="status">open to collaborate</span></dd></div>
+<!-- ── how it is made ────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="making" data-head="how it is made">
+  <div class="art">
+    <span class="kicker">Method</span>
+    <h2>Three things have to be true before an AI output can enter an insurance decision.</h2>
+    <p><span class="ns">Measurement.</span> Generate the truth; never curate it. A curated answer key drifts and
+    cannot be regenerated as the test grows, so both studies start from a deterministic generator and are scored by
+    a scorer that counts false alarms rather than rewarding the model for talking more.</p>
+    <p><span class="ns">Governance.</span> Every claim ships the bytes behind it: frozen harness snapshots, prompt
+    hashes, decisions logged in JSONL, sealed manifests per scenario. A number without the instrument that produced
+    it is an anecdote &mdash; mine included.</p>
+    <p><span class="ns">Accountability.</span> Agents propose; a named human decides. Escalation rules, permissions
+    and conservatism belong in the architecture, not in the prompt wording. <a class="in" href="/method.html">The
+    full method</a> is written up, including the part that is still only a design.</p>
+    <dl class="chain">
+      <div><dt>Sealed exam</dt><dd><em>measured</em> · 47 exams, the key held out of the weights</dd></div>
+      <div><dt>Experience bench</dt><dd><em>measured</em> · 41.9 % · 58.1 % · 8067f00</dd></div>
+      <div><dt>Variance probe</dt><dd><em>verified</em> · 600 runs, 0 divergence · cbedb1b</dd></div>
+      <div><dt>Decision engine</dt><dd><em>demonstrated</em> · three roles debate, a named actuary signs · 66a73d0</dd></div>
+      <div><dt>Async HITL method</dt><dd>blueprint · no figure claimed yet</dd></div>
     </dl>
   </div>
+  <aside>
+    <span class="t">Why the labels</span>
+    <span class="r"><b>measured</b> a figure with a denominator</span>
+    <span class="r"><b>verified</b> re-run to byte equality</span>
+    <span class="r"><b>demonstrated</b> it runs, not yet measured</span>
+    <span class="r"><b>blueprint</b> designed, untested</span>
+  </aside>
+</section>
 
-  <h1>I make AI decisions in insurance defensible.</h1>
-  <p class="lede">I am a qualified actuary and a data scientist. Thirteen years in life insurance — now in life
-  reinsurance, building predictive underwriting that runs in production. In the open, I build the things that
-  question is short of: data with a known answer, tests that count mistakes, and engines whose reasoning an auditor
-  could actually read.</p>
-  <p class="lede" style="margin-top:1rem">The starting point is one sentence: <strong>a decision an actuary cannot
-  inspect is a decision an actuary cannot sign.</strong></p>
-  <div class="btn-row">
-    <a class="btn" href="/projects.html">See the projects</a>
-    <a class="btn ghost" href="/about.html">More about me</a>
-    <a class="btn ghost" href="mailto:ouzheshi@gmail.com">ouzheshi@gmail.com</a>
+<!-- ── the work ──────────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="work" data-head="the work">
+  <div class="art">
+    <span class="kicker">The projects, plainly</span>
+    <h2>Six things, and why each one is here.</h2>
+    <ol class="work">
+      <li><b><a href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator">Synthetic data generator</a></b>
+        <span>Australian death, trauma, disability and income-protection experience: 250 000 policies from one seed,
+        trends and shocks planted deliberately, answer key sealed. Nothing here is checkable without it.</span></li>
+      <li><b><a href="/research/life-insurance-experience-bench.html">Experience bench</a></b>
+        <span>Forty-seven sealed exams, two models crossed with two harnesses, a scorer that counts inventions. It
+        turned confident vibes into numbers.</span></li>
+      <li><b><a href="/research/underwriting-output-variance.html">Multi-agent underwriter</a></b>
+        <span>Medical, financial and compliance agents debating above a deterministic rule engine, with a human
+        signing on top. It shows where the human actually goes.</span></li>
+      <li><b><a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard">Analysis dashboard</a> · <a href="https://github.com/jasonzheshiou/Standard_Inquirer">Standard Inquirer</a></b>
+        <span>A trauma-incidence study with credibility weighting, trend tests and model selection, with an audit
+        trail; and compliance answers that cite the standard rather than a model's recollection of it.</span></li>
+      <li><b><a href="https://github.com/jasonzheshiou/LLM_Status_Watch">Status watch</a> · schema and Excel tooling</b>
+        <span>A Raspberry Pi that tells my phone when the shared model server is free, plus schema inspection and
+        join planning. Measurement needs a queue, and nothing downstream works if the joins are wrong.</span></li>
+      <li><b><a href="https://github.com/jasonzheshiou/Pixel_Storybook">Pixel Storybook</a> · little games</b>
+        <span>Side projects with no commercial excuse, keeping the habits honest: pre-register the question, publish
+        the noise floor, keep the artefacts. Two of three claims there failed their own noise floor, and that is on
+        the record.</span></li>
+    </ol>
+    <p style="margin-top:1.4rem">The whole map of how the thirteen fit together is on the
+      <a class="in" href="/ecosystem.html">ecosystem page</a>, and the full list is on the
+      <a class="in" href="/projects.html">projects page</a>.</p>
   </div>
+  <aside>
+    <span class="t">At a glance</span>
+    <span class="r"><b>now</b> Pacific Life Re · predictive underwriting in production</span>
+    <span class="r"><b>before</b> Resolution Life Australasia · Zurich</span>
+    <span class="r"><b>credential</b> FIAA, Actuaries Institute, 2021</span>
+    <span class="r"><b>stack</b> Python · SQL · pandas · Streamlit · Power BI</span>
+  </aside>
+</section>
 
-<figure class="figscroll">
-<svg class="diagram" viewBox="0 0 1026 128" role="img" aria-label="The portfolio on one line: synthetic world, measurement, decision engine, accountability.">
-  <rect class="node" x="4" y="10" width="230" height="106" rx="2"/>
-  <path class="link" d="M5 26V11h15"/><path class="link" d="M233 100v15h-15"/>
-  <text class="node-k" x="22" y="34">01 · SYNTHETIC WORLD</text>
-  <text class="node-t" x="22" y="60">250 000 policies</text>
-  <text class="node-s" x="22" y="80">one seed, four benefit lines</text>
-  <text class="node-s" x="22" y="97">anomalies planted on purpose</text>
-  <use class="glyph" href="#i-seed" x="190" y="20" width="32" height="32"/>
-  <rect class="node" x="268" y="10" width="230" height="106" rx="2"/>
-  <path class="link" d="M269 26V11h15"/><path class="link" d="M497 100v15h-15"/>
-  <text class="node-k" x="286" y="34">02 · MEASUREMENT</text>
-  <text class="node-t" x="286" y="60">47 sealed exams</text>
-  <text class="node-s" x="286" y="80">two models × two harnesses</text>
-  <text class="node-s" x="286" y="97">false alarms counted as well</text>
-  <use class="glyph" href="#i-target" x="454" y="20" width="32" height="32"/>
-  <rect class="node" x="532" y="10" width="230" height="106" rx="2"/>
-  <path class="link" d="M533 26V11h15"/><path class="link" d="M761 100v15h-15"/>
-  <text class="node-k" x="550" y="34">03 · DECISION ENGINE</text>
-  <text class="node-t" x="550" y="60">Agent underwriting</text>
-  <text class="node-s" x="550" y="80">debate under fixed rules</text>
-  <text class="node-s" x="550" y="97">a named human signs</text>
-  <use class="glyph" href="#i-agents" x="718" y="20" width="32" height="32"/>
-  <rect class="node" x="796" y="10" width="230" height="106" rx="2"/>
-  <path class="link" d="M797 26V11h15"/><path class="link" d="M1025 100v15h-15"/>
-  <text class="node-k" x="814" y="34">04 · ACCOUNTABILITY</text>
-  <text class="node-t" x="814" y="60">The audit trail</text>
-  <text class="node-s" x="814" y="80">prompts, decisions, scores</text>
-  <text class="node-s" x="814" y="97">everything re-derivable</text>
-  <use class="glyph" href="#i-sign" x="982" y="20" width="32" height="32"/>
-<path class="flow" d="M236 63h28"/><path class="link" d="M258 58l7 5-7 5"/>
-<path class="flow" d="M500 63h28"/><path class="link" d="M522 58l7 5-7 5"/>
-<path class="flow" d="M764 63h28"/><path class="link" d="M786 58l7 5-7 5"/>
-</svg>
-<figcaption>Every repository sits on this line — left is data nobody can publish, right is the accountability an actuary has to provide. Scroll if the line is wider than your screen.</figcaption>
-</figure>
-</div></section>
-
-<section class="band tight"><div class="wrap">
-  <p class="eyebrow">What I do</p>
-  <div class="what">
-    <div><svg class="ic" aria-hidden="true"><use href="#i-sign"/></svg><span class="n">DAY JOB</span><b>Predictive underwriting, in production</b>
-      <p>Life reinsurance, Sydney. Models that go live: out-of-time validation, thresholds set against a stated
-      risk tolerance, and sign-off from underwriting, pricing, risk, model risk, legal and security.</p></div>
-    <div><svg class="ic" aria-hidden="true"><use href="#i-schema"/></svg><span class="n">OPEN WORK</span><b>Insurance data tools with receipts</b>
-      <p>Thirteen public repositories: a synthetic experience generator, a benchmark built on it, a multi-agent
-      underwriting engine, a compliance assessor, and the plumbing that makes local models usable.</p></div>
-    <div><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg><span class="n">THE POINT</span><b>Measured, not claimed</b>
-      <p>Two studies that ran to real numbers — whether a model can read an experience study, and whether the same
-      underwriting decision twice is the same decision. Failures published beside the results.</p></div>
-  </div>
-</div></section>
-
-<section class="band"><div class="wrap">
-  <p class="eyebrow">The projects, plainly</p>
-  <h2 style="margin-top:0">Six things, and why each one is here</h2>
-  <div class="plain">
-    <div class="row">
-      <div class="t"><svg class="ic" aria-hidden="true"><use href="#i-seed"/></svg>Data<b>Synthetic Data Generator</b>
-        <a href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator">repository →</a><span class="impact">nothing here is checkable without it</span></div>
-      <p class="w"><em>what it is</em>Australian death, trauma, disability and income-protection experience — 250 000 policies
-        from one seed — with trends and shocks planted deliberately, and the answer key kept sealed.</p>
-      <p class="w"><em>why it matters</em>Nobody can publish real experience data. Without a world with a known
-        answer, nothing about AI in insurance can be checked rather than believed.</p>
-    </div>
-    <div class="row">
-      <div class="t"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg>Measurement<b>Experience Bench</b>
-        <a href="/research/life-insurance-experience-bench.html">study 01 →</a><span class="impact">turns confident vibes into numbers</span></div>
-      <p class="w"><em>what it is</em>Forty-seven sealed exams, two Qwen 27B models crossed with two harnesses, and
-        a scorer that counts inventions as well as misses.</p>
-      <p class="w"><em>why it matters</em>It turned “AI can do experience analysis” into a number with a
-        denominator — 71 % accurate at best, and two in five of its claims false alarms when it chose to speak.</p>
-    </div>
-    <div class="row">
-      <div class="t"><svg class="ic" aria-hidden="true"><use href="#i-agents"/></svg>Decisions<b>Multi-Agent Underwriter</b>
-        <a href="/research/underwriting-output-variance.html">study 02 →</a><span class="impact">shows exactly where the human goes</span></div>
-      <p class="w"><em>what it is</em>Medical, financial and compliance agents debating above a deterministic rule
-        engine, with a human signing on top — and a study of how stable its answers actually are.</p>
-      <p class="w"><em>why it matters</em>It shows what an auditable AI underwriting path looks like, and proves
-        that uncertainty concentrates exactly on borderline cases — which is where a human belongs.</p>
-    </div>
-    <div class="row">
-      <div class="t"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg>Judgement &amp; compliance<b>Analysis Dashboard · Standard Inquirer</b>
-        <a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard">dashboard →</a>
-        <a href="https://github.com/jasonzheshiou/Standard_Inquirer"> · standards →</a><span class="impact">the real method, open to argue with</span></div>
-      <p class="w"><em>what it is</em>A trauma-incidence study with credibility weighting, trend tests and model
-        selection, with an audit trail; and a conversational assessment against 40+ APRA standards retrieved from a
-        knowledge base.</p>
-      <p class="w"><em>why it matters</em>This is the real method, in the open, so colleagues can argue with the
-        assumptions instead of the summary — and compliance answers that cite the standard rather than a model's
-        recollection of it.</p>
-    </div>
-    <div class="row">
-      <div class="t"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg>Operations<b>Status Watch · schema and Excel tooling</b>
-        <a href="https://github.com/jasonzheshiou/LLM_Status_Watch">status watch →</a><span class="impact">measurement needs a queue and clean joins</span></div>
-      <p class="w"><em>what it is</em>A Raspberry Pi that tells my phone when the shared model server is free, plus
-        tools for schema inspection, join planning and reviewable Excel automation.</p>
-      <p class="w"><em>why it matters</em>Measurement needs a queue. A five-hour and a twenty-two-hour run on one
-        shared machine turns scheduling into engineering, and nothing downstream works if the joins are wrong.</p>
-    </div>
-    <div class="row">
-      <div class="t"><svg class="ic" aria-hidden="true"><use href="#i-particles"/></svg>Craft<b>Pixel Storybook · Piticle Life · little_games</b>
-        <a href="https://github.com/jasonzheshiou/Pixel_Storybook">side projects →</a><span class="impact">habits kept honest where failure is cheap</span></div>
-      <p class="w"><em>what it is</em>Side projects with no commercial excuse: a model that paints pixel art by
-        writing and critiquing code, a particle-life society on old hardware, two dependency-free browser games.</p>
-      <p class="w"><em>why it matters</em>They keep the habits honest — pre-register the question, publish the noise
-        floor, keep the artefacts. Two of three claims there failed their own noise floor, and that is on the record.</p>
-    </div>
-  </div>
-</div></section>
-
-<section class="band"><div class="wrap">
-  <p class="eyebrow">Why it matters</p>
-  <h2 style="margin-top:0">Three things have to be true before an AI output can enter an insurance decision</h2>
-  <div class="pillars" style="margin-top:1.8rem">
-    <div><span class="n">01 · MEASUREMENT</span><b>Generate the truth; never curate it</b>
-      <p>A curated answer key drifts and cannot be regenerated as the test grows. Both studies start from a
-      deterministic generator, and are scored by a scorer that counts false alarms rather than rewarding the model
-      for talking more.</p></div>
-    <div><span class="n">02 · GOVERNANCE</span><b>Every claim ships the bytes behind it</b>
-      <p>Frozen harness snapshots, prompt hashes, decisions logged in JSONL, sealed manifests per scenario. A number
-      without the instrument that produced it is an anecdote — mine included.</p></div>
-    <div><span class="n">03 · ACCOUNTABILITY</span><b>Agents propose; a named human decides</b>
-      <p>Escalation rules, permissions and conservatism belong in the architecture, not in the prompt wording.
-      Stability is often bought with a risk-appetite decision, and somebody should sign that.</p></div>
-  </div>
-  <div class="two">
-    <a href="/research/life-insurance-experience-bench.html">
-      <svg class="ic lg" aria-hidden="true"><use href="#i-target"/></svg>
-      <span class="k">Study 01 · Can a model read an experience study?</span>
-      <div class="big">71.2 %</div>
-      <h3>Best cell, on a held-out split</h3>
-      <p>And the number that matters more: 41.9 % of its claims were false alarms, tuning scores were 30 points
-      optimistic, and the two models cost 3.4× different amounts to run.
-      <strong>Read the study →</strong></p></a>
-    <a href="/research/underwriting-output-variance.html">
-      <svg class="ic lg" aria-hidden="true"><use href="#i-delta"/></svg>
-      <span class="k">Study 02 · The same applicant, a hundred times</span>
-      <div class="big">0–47 %</div>
-      <h3>Spread of decisions, clear case to borderline</h3>
-      <p>Zero on the rule-based path, up to 47 % where the case is genuinely hard, and setting temperature to zero
-      changed <em>which decision</em> came back. <strong>Read the study →</strong></p></a>
-  </div>
-</div></section>
-
-<section class="band"><div class="wrap split-32">
-  <article class="prose">
-    <p class="eyebrow">The journey</p>
-    <h2 id="journey" style="margin-top:0">What open-sourcing all this has meant</h2>
-    <p>I started publishing for a dull reason: I wanted the work to be checkable. A CV can say anything. A repository
-    with a generator, a scorer and a log either supports the claim or it doesn't — and I would rather be argued with
-    against evidence than admired against a summary.</p>
-    <p>It turned into something else. Everything here was built in <strong>broken time</strong> — forty minutes
-    between a full-time job and childcare — which meant nothing could need me to sit and watch it. So I stopped
-    writing code line by line and started designing loops I could delegate, then measuring what came out, because I
-    could not inspect the models or my own code the way I used to. That is the same three-part discipline the
-    profession needs: <em>delegate the work, verify the behaviour, keep the sign-off</em>. The constraint was the
-    teacher.</p>
+<!-- ── the journey ───────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="journey" data-head="the journey">
+  <div class="art">
+    <span class="kicker">What open-sourcing it has meant</span>
+    <h2>I started publishing for a dull reason: I wanted the work to be checkable.</h2>
+    <p><span class="ns">A CV can say anything.</span> A repository with a generator, a scorer and a log either
+    supports the claim or it does not, and I would rather be argued with against evidence than admired against a
+    summary.</p>
+    <p><span class="ns">It turned into something else.</span> Everything here was built in broken time &mdash; forty
+    minutes between a full-time job and childcare &mdash; which meant nothing could need me to sit and watch it. So
+    I stopped writing code line by line and started designing loops I could delegate, then measuring what came out,
+    because I could no longer inspect the models or my own code the way I used to. The same three-part discipline the
+    profession needs: delegate the work, verify the behaviour, keep the sign-off. The constraint was the teacher.</p>
     <p>It also made me a better actuary. Reading a benchmark result, a variance distribution or a vendor's model card
     is a different task once you have been the one who had to produce all three honestly.</p>
-    <div class="btn-row"><a class="btn ghost" href="/method.html">Read the full method</a><a class="btn ghost" href="/pixel.html">See it in pixel art</a><a class="btn ghost" href="/about.html">Background and principles</a></div>
-  </article>
+  </div>
   <aside>
-    <div class="mean" style="margin-top:0">
-      <div><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg><span class="n">01</span><b>Receipts over claims</b><p>The habit of shipping the bytes behind a number came
-        from being wrong in public and having the record prove which part was wrong.</p></div>
-      <div><svg class="ic" aria-hidden="true"><use href="#i-delta"/></svg><span class="n">02</span><b>Failures are the useful part</b><p>A run that retried forever, a tool nobody
-        used, two claims that died at their noise floor. Every one changed a design decision.</p></div>
-      <div><svg class="ic" aria-hidden="true"><use href="#i-architect"/></svg><span class="n">03</span><b>Architecture, not heroics</b><p>Delegation, resumable runs, handoff documents
-        and a phone that beeps when the server frees up beat long nights and good intentions.</p></div>
-    </div>
+    <span class="t">Receipts over claims</span>
+    <span class="r">the habit came from being wrong in public, with the record proving which part was wrong</span>
+    <span class="r">failures are the useful part: a run that retried forever, a tool nobody used, two claims that
+      died at their noise floor</span>
+    <span class="r">architecture over heroics: delegation, resumable runs, handoff documents</span>
   </aside>
-</div></section>
+</section>
 
-<section class="band"><div class="wrap split">
-  <article>
-    <p class="eyebrow">Say hello</p>
-    <h2 style="margin-top:0">Corrections, collaborations, hard questions</h2>
-    <p class="muted">The most useful message I can get is a reason why one of these results does not hold. Decision
-    records live in the repositories' logs, so a disagreement can be argued against evidence rather than against a
-    summary of it. Glad to talk with actuaries, engineers and regulators about the governance patterns.</p>
-    <div class="btn-row">
-      <a class="btn" href="mailto:ouzheshi@gmail.com">ouzheshi@gmail.com</a>
-      <a class="btn ghost" href="https://github.com/jasonzheshiou">GitHub</a>
-      <a class="btn ghost" href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a>
-    </div>
-  </article>
-  <aside><div class="panel">
-    <h4 style="margin-top:0">At a glance</h4>
-    <dl class="spec">
-      <dt>Now</dt><dd>Pacific Life Re — predictive underwriting in production</dd>
-      <dt>Before</dt><dd>Resolution Life Australasia · Zurich</dd>
-      <dt>Credential</dt><dd>FIAA, Actuaries Institute, 2021</dd>
-      <dt>Stack</dt><dd>Python · SQL · pandas · Streamlit · Power BI</dd>
-      <dt>Repos</dt><dd>13 public · MIT licensed</dd>
-    </dl>
-  </div></aside>
-</div></section>
+<!-- ── the boundaries ────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="not" data-head="what I will not claim">
+  <div class="art">
+    <span class="kicker">The boundaries</span>
+    <h2>What this work does not say.</h2>
+    <ul class="not">
+      <li>No real policyholder data appears anywhere. Every book is synthetic and seeded from one number.</li>
+      <li>No claim of accuracy beyond the sealed key &mdash; and the key is synthetic, so &ldquo;false alarm&rdquo;
+      means nothing was planted there.</li>
+      <li>No production deployment of the agent engines, no regulatory sign-off, and no replacement for a signing
+      actuary.</li>
+      <li>Lapse and expense A/E work is planned and deliberately untested, so it carries no number here.</li>
+    </ul>
+  </div>
+  <aside>
+    <span class="t">Standing</span>
+    <span class="r">Everything above is falsifiable from a public repository.</span>
+    <span class="r">If a figure cannot be traced to a commit, it is not on this site.</span>
+    <span class="r">Charts here are plotted from the published CSVs.</span>
+  </aside>
+</section>
+
+<!-- ── say hello ─────────────────────────────────────────────────────────────────────────── -->
+<section class="look" id="next" data-head="say hello">
+  <div class="art">
+    <span class="kicker">Corrections, collaborations, hard questions</span>
+    <h2>The most useful message I can get is a reason why one of these results does not hold.</h2>
+    <p>Decision records live in the repositories' logs, so a disagreement can be argued against evidence rather than
+    against a summary of it. Glad to talk with actuaries, engineers and regulators about the governance patterns
+    &mdash; <a class="in" href="mailto:ouzheshi@gmail.com">ouzheshi@gmail.com</a>, or
+    <a class="in" href="https://github.com/jasonzheshiou">GitHub</a>, or
+    <a class="in" href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a>.</p>
+  </div>
+  <aside>
+    <span class="t">Elsewhere</span>
+    <span class="r"><b>email</b> ouzheshi@gmail.com</span>
+    <span class="r"><b>github</b> jasonzheshiou · 13 public</span>
+    <span class="r"><b>linkedin</b> zheshi-jason-ou-8780203a</span>
+  </aside>
+</section>
+
+<footer class="nfoot">
+  <div>
+    <h3>Research</h3>
+    <ul>
+      <li><a href="/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+      <li><a href="/research/underwriting-output-variance.html">Output-variance study</a></li>
+      <li><a href="/research/findings.html">Findings ledger</a></li>
+      <li><a href="/ecosystem.html">Ecosystem map</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>The site</h3>
+    <ul>
+      <li><a href="/projects.html">Projects</a></li>
+      <li><a href="/method.html">How I work</a></li>
+      <li><a href="/about.html">Background and principles</a></li>
+      <li><a href="/writing.html">Writing</a></li>
+      <li><a href="/pixel.html">The pixel edition essay</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Elsewhere</h3>
+    <ul>
+      <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
+      <li><a href="mailto:ouzheshi@gmail.com">Email</a></li>
+      <li><a href="https://github.com/jasonzheshiou" rel="noopener">All repositories</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Other editions</h3>
+    <ul>
+      <li><a href="/archive/console/">Console edition of this page</a></li>
+      <li><a href="/archive/line/">Static edition</a></li>
+      <li><a href="/archive/pixel/">Pixel edition</a></li>
+    </ul>
+  </div>
+</footer>
+
+<p class="nfine">
+  <span>Jason Ou — FIAA, senior data scientist and analytic actuary in Sydney.</span>
+  <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
+  <span>© 2026 Jason Ou · content MIT-licensed</span>
+</p>
 
 </main>
-
-<footer class="site"><div class="wrap cols">
-  <div><h4>About this site</h4>
-    <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary in Sydney. Open-source
-    life-insurance data tools, two measured studies of LLMs in actuarial work, and the method the open-source
-    journey forced along the way.</p></div>
-  <div><h4>Research</h4><ul>
-    <li><a href="/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
-    <li><a href="/research/underwriting-output-variance.html">Output-variance study</a></li>
-    <li><a href="/research/findings.html">Findings ledger</a></li>
-    <li><a href="/ecosystem.html">Ecosystem map</a></li>
-    <li><a href="/writing.html">Writing</a></li></ul></div>
-  <div><h4>Elsewhere</h4><ul>
-    <li><a href="/method.html">How I work</a></li>
-    <li><a href="/archive/line/">Static edition</a></li>
-    <li><a href="/archive/pixel/">Pixel edition</a></li>
-    <li><a href="/projects.html">All repositories</a></li>
-    <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li></ul></div>
-</div><div class="wrap fine">
-  <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
-  <span class="prov">© 2026 Jason Ou · content MIT-licensed · charts plotted from published CSVs</span>
-</div></footer>
-</body>
-</html>
+</body></html>

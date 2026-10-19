@@ -172,7 +172,7 @@ Beyond the day job, I'm passionate about **AI cooperation** - building tools whe
 published CSVs.
 
 ```
-index.html                              the front door — the motion edition, authored here
+index.html                              the front door — the reading edition, authored here
 research/life-insurance-experience-bench.html   the flagship write-up
 research/findings.html                  eight measured findings
 ecosystem.html                          how the 13 repos interlock
@@ -180,28 +180,33 @@ projects.html · about.html · method.html · pixel.html · writing.html · 404.
 posts/                                  one page per post, built from ../posts/*.md
 feed.xml                                RSS for the published posts, built from the same files
 assets/site.css · site.js · charts.js   one stylesheet, three small scripts, shared
-assets/motion.css · motion.js           the behaviour layer: pointer, scroll timelines, the traverse
+assets/note.css · note.js               the reading edition: measure, margin receipts, running head
+assets/motion.css · motion.js           the console layer: pointer, scroll timelines, the traverse
 assets/sprite.html                      22 inline icons
 assets/pixel-sprite.html                the same 22 as pixel art
 assets/pixel-sheet.png                  all 22 glyphs on one contact sheet, 3.6 KB
-archive/line/ · archive/pixel/          two older drawings of the site, generated and noindexed
+archive/console/ · line/ · pixel/       three older drawings of the front page, generated and noindexed
 ```
 
-### One site, two archived drawings
+### The reading edition, and three archived drawings
 
-`/` is the site: vector strokes, plus the behaviour in `motion.css` and `motion.js` — a pointer light, eased
-parallax, scroll-driven reveals written as CSS scroll timelines, a reading rail, magnetic nav, tilt-and-light
-surfaces, figures that count up once and settle back onto the author's own string, and on the method page a
-*traverse*: a review plane you move across the decision chain while the ledger marks the station you are standing
-at. Every one of those behaviours is switched off by `prefers-reduced-motion: reduce`, or is simply inert where
-there is no pointer to follow. `?pointer=force` re-arms the pointer layer on a machine that misreports itself.
+`/` is written as a reading edition rather than a dashboard: a 38-rem measure with 1.72 leading, warm off-white ink on
+warm off-black (or paper in the light theme), greyscale everywhere with the one saturated pigment reserved for a
+measured figure, one claim per screen, the provenance of every figure sitting in the right margin beside the sentence
+it belongs to, and a running head in the corner saying which part of the argument you are in. The only motion is a soft
+arrival as a section enters and the running head changing words; the reduced-motion page is the same page. The rules
+behind it are Butterick on measure and leading, Tufte CSS on sidenotes and colour, and NN/g's progressive disclosure:
+what appears on the first display is what you are saying is important.
 
-Two older drawings are kept under `/archive/`, generated from these pages rather than hand-copied, `noindex` and
-disallowed in `robots.txt`: **`/archive/line/`** is the same site with the behaviour stripped back out, and
-**`/archive/pixel/`** draws the same 22 glyphs as 32 × 32 pixel art with the Bresenham and midpoint primitives
-from [Pixel_Storybook](https://github.com/jasonzheshiou/Pixel_Storybook), a pixel typeface and flat surfaces;
-nine glyphs did not survive that conversion automatically and were redrawn by hand as character matrices. A
-sentence corrected here is correct in both on the next run of `tools/build_archives.py`.
+The inner pages are still the console edition — the grid, the pointer light, the traverse — authored in the same files.
+
+Three older drawings are generated under `/archive/`, noindexed and disallowed in `robots.txt`: **`/archive/console/`**
+is the previous front page, kept from a frozen snapshot in `tools/snapshots/` so it keeps showing what it showed;
+**`/archive/line/`** is the site with the behaviour stripped back out; **`/archive/pixel/`** draws the same 22 glyphs
+as 32 × 32 pixel art with the Bresenham and midpoint primitives from
+[Pixel_Storybook](https://github.com/jasonzheshiou/Pixel_Storybook), a pixel typeface and flat surfaces; nine glyphs
+did not survive that conversion automatically and were redrawn by hand as character matrices. A sentence corrected here
+is correct in all three on the next run of `tools/build_archives.py`.
 
 ### Writing
 
