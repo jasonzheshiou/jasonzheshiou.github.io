@@ -1,45 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-ed="motion">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
-<title>Can a model read an experience study? — Life Insurance Experience Bench · Jason Ou · motion edition</title>
+<title>Can a model read an experience study? — Life Insurance Experience Bench · Jason Ou · static edition</title>
 <meta name="description" content="A 47-scenario benchmark of synthetic life-insurance A/E experience data: two Qwen 27B models crossed with two harnesses, strict scoring, false-alarm accounting and cost. Findings, not architecture.">
-<meta property="og:site_name" content="Jason Ou — motion edition">
+<meta property="og:site_name" content="Jason Ou — static edition">
+<meta name="robots" content="noindex,follow">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Can a model read an experience study? A/E benchmark findings">
 <meta property="og:description" content="71.2% strict accuracy, 41.9% false alarms, a harness that does not transfer, and a 30-point optimism gap. Measured on synthetic life-insurance experience data.">
-<meta property="og:url" content="https://jasonzheshiou.github.io/motion/research/life-insurance-experience-bench.html">
+<meta property="og:url" content="https://jasonzheshiou.github.io/archive/line/research/life-insurance-experience-bench.html">
 <meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
 <meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
-<link rel="canonical" href="https://jasonzheshiou.github.io/motion/research/life-insurance-experience-bench.html">
+<link rel="canonical" href="https://jasonzheshiou.github.io/archive/line/research/life-insurance-experience-bench.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/motion/motion.css">
 <script src="/assets/site.js" defer></script>
-<script src="/motion/motion.js" defer></script>
 <script src="/assets/charts.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="/motion/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <a class="brand" href="/archive/line/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
   <nav class="main">
-    <a href="/motion/">Home</a>
-    <a href="/motion/research/life-insurance-experience-bench.html" aria-current="page">A/E Bench</a>
-    <a href="/motion/research/underwriting-output-variance.html">Variance</a>
-    <a href="/motion/research/findings.html">Findings</a>
-    <a href="/motion/ecosystem.html">Ecosystem</a>
-    <a href="/motion/projects.html">Projects</a>    <a href="/motion/method.html">Method</a>
+    <a href="/archive/line/">Home</a>
+    <a href="/archive/line/research/life-insurance-experience-bench.html" aria-current="page">A/E Bench</a>
+    <a href="/archive/line/research/underwriting-output-variance.html">Variance</a>
+    <a href="/archive/line/research/findings.html">Findings</a>
+    <a href="/archive/line/ecosystem.html">Ecosystem</a>
+    <a href="/archive/line/projects.html">Projects</a>    <a href="/archive/line/method.html">Method</a>
 
-    <a href="/motion/about.html">About</a>
-    <a class="ed-link" href="/" title="The same site without the motion">&#9664; Line site</a>
-    <a class="ed-link" href="/pixel/" title="The same site drawn in pixel art">Pixel site &#9654;</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/archive/line/about.html">About</a>
+    <a class="ed-link" href="/" title="The published site, with motion">&#9664; Live site</a>
     <button class="theme-btn" type="button">☾</button>
   </nav>
 </div></header>
@@ -240,8 +239,8 @@
   <div class="btn-row">
     <a class="btn" href="#results">Jump to the results</a>
     <a class="btn ghost" href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench">Repository</a>
-    <a class="btn ghost" href="/motion/research/findings.html">Findings ledger</a>
-    <a class="btn ghost" href="/motion/research/underwriting-output-variance.html">Study 02: variance</a>
+    <a class="btn ghost" href="/archive/line/research/findings.html">Findings ledger</a>
+    <a class="btn ghost" href="/archive/line/research/underwriting-output-variance.html">Study 02: variance</a>
   </div>
 </div>
 
@@ -412,7 +411,7 @@ running anything untrusted.</p></div>
 Each pass was one hypothesis and one edit, tested on the affected books, re-checked against the neighbours it could
 have disturbed, then kept or reverted with the code and prompt snapshotted — seven passes in all, 307 diary entries,
 268 of them ending in a harness edit. The record is explicit that a human still chose which failures to pursue: the
-delegation covered effort, not judgement. <a href="/motion/method.html">The method behind this is written up here.</a></p></div>
+delegation covered effort, not judgement. <a href="/archive/line/method.html">The method behind this is written up here.</a></p></div>
 
 <h2 id="measurement">How an answer is measured</h2>
 <p>A <strong>unit</strong> is one planted control in one run; a control planted across a whole scenario
@@ -679,8 +678,8 @@ harness, not a working one.</p>
 escalation thresholds are a harness; so is the compliance questionnaire logic; so is the analysis
 dashboard's commentary layer. Each of them ships with the same three requirements this benchmark learned to
 insist on: a ground truth that is generated rather than curated, a scorer that counts false alarms, and a
-snapshot of the exact bytes behind the claim. The interlock is on the <a href="/motion/ecosystem.html">ecosystem
-page</a>; the six findings as a ledger are on the <a href="/motion/research/findings.html">findings page</a>.</p>
+snapshot of the exact bytes behind the claim. The interlock is on the <a href="/archive/line/ecosystem.html">ecosystem
+page</a>; the six findings as a ledger are on the <a href="/archive/line/research/findings.html">findings page</a>.</p>
 <blockquote>The next extension is not a new benchmark. <code>claims A/E</code> is the first surface, not the
 limit: adding lapse, expense or reserve A/E means a new scenario family and a new section of
 <code>stats_pack.py</code> — not a new scorer, and not a new governance argument.</blockquote>
@@ -732,19 +731,18 @@ limit: adding lapse, expense or reserve A/E means a new scenario family and a ne
     life-insurance data tools, benchmarks and governance patterns for actuarial work with AI.</p>
   </div>
   <div><h4>Research</h4><ul>
-    <li><a href="/motion/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
-    <li><a href="/motion/research/underwriting-output-variance.html">Output-variance study</a></li>
-    <li><a href="/motion/research/findings.html">Findings ledger</a></li>
-    <li><a href="/motion/ecosystem.html">Ecosystem map</a></li>
+    <li><a href="/archive/line/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/archive/line/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/archive/line/research/findings.html">Findings ledger</a></li>
+    <li><a href="/archive/line/ecosystem.html">Ecosystem map</a></li>
   </ul></div>
   <div><h4>Elsewhere</h4><ul>
     <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
-    <li><a href="/motion/method.html">How I work</a></li>
-    <li><a href="/">Line edition of this site</a></li>
-    <li><a href="/pixel/">Pixel-art site</a></li>
-    <li><a href="/motion/">Motion edition</a></li>
-    <li><a href="/motion/projects.html">All repositories</a></li>
+    <li><a href="/archive/line/method.html">How I work</a></li>
+    <li><span aria-current="page">Static edition (you are here)</span></li>
+    <li><a href="/archive/pixel/">Pixel edition</a></li>
+    <li><a href="/archive/line/projects.html">All repositories</a></li>
   </ul></div>
 </div><div class="wrap fine">
   <span>No analytics, no third-party scripts beyond the font stylesheet.</span>

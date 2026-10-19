@@ -8,16 +8,16 @@
 <meta name="description" content="Running the same underwriting decision 100 times on a local LLM: variance concentrates at decision boundaries, temperature changes the decision rather than only the spread, and a combination rule can absorb an agent's variance entirely.">
 <meta property="og:title" content="Output variance in LLM underwriting — five findings">
 <meta property="og:description" content="Same applicant, 100 runs. Variance concentrates at the decision boundary; T=0 changes the answer, not just the spread; architecture beat the model.">
-<meta property="og:url" content="https://jasonzheshiou.github.io/pixel/research/underwriting-output-variance.html">
+<meta property="og:url" content="https://jasonzheshiou.github.io/archive/pixel/research/underwriting-output-variance.html">
 <meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
 <meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
-<link rel="canonical" href="https://jasonzheshiou.github.io/pixel/research/underwriting-output-variance.html">
+<link rel="canonical" href="https://jasonzheshiou.github.io/archive/pixel/research/underwriting-output-variance.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/pixel/pixel.css">
+<link rel="stylesheet" href="/assets/pixel.css">
 <script src="/assets/site.js" defer></script>
 <script src="/assets/charts.js" defer></script>
 </head>
@@ -25,18 +25,18 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="/pixel/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <a class="brand" href="/archive/pixel/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
   <nav class="main">
-    <a href="/pixel/" >Home</a>
-    <a href="/pixel/research/life-insurance-experience-bench.html">A/E Bench</a>
-    <a href="/pixel/research/underwriting-output-variance.html" aria-current="page">Variance</a>
-    <a href="/pixel/research/findings.html">Findings</a>
-    <a href="/pixel/ecosystem.html">Ecosystem</a>
-    <a href="/pixel/projects.html">Projects</a>    <a href="/pixel/method.html">Method</a>
+    <a href="/archive/pixel/" >Home</a>
+    <a href="/archive/pixel/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/archive/pixel/research/underwriting-output-variance.html" aria-current="page">Variance</a>
+    <a href="/archive/pixel/research/findings.html">Findings</a>
+    <a href="/archive/pixel/ecosystem.html">Ecosystem</a>
+    <a href="/archive/pixel/projects.html">Projects</a>    <a href="/archive/pixel/method.html">Method</a>
 
-    <a href="/pixel/about.html">About</a>
-    <a class="ed-link" href="/" title="The same site drawn with vector line art">&#9664; Line site</a>
-    <a class="ed-link" href="/motion/" title="The same site with motion added">Motion site &#9654;</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/archive/pixel/about.html">About</a>
+    <a class="ed-link" href="/" title="The published site, with motion">&#9664; Live site</a>
     <button class="theme-btn" type="button">☾</button>
   </nav>
 </div></header>
@@ -266,11 +266,11 @@ each move the output distribution, and the deploying team may not be told.</p>
 </tbody></table></div>
 <blockquote>The variance you measured is only valid for the exact configuration you tested. Repeated-run testing
 is therefore an ongoing control, not a one-off exercise.</blockquote>
-<p>This is the same wall the <a href="/pixel/research/life-insurance-experience-bench.html">A/E benchmark</a> hit from a
+<p>This is the same wall the <a href="/archive/pixel/research/life-insurance-experience-bench.html">A/E benchmark</a> hit from a
 completely different direction. There: a harness tuned for one model loses accuracy on the next, so the
 model-and-harness pair must be re-measured. Here: a variance profile describes a configuration, so the pair must
 be re-measured after any change. Two independent studies, one governance rule — which is why it appears on the
-<a href="/pixel/ecosystem.html">ecosystem page</a> as the rule that binds every layer.</p>
+<a href="/archive/pixel/ecosystem.html">ecosystem page</a> as the rule that binds every layer.</p>
 
 <h2 id="asks">What I ask a model-risk pack to contain</h2>
 <div class="flow">
@@ -351,18 +351,18 @@ because different run counts do not share a denominator. MIT-licensed.</p>
     <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary. Open-source
     life-insurance data tools, benchmarks and governance patterns for actuarial work with AI.</p></div>
   <div><h4>Research</h4><ul>
-    <li><a href="/pixel/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
-    <li><a href="/pixel/research/underwriting-output-variance.html">Output-variance study</a></li>
-    <li><a href="/pixel/research/findings.html">Findings ledger</a></li>
-    <li><a href="/pixel/ecosystem.html">Ecosystem map</a></li></ul></div>
+    <li><a href="/archive/pixel/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/archive/pixel/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/archive/pixel/research/findings.html">Findings ledger</a></li>
+    <li><a href="/archive/pixel/ecosystem.html">Ecosystem map</a></li>
+    <li><a href="/writing.html">Writing</a></li></ul></div>
   <div><h4>Elsewhere</h4><ul>
     <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
-    <li><a href="/pixel/method.html">How I work</a></li>
-    <li><a href="/">Line edition of this site</a></li>
-    <li><a href="/motion/">Motion edition</a></li>
-    <li><a href="/motion/">Motion edition</a></li>
-    <li><a href="/pixel/projects.html">All repositories</a></li></ul></div>
+    <li><a href="/archive/pixel/method.html">How I work</a></li>
+    <li><a href="/archive/line/">Static edition</a></li>
+    <li><span aria-current="page">Pixel edition (you are here)</span></li>
+    <li><a href="/archive/pixel/projects.html">All repositories</a></li></ul></div>
 </div><div class="wrap fine">
   <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
   <span class="prov">© 2026 Jason Ou · content MIT-licensed</span>

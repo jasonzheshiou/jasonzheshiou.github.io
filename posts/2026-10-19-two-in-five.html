@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-ed="motion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
+<title>Two in five, and why that is the useful number — Jason Ou</title>
+<meta name="description" content="The A/E benchmark said 41.9 % of the model&#x27;s flags were false alarms. That is a worse-sounding number than it is, and a better one than most demos admit.">
+<meta name="robots" content="noindex,follow">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Two in five, and why that is the useful number">
+<meta property="og:description" content="What I do, the projects and why they matter, and what the open-source journey has meant. Two measured studies, thirteen repositories, no analytics.">
+<meta property="og:url" content="https://jasonzheshiou.github.io/posts/2026-10-19-two-in-five.html">
+<meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<link rel="canonical" href="https://jasonzheshiou.github.io/posts/2026-10-19-two-in-five.html">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/motion.css">
+<script src="/assets/site.js" defer></script>
+<script src="/assets/motion.js" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Jason Ou","jobTitle":"Senior Data Scientist and Strategic Analytic Actuary (FIAA)","url":"https://jasonzheshiou.github.io/","sameAs":["https://github.com/jasonzheshiou","https://www.linkedin.com/in/zheshi-jason-ou-8780203a"],
+"hasCredential":{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","credentialCategory":"Fellow of the Institute of Actuaries of Australia (FIAA)","recognizedBy":{"name":"Actuaries Institute"},"dateCreated":"2021-12"}}
+</script>
+<style>
+.hero{position:relative;overflow:hidden}
+.hero .lede + .lede{margin-top:.85rem}
+.hero .figscroll{margin-top:1.3rem;padding:.85rem .95rem .95rem}
+.hero-line{position:absolute;right:0;top:12%;width:min(42%,480px);opacity:.15;pointer-events:none;filter:drop-shadow(0 0 12px rgba(53,214,255,.55))}
+.hero-line polyline{fill:none;stroke:var(--cyan);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.hero-line .base{stroke:var(--violet);stroke-width:1.1;opacity:.7;stroke-dasharray:4 5}
+@media (max-width:900px){ .hero-line{top:auto;bottom:1rem;opacity:.08} }
+.what{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.what > div{background:var(--panel-2);padding:1.15rem 1.15rem 1.25rem}
+.what .n{font:500 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.what b{display:block;font-family:var(--disp);font-size:1.05rem;margin:.55rem 0 .3rem}
+.what p{margin:0;font-size:14.2px;color:var(--muted)}
+.plain{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(9px);margin-top:1.8rem}
+.plain .row{display:grid;grid-template-columns:250px 1fr 1fr;gap:1.3rem;padding:1.15rem 1.2rem;border-bottom:1px solid var(--line);transition:background .16s ease}
+.plain .row:last-child{border-bottom:0}
+.plain .row:hover{background:var(--cyan-bg)}
+.plain .t{font:500 10.5px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+.plain .t b{display:block;font-family:var(--disp);font-size:1.06rem;letter-spacing:-.01em;text-transform:none;color:var(--ink);margin-top:.4rem}
+.plain .t a{color:var(--muted);text-decoration:none;font:400 12px/1.6 var(--mono)}
+.plain .t a:hover{color:var(--cyan)}
+.plain .w{font-size:14.3px;color:var(--muted);margin:0}
+.plain .w em{display:block;font:500 9.5px/1.8 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-style:normal}
+@media (max-width:940px){ .plain .row{grid-template-columns:1fr;gap:.55rem} }
+.two{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.8rem}
+@media (min-width:860px){ .two{grid-template-columns:1fr 1fr} }
+.two > a{background:var(--panel-2);padding:1.3rem 1.35rem;text-decoration:none;color:inherit;display:block}
+.two > a:hover{background:var(--cyan-bg)}
+.two .k{font:500 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.two .big{font:500 clamp(1.6rem,3vw,2rem)/1 var(--mono);color:var(--cyan);text-shadow:var(--glow);margin:.75rem 0 .3rem}
+.two h3{margin:0 0 .3rem;font-size:1.15rem}
+.two p{margin:0;font-size:14.3px;color:var(--muted)}
+.mean{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:1.8rem}
+.mean > div{background:var(--panel-2);padding:1.1rem 1.15rem 1.2rem}
+.mean b{display:block;font-family:var(--disp);font-size:1rem;margin:.4rem 0 .3rem}
+.mean p{margin:0;font-size:13.9px;color:var(--muted)}
+.mean .n{font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <nav class="main">
+    <a href="/" aria-current="page">Home</a>
+    <a href="/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/research/underwriting-output-variance.html">Variance</a>
+    <a href="/research/findings.html">Findings</a>
+    <a href="/ecosystem.html">Ecosystem</a>
+    <a href="/projects.html">Projects</a>
+    <a href="/method.html">Method</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/about.html">About</a>
+    <button class="theme-btn" type="button">☾</button>
+  </nav>
+</div></header>
+
+<main id="main"><div class="wrap"><article class="prose">
+<p class="eyebrow">&#9646; Writing</p>
+<h1>Two in five, and why that is the useful number</h1>
+<p class="small muted">2026-10-19 · 2 min read</p>
+<div class="note"><h4>Draft</h4><p>Not published yet: the figures and links are still being checked, so this page is left out of the feed and out of search.</p></div>
+
+<p>Before the benchmark existed, "an LLM can do experience analysis" was a vibe. After it, there was a number with a denominator: <strong>41.9 % of the flags were false alarms</strong>, with precision of 58.1 % against a sealed answer key.</p>
+<p>That sentence is more useful than either half of the usual argument.</p>
+<h3>What was actually asked of the model</h3>
+<p>The benchmark is a synthetic book — 250 000 seeded lives across four benefit lines, with anomalies planted on purpose — and 47 scenarios built so the answer key never reaches the model. Two Qwen 27B models, crossed with two harnesses, asked to do the thing every experience analyst does: look at actual-over-expected and say where the story is.</p>
+<p>A false alarm here is not "the model said something wrong". It is: the model flagged a cell, and the sealed record says nothing was planted there. Every flag costs a human an hour. That is the price the number is measuring.</p>
+<h3>Why not just report precision</h3>
+<p>Because precision without a denominator is a mood. 58.1 % on 47 scenarios is not the same claim as 58.1 % on 4 000, and the site says which one it is. The whole point of publishing the harness, the answer key's construction and the commit (<code>8067f00</code>) is that the number can be re-derived and argued with.</p>
+<p>The 41.9 % is also the cheapest argument I have against the demo. A demo shows you one flag it got right. A benchmark tells you how many you would have had to sit through to get it.</p>
+<h3>What I would change</h3>
+<p>The key is synthetic, so "false alarm" is defined by what I chose to plant. A fresh held-out exam, drawn from a different seed family, is the obvious next step — and the reason the standing on that page says <em>measured</em> rather than <em>proven</em>.</p>
+<p>The full write-up, including every figure and what each one excludes, is in <a href="/research/life-insurance-experience-bench.html">the A/E benchmark</a>.</p>
+<div><span class="chip">measurement</span> <span class="chip">agents</span> <span class="chip">life insurance</span></div>
+
+<p class="small"><a href="/writing.html">&#9666; All writing</a></p>
+</article></div></main><footer class="site"><div class="wrap cols">
+  <div><h4>About this site</h4>
+    <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary in Sydney. Open-source
+    life-insurance data tools, two measured studies of LLMs in actuarial work, and the method the open-source
+    journey forced along the way.</p></div>
+  <div><h4>Research</h4><ul>
+    <li><a href="/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/research/findings.html">Findings ledger</a></li>
+    <li><a href="/ecosystem.html">Ecosystem map</a></li>
+    <li><a href="/writing.html">Writing</a></li></ul></div>
+  <div><h4>Elsewhere</h4><ul>
+    <li><a href="/method.html">How I work</a></li>
+    <li><a href="/archive/line/">Static edition</a></li>
+    <li><a href="/archive/pixel/">Pixel edition</a></li>
+    <li><a href="/projects.html">All repositories</a></li>
+    <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li></ul></div>
+</div><div class="wrap fine">
+  <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
+  <span class="prov">© 2026 Jason Ou · content MIT-licensed · charts plotted from published CSVs</span>
+</div></footer>
+</body>
+</html>

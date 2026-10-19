@@ -8,16 +8,16 @@
 <meta name="description" content="Six layers, thirteen repositories, one thesis: open, inspectable tools for actuarial work. Named dependencies between the data generator, the A/E benchmark, the analysis dashboard, the underwriting engine and the compliance tool.">
 <meta property="og:title" content="The Actuarial AI Ecosystem — how the repositories interlock">
 <meta property="og:description" content="Not a project list: a map of what feeds what, with the edges named in code.">
-<meta property="og:url" content="https://jasonzheshiou.github.io/pixel/ecosystem.html">
+<meta property="og:url" content="https://jasonzheshiou.github.io/archive/pixel/ecosystem.html">
 <meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
 <meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
-<link rel="canonical" href="https://jasonzheshiou.github.io/pixel/ecosystem.html">
+<link rel="canonical" href="https://jasonzheshiou.github.io/archive/pixel/ecosystem.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/pixel/pixel.css">
+<link rel="stylesheet" href="/assets/pixel.css">
 <script src="/assets/site.js" defer></script>
 <style>
 .node{position:relative}
@@ -30,18 +30,18 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="/pixel/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <a class="brand" href="/archive/pixel/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
   <nav class="main">
-    <a href="/pixel/">Home</a>
-    <a href="/pixel/research/life-insurance-experience-bench.html">A/E Bench</a>
-    <a href="/pixel/research/underwriting-output-variance.html">Variance</a>
-    <a href="/pixel/research/findings.html">Findings</a>
-    <a href="/pixel/ecosystem.html" aria-current="page">Ecosystem</a>
-    <a href="/pixel/projects.html">Projects</a>    <a href="/pixel/method.html">Method</a>
+    <a href="/archive/pixel/">Home</a>
+    <a href="/archive/pixel/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/archive/pixel/research/underwriting-output-variance.html">Variance</a>
+    <a href="/archive/pixel/research/findings.html">Findings</a>
+    <a href="/archive/pixel/ecosystem.html" aria-current="page">Ecosystem</a>
+    <a href="/archive/pixel/projects.html">Projects</a>    <a href="/archive/pixel/method.html">Method</a>
 
-    <a href="/pixel/about.html">About</a>
-    <a class="ed-link" href="/" title="The same site drawn with vector line art">&#9664; Line site</a>
-    <a class="ed-link" href="/motion/" title="The same site with motion added">Motion site &#9654;</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/archive/pixel/about.html">About</a>
+    <a class="ed-link" href="/" title="The published site, with motion">&#9664; Live site</a>
     <button class="theme-btn" type="button">☾</button>
   </nav>
 </div></header>
@@ -138,8 +138,8 @@
     <div class="eco-layer">
       <div class="lab"><svg class="ic" aria-hidden="true"><use href="#p-target"/></svg><div class="lv">L2</div><h3>Measurement</h3><p>The layer everything else is checked against: ground truth, strict scoring, false-alarm accounting, frozen provenance.</p></div>
       <div class="eco-nodes">
-        <a class="node" href="/pixel/research/life-insurance-experience-bench.html"><span class="lv">L2</span><b>Life Insurance Experience Bench</b><span>47 sealed scenarios, harness A/B, scorer v3, leak-gated zones, published corpora. ← the flagship.</span></a>
-        <a class="node" href="/pixel/research/underwriting-output-variance.html"><span class="lv">L2</span><b>Output-Variance Study</b><span>Repeated-invocation testing of the underwriter: same case 100 times, Wilson intervals, tier distributions. The second measured instrument.</span></a>
+        <a class="node" href="/archive/pixel/research/life-insurance-experience-bench.html"><span class="lv">L2</span><b>Life Insurance Experience Bench</b><span>47 sealed scenarios, harness A/B, scorer v3, leak-gated zones, published corpora. ← the flagship.</span></a>
+        <a class="node" href="/archive/pixel/research/underwriting-output-variance.html"><span class="lv">L2</span><b>Output-Variance Study</b><span>Repeated-invocation testing of the underwriter: same case 100 times, Wilson intervals, tier distributions. The second measured instrument.</span></a>
       </div>
     </div>
 
@@ -169,12 +169,12 @@ a tagline.</p>
 <tr><td><b>Generator → Underwriter</b></td><td>Bulk synthetic applicant profiles for testing and validation of the agent pipeline — no real policyholder data anywhere.</td><td><code>data/generate_synthetic.py</code>, cross-repo table in README</td></tr>
 <tr><td><b>Dashboard → Underwriter</b></td><td>Industry benchmark rates and claims experience feeding comparative evidence into underwriting decisions, and eventually into pricing and reserving assumptions.</td><td>benchmark data per 1 000 lives by age / occupation / gender</td></tr>
 <tr><td><b>Standard_Inquirer → Underwriter</b></td><td>Regulatory reference checks and policy-condition lookups: the same APRA / Actuaries Institute corpus, retrieved through a vector knowledge base.</td><td>ChromaDB store + standards ingestion pipeline</td></tr>
-<tr><td><b>Underwriter → Variance study</b></td><td>The engine becomes an instrument: <code>tests/stability/</code> runs one applicant through the LLM path ~100 times and records tier distributions, consistency rates, Wilson intervals and failure rates — the numbers behind <a href="/pixel/research/underwriting-output-variance.html">the five findings</a>.</td><td><code>tests/stability/run_recorder.py</code> · <code>distribution_analyzer.py</code></td></tr>
-<tr><td><b>Variance study ↔ Bench</b></td><td>Two independent studies converging on one rule. The bench shows a harness tuned for one model loses accuracy on the next; the variance study shows a variance profile is only valid for the configuration tested. Same conclusion, different instruments.</td><td><a href="/pixel/research/life-insurance-experience-bench.html">study 01</a> · <a href="/pixel/research/underwriting-output-variance.html">study 02</a></td></tr>
+<tr><td><b>Underwriter → Variance study</b></td><td>The engine becomes an instrument: <code>tests/stability/</code> runs one applicant through the LLM path ~100 times and records tier distributions, consistency rates, Wilson intervals and failure rates — the numbers behind <a href="/archive/pixel/research/underwriting-output-variance.html">the five findings</a>.</td><td><code>tests/stability/run_recorder.py</code> · <code>distribution_analyzer.py</code></td></tr>
+<tr><td><b>Variance study ↔ Bench</b></td><td>Two independent studies converging on one rule. The bench shows a harness tuned for one model loses accuracy on the next; the variance study shows a variance profile is only valid for the configuration tested. Same conclusion, different instruments.</td><td><a href="/archive/pixel/research/life-insurance-experience-bench.html">study 01</a> · <a href="/archive/pixel/research/underwriting-output-variance.html">study 02</a></td></tr>
 <tr><td><b>Underwriter → the Bench's rule</b></td><td>The underwriter's prompts, escalation thresholds and debate protocol are a harness. The bench's central finding says they must be re-measured whenever the model changes — output variance measured the same way (<span class="num">0 %</span> deterministic vs <span class="num">0–47 %</span> LLM path).</td><td><code>tests/stability/</code> · <code>docs/llm_temperature_sensitivity_results.md</code></td></tr>
 <tr><td><b>Bench → Operations</b></td><td>A 72-call held-out exam takes <span class="num">21.9 h</span> of one shared local slot. Scheduling against a busy server and knowing the moment it frees up stops being a convenience and becomes part of the experiment rig.</td><td><code>LLM_Status_Watch</code> — metrics poll, idle-held-5-min → push</td></tr>
 <tr><td><b>Bench ↔ Dashboard</b></td><td>The same actuarial statistics on two different hosts: the dashboard runs credibility, Mann-Kendall and GLM-style selection for a human reader; the bench's <code>stats_pack.py</code> computes gradient / R² / excursion / overdispersion diagnostics for a model.</td><td><code>scripts/stats_pack.py</code> · dashboard <code>README_Methodology.md</code></td></tr>
-<tr><td><b>Method → every layer</b></td><td>How the layers were built is part of what they can claim: delegated agent loops with execution logs and per-pass artefacts, black-box behavioural verification instead of code review, and asynchronous handoffs so a run can be left and resumed. That is why the artefacts are inspectable rather than merely present.</td><td><a href="/pixel/method.html">method</a> · <code>docs/HANDOFF_CONTEXT.md</code> · <code>docs/HANDOFF_RUN_SCENARIOS.md</code> · per-pass manifests</td></tr>
+<tr><td><b>Method → every layer</b></td><td>How the layers were built is part of what they can claim: delegated agent loops with execution logs and per-pass artefacts, black-box behavioural verification instead of code review, and asynchronous handoffs so a run can be left and resumed. That is why the artefacts are inspectable rather than merely present.</td><td><a href="/archive/pixel/method.html">method</a> · <code>docs/HANDOFF_CONTEXT.md</code> · <code>docs/HANDOFF_RUN_SCENARIOS.md</code> · per-pass manifests</td></tr>
 <tr><td><b>Craft layer → everything</b></td><td>Method habits, imported deliberately: write the question before the sweep, report the noise floor, keep a per-pass audit trail, and never generate a question you cannot defend.</td><td><code>Piticle_Life/docs/findings.md</code> · <code>Pixel_Storybook</code> manifests · <code>little_games</code> generator guarantees</td></tr>
 </tbody></table></div>
 
@@ -201,7 +201,7 @@ than being a pile of apps:</p>
 <tr><td>L1 Data</td><td><em>verified</em> — bit-deterministic on seed and commit; per-scenario sanity gates</td><td>lapse model is still a placeholder</td></tr>
 <tr><td>L2 Measurement</td><td><em>measured</em> — two model campaigns, published corpora, sealed truth</td><td>a fresh held-out exam (the current one is spent); real jail for tool calls</td></tr>
 <tr><td>L3 Judgement</td><td>demonstrated — methods and audit scaffolding are real, results are not scored</td><td>run dashboard outputs through the bench's scorer</td></tr>
-<tr><td>L4 Governance</td><td>partly measured — <a href="/pixel/research/underwriting-output-variance.html">output variance is measured</a>; decision quality is not scored</td><td>an underwriting exam with planted outcomes, mirroring L2</td></tr>
+<tr><td>L4 Governance</td><td>partly measured — <a href="/archive/pixel/research/underwriting-output-variance.html">output variance is measured</a>; decision quality is not scored</td><td>an underwriting exam with planted outcomes, mirroring L2</td></tr>
 <tr><td>L5 Operations</td><td><em>in service</em> — LLM_Status_Watch runs on real hardware</td><td>M365 loop is an untested blueprint</td></tr>
 <tr><td>L6 Craft</td><td>measured where pre-registered</td><td>nothing — these are deliberate side projects</td></tr>
 </tbody></table></div>
@@ -235,8 +235,8 @@ project exists because the previous one hit a wall, which is what makes "ecosyst
     </div>
     
 <p class="small muted">The same order in checklist form, with the design lessons each step taught, is on the
-<a href="/pixel/projects.html">projects page</a>; the development method they were built with is on the
-<a href="/pixel/method.html">method page</a>.</p>
+<a href="/archive/pixel/projects.html">projects page</a>; the development method they were built with is on the
+<a href="/archive/pixel/method.html">method page</a>.</p>
 
 <h2 id="open">Why open</h2>
 <p>Underwriting rules engines are the operational backbone of insurance: they encode what risks are
@@ -261,11 +261,11 @@ argued against evidence rather than against a summary. Open an issue on the rele
 <a href="#chain">How one thing led to the next</a><br>
 <a href="#open">Why open</a><br>
 <h4>Read next</h4>
-<a href="/pixel/research/life-insurance-experience-bench.html">The benchmark findings</a><br>
-<a href="/pixel/research/underwriting-output-variance.html">The variance study</a><br>
-<a href="/pixel/research/findings.html">Findings ledger</a><br>
-<a href="/pixel/method.html">How the work gets done</a><br>
-<a href="/pixel/projects.html">All 13 repositories</a>
+<a href="/archive/pixel/research/life-insurance-experience-bench.html">The benchmark findings</a><br>
+<a href="/archive/pixel/research/underwriting-output-variance.html">The variance study</a><br>
+<a href="/archive/pixel/research/findings.html">Findings ledger</a><br>
+<a href="/archive/pixel/method.html">How the work gets done</a><br>
+<a href="/archive/pixel/projects.html">All 13 repositories</a>
 </div></aside></div></div>
 
 </main>
@@ -275,18 +275,18 @@ argued against evidence rather than against a summary. Open an issue on the rele
     <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary. Open-source
     life-insurance data tools, benchmarks and governance patterns for actuarial work with AI.</p></div>
   <div><h4>Research</h4><ul>
-    <li><a href="/pixel/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
-    <li><a href="/pixel/research/underwriting-output-variance.html">Output-variance study</a></li>
-    <li><a href="/pixel/research/findings.html">Findings ledger</a></li>
-    <li><a href="/pixel/ecosystem.html">Ecosystem map</a></li></ul></div>
+    <li><a href="/archive/pixel/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/archive/pixel/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/archive/pixel/research/findings.html">Findings ledger</a></li>
+    <li><a href="/archive/pixel/ecosystem.html">Ecosystem map</a></li>
+    <li><a href="/writing.html">Writing</a></li></ul></div>
   <div><h4>Elsewhere</h4><ul>
     <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
-    <li><a href="/pixel/method.html">How I work</a></li>
-    <li><a href="/">Line edition of this site</a></li>
-    <li><a href="/motion/">Motion edition</a></li>
-    <li><a href="/motion/">Motion edition</a></li>
-    <li><a href="/pixel/projects.html">All repositories</a></li></ul></div>
+    <li><a href="/archive/pixel/method.html">How I work</a></li>
+    <li><a href="/archive/line/">Static edition</a></li>
+    <li><span aria-current="page">Pixel edition (you are here)</span></li>
+    <li><a href="/archive/pixel/projects.html">All repositories</a></li></ul></div>
 </div><div class="wrap fine">
   <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
   <span class="prov">© 2026 Jason Ou · content MIT-licensed</span>

@@ -484,7 +484,8 @@ footer.site .fine { font-size: 12px; color: var(--dim); border-top: 1px solid va
 
 
 
-@media (prefers-reduced-motion: reduce) { .diagram .flow { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .diagram .flow { animation: none; }
+  body::after { display: none; } .status::before { animation: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

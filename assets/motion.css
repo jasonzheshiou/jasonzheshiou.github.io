@@ -8,6 +8,7 @@ html[data-ed="motion"] { scroll-behavior: smooth; }
 /* pointer light: one fixed radial gradient, no painting on every mousemove */
 html[data-ed="motion"] body::after {
   content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  animation: none;                    /* the base edition sweeps this layer; a light must stay put */
   background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 30%),
               rgba(53, 214, 255, .075), transparent 68%);
   transition: opacity .4s ease;

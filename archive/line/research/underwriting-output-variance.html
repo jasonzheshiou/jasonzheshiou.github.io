@@ -1,43 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-ed="motion">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
-<title>Output variance in LLM underwriting — five findings · Jason Ou · motion edition</title>
+<title>Output variance in LLM underwriting — five findings · Jason Ou · static edition</title>
 <meta name="description" content="Running the same underwriting decision 100 times on a local LLM: variance concentrates at decision boundaries, temperature changes the decision rather than only the spread, and a combination rule can absorb an agent's variance entirely.">
 <meta property="og:title" content="Output variance in LLM underwriting — five findings">
 <meta property="og:description" content="Same applicant, 100 runs. Variance concentrates at the decision boundary; T=0 changes the answer, not just the spread; architecture beat the model.">
-<meta property="og:url" content="https://jasonzheshiou.github.io/motion/research/underwriting-output-variance.html">
+<meta property="og:url" content="https://jasonzheshiou.github.io/archive/line/research/underwriting-output-variance.html">
 <meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
 <meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
-<link rel="canonical" href="https://jasonzheshiou.github.io/motion/research/underwriting-output-variance.html">
+<link rel="canonical" href="https://jasonzheshiou.github.io/archive/line/research/underwriting-output-variance.html">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/motion/motion.css">
 <script src="/assets/site.js" defer></script>
-<script src="/motion/motion.js" defer></script>
 <script src="/assets/charts.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top"><div class="wrap bar">
-  <a class="brand" href="/motion/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <a class="brand" href="/archive/line/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
   <nav class="main">
-    <a href="/motion/" >Home</a>
-    <a href="/motion/research/life-insurance-experience-bench.html">A/E Bench</a>
-    <a href="/motion/research/underwriting-output-variance.html" aria-current="page">Variance</a>
-    <a href="/motion/research/findings.html">Findings</a>
-    <a href="/motion/ecosystem.html">Ecosystem</a>
-    <a href="/motion/projects.html">Projects</a>    <a href="/motion/method.html">Method</a>
+    <a href="/archive/line/" >Home</a>
+    <a href="/archive/line/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/archive/line/research/underwriting-output-variance.html" aria-current="page">Variance</a>
+    <a href="/archive/line/research/findings.html">Findings</a>
+    <a href="/archive/line/ecosystem.html">Ecosystem</a>
+    <a href="/archive/line/projects.html">Projects</a>    <a href="/archive/line/method.html">Method</a>
 
-    <a href="/motion/about.html">About</a>
-    <a class="ed-link" href="/" title="The same site without the motion">&#9664; Line site</a>
-    <a class="ed-link" href="/pixel/" title="The same site drawn in pixel art">Pixel site &#9654;</a>
+    <a href="/writing.html">Writing</a>
+    <a href="/archive/line/about.html">About</a>
+    <a class="ed-link" href="/" title="The published site, with motion">&#9664; Live site</a>
     <button class="theme-btn" type="button">☾</button>
   </nav>
 </div></header>
@@ -406,11 +404,11 @@ each move the output distribution, and the deploying team may not be told.</p>
 </tbody></table></div>
 <blockquote>The variance you measured is only valid for the exact configuration you tested. Repeated-run testing
 is therefore an ongoing control, not a one-off exercise.</blockquote>
-<p>This is the same wall the <a href="/motion/research/life-insurance-experience-bench.html">A/E benchmark</a> hit from a
+<p>This is the same wall the <a href="/archive/line/research/life-insurance-experience-bench.html">A/E benchmark</a> hit from a
 completely different direction. There: a harness tuned for one model loses accuracy on the next, so the
 model-and-harness pair must be re-measured. Here: a variance profile describes a configuration, so the pair must
 be re-measured after any change. Two independent studies, one governance rule — which is why it appears on the
-<a href="/motion/ecosystem.html">ecosystem page</a> as the rule that binds every layer.</p>
+<a href="/archive/line/ecosystem.html">ecosystem page</a> as the rule that binds every layer.</p>
 
 <h2 id="asks">What I ask a model-risk pack to contain</h2>
 <div class="flow">
@@ -491,18 +489,18 @@ because different run counts do not share a denominator. MIT-licensed.</p>
     <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary. Open-source
     life-insurance data tools, benchmarks and governance patterns for actuarial work with AI.</p></div>
   <div><h4>Research</h4><ul>
-    <li><a href="/motion/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
-    <li><a href="/motion/research/underwriting-output-variance.html">Output-variance study</a></li>
-    <li><a href="/motion/research/findings.html">Findings ledger</a></li>
-    <li><a href="/motion/ecosystem.html">Ecosystem map</a></li></ul></div>
+    <li><a href="/archive/line/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/archive/line/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/archive/line/research/findings.html">Findings ledger</a></li>
+    <li><a href="/archive/line/ecosystem.html">Ecosystem map</a></li>
+    <li><a href="/writing.html">Writing</a></li></ul></div>
   <div><h4>Elsewhere</h4><ul>
     <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
-    <li><a href="/motion/method.html">How I work</a></li>
-    <li><a href="/">Line edition of this site</a></li>
-    <li><a href="/pixel/">Pixel-art site</a></li>
-    <li><a href="/motion/">Motion edition</a></li>
-    <li><a href="/motion/projects.html">All repositories</a></li></ul></div>
+    <li><a href="/archive/line/method.html">How I work</a></li>
+    <li><span aria-current="page">Static edition (you are here)</span></li>
+    <li><a href="/archive/pixel/">Pixel edition</a></li>
+    <li><a href="/archive/line/projects.html">All repositories</a></li></ul></div>
 </div><div class="wrap fine">
   <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
   <span class="prov">© 2026 Jason Ou · content MIT-licensed</span>
