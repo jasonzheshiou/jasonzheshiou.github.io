@@ -179,13 +179,15 @@ ecosystem.html                          how the 13 repos interlock
 projects.html · about.html · method.html · pixel.html · 404.html
 pixel/                                  the whole site again, in pixel art
 pixel/pixel.css                         the pixel skin, loaded over site.css
+motion/                                 the whole site again, with motion added
+motion/motion.css · motion.js           the behaviour layer, loaded over site.css and site.js
 assets/site.css · site.js · charts.js   one stylesheet, two small scripts, shared
 assets/sprite.html                      22 inline icons (the line edition)
 assets/pixel-sprite.html                the same 22 as pixel art
 assets/pixel-sheet.png                  all 22 glyphs on one contact sheet, 3.6 KB
 ```
 
-### Two sites, one set of words
+### Three sites, one set of words
 
 `/` is drawn with 1.7-px vector strokes; **`/pixel/`** draws the same 22 shapes as 32 × 32 pixel art with the
 Bresenham and midpoint primitives from
@@ -195,8 +197,16 @@ character matrices — the same path that repository uses when the model server 
 
 The pixel site is generated, not hand-copied: a script kept outside the published tree copies each page across,
 retargets every icon reference to the pixel sheet, moves the links under `/pixel/` and loads the extra skin. One
-sentence corrected in the vector site is therefore correct in both. Each site's top bar links to the other, and
+sentence corrected in the vector site is therefore correct in both. Each site's top bar links to the other two, and
 `/pixel.html` documents the conversion in both editions (`/pixel/how.html`).
+
+**`/motion/`** keeps the same words and the same markup and adds behaviour instead of a skin: a pointer light and
+eased parallax on the hero artwork, scroll-driven reveals written as CSS scroll timelines rather than scroll
+listeners, a reading-progress rail, magnetic nav, surfaces that tilt toward the cursor, figures that count up and
+then settle back onto the author's own string, and on the method page a *traverse* — a review plane you move across
+the decision chain while the ledger marks the station you are standing at. It is generated from the same pages by
+`tools/build_motion_site.py`, and every one of those behaviours is switched off by `prefers-reduced-motion: reduce`
+or is simply inert where there is no pointer to follow.
 
 Two things worth knowing if you poke at it. A clone behind `<use>` is invisible to document CSS, so sprite shapes
 carry presentation attributes driven by custom properties (`stroke="var(--ic-cyan)"`) rather than classes; the

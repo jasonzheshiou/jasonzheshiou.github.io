@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-ed="motion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
+<title>The Actuarial AI Ecosystem — how the repositories interlock · Jason Ou · motion edition</title>
+<meta name="description" content="Six layers, thirteen repositories, one thesis: open, inspectable tools for actuarial work. Named dependencies between the data generator, the A/E benchmark, the analysis dashboard, the underwriting engine and the compliance tool.">
+<meta property="og:title" content="The Actuarial AI Ecosystem — how the repositories interlock">
+<meta property="og:description" content="Not a project list: a map of what feeds what, with the edges named in code.">
+<meta property="og:url" content="https://jasonzheshiou.github.io/motion/ecosystem.html">
+<meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<link rel="canonical" href="https://jasonzheshiou.github.io/motion/ecosystem.html">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/motion/motion.css">
+<script src="/assets/site.js" defer></script>
+<script src="/motion/motion.js" defer></script>
+<style>
+.node{position:relative}
+.node .lv{position:absolute;top:.5rem;right:.6rem;font:500 10px/1 var(--mono);color:var(--muted);opacity:.6}
+.legend-row{display:flex;flex-wrap:wrap;gap:1rem;font-size:12.5px;color:var(--muted);margin-top:1rem}
+.substrate{border:1px dashed var(--line-2);border-radius:var(--radius);padding:.9rem 1.1rem;margin-top:.8rem;font-size:13.5px;color:var(--muted);background:var(--panel-2)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="/motion/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <nav class="main">
+    <a href="/motion/">Home</a>
+    <a href="/motion/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/motion/research/underwriting-output-variance.html">Variance</a>
+    <a href="/motion/research/findings.html">Findings</a>
+    <a href="/motion/ecosystem.html" aria-current="page">Ecosystem</a>
+    <a href="/motion/projects.html">Projects</a>    <a href="/motion/method.html">Method</a>
+
+    <a href="/motion/about.html">About</a>
+    <a class="ed-link" href="/" title="The same site without the motion">&#9664; Line site</a>
+    <a class="ed-link" href="/pixel/" title="The same site drawn in pixel art">Pixel site &#9654;</a>
+    <button class="theme-btn" type="button">☾</button>
+  </nav>
+</div></header>
+
+<main id="main">
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+
+  <symbol id="i-seed" viewBox="0 0 48 48">
+    <rect x="7" y="7" width="14" height="14" rx="2" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M14 21v6h8" stroke="var(--ic-cyan)" fill="none"/>
+    <g stroke-dasharray="1 3">
+      <path d="M27 27h14M27 33h14M27 39h14" stroke="var(--ic-dim)" fill="none"/>
+    </g>
+    <circle cx="34" cy="33" r="3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-target" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="24" cy="24" r="9" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="24" r="2.5" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M33 33l6 6M39 33l-6 6" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-agents" viewBox="0 0 48 48">
+    <rect x="6" y="8" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="6" y="32" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="19" y="20" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M16 12c6 0 3 12 3 12M16 36c6 0 3-8 3-8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M29 24h5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M34 17l7 7-7 7-7-7z" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-trend" viewBox="0 0 48 48">
+    <path d="M8 38h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M10 32l7-6 6 4 8-11 6 5" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="31" cy="19" r="6" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M35 23l4 4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-standard" viewBox="0 0 48 48">
+    <path d="M12 6h18l6 6v30H12z" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M30 6v6h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M17 20h14M17 26h14M17 32h8" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M30 33l3 3 6-7" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-gauge" viewBox="0 0 48 48">
+    <path d="M9 33a15 15 0 0 1 30 0" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 33l8-9" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="33" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M9 39h30" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M40 12l3 3-3 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-schema" viewBox="0 0 48 48">
+    <rect x="6" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="27" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="16" y="29" width="16" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M13 20v4h22v-4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 24v5" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-sheet" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 17h32M8 26h32M8 34h32M19 17v23M30 17v23" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M19 26l5 4 6-8" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-loop" viewBox="0 0 48 48">
+    <path d="M24 9a15 15 0 1 1-10.6 25.6" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M13 27v8h8" stroke="var(--ic-cyan)" fill="none"/>
+    <rect x="18" y="19" width="12" height="10" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M21 24h6" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-particles" viewBox="0 0 48 48">
+    <rect x="7" y="7" width="34" height="34" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="17" cy="18" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="30" cy="16" r="2" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="30" r="3" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="34" cy="30" r="1.5" stroke="var(--ic-amber)" fill="none"/>
+    <circle cx="15" cy="32" r="1.5" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M17 18l7 12 10-14" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-pixel" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 24h32M24 8v32" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="15" y="15" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <rect x="27" y="27" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <rect x="27" y="15" width="6" height="6" stroke="var(--ic-amber)" fill="var(--ic-amber)"/>
+  </symbol>
+
+  <symbol id="i-puzzle" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="26" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="8" y="26" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="26" y="26" width="14" height="14" rx="1" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M15 15h0M33 33h0" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-id" viewBox="0 0 48 48">
+    <rect x="6" y="11" width="36" height="26" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="16" cy="22" r="4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M10 32c1-4 4-5 6-5s5 1 6 5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M27 20h9M27 26h9" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-ruler" viewBox="0 0 48 48">
+    <rect x="6" y="18" width="36" height="12" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M13 18v6M20 18v4M27 18v6M34 18v4" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M24 12v4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M6 12h36" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-shield" viewBox="0 0 48 48">
+    <path d="M24 7l14 5v12c0 9-6 14-14 17-8-3-14-8-14-17V12z" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M18 23l5 5 8-9" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-sign" viewBox="0 0 48 48">
+    <path d="M8 34h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M12 26c4-10 8 6 12-2s6 4 10-2" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M34 12l4 4-10 10-5 1 1-5z" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-clock" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="16" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M24 14v10l7 4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 8v-0M40 24h0" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M36 10l4 4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-blackbox" viewBox="0 0 48 48">
+    <rect x="14" y="14" width="20" height="20" rx="1" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M6 24h8M34 24h8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M42 20l0 8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M10 12h10M10 36h10" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-handoff" viewBox="0 0 48 48">
+    <path d="M12 8h14l6 6v26H12z" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M26 8v6h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M17 22h10M17 28h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M32 24h10M38 20l4 4-4 4" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M42 32v6" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-architect" viewBox="0 0 48 48">
+    <path d="M24 6l16 8-16 8-16-8z" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M8 24l16 8 16-8" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 32l16 8 16-8" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-queue" viewBox="0 0 48 48">
+    <rect x="7" y="10" width="8" height="28" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="19" y="10" width="8" height="28" rx="1" stroke="var(--ic-cyan)" fill="none"/>
+    <rect x="31" y="10" width="8" height="28" rx="1" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M19 24h-4M31 24h-4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-delta" viewBox="0 0 48 48">
+    <path d="M8 40h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M14 40V22M22 40V14M30 40V26M38 40V18" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M12 12h26" stroke-dasharray="3 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+</defs></svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="wrap hero">
+  <p class="eyebrow">Ecosystem · 13 repositories</p>
+  <h1>Not a project list — a working system</h1>
+  <p class="lede">Actuarial science has a long tradition of professional collaboration — experience studies,
+  mortality tables, industry working groups. Our <em>tools</em> have stayed proprietary. In an era where AI is
+  reshaping the profession, actuaries need inspectable tools more than ever, so every piece here is open,
+  versioned and cross-referenced. Open source is not a licensing choice; it is a governance choice.</p>
+  <div class="hero-meta">
+    <span class="chip">one shared substrate: local <span class="num">Qwen</span> 27B–38B on LAN</span>
+    <span class="chip">every edge named in code, not in a slide</span>
+  </div>
+</div>
+
+<div class="wrap band">
+  <div class="eco">
+
+    <div class="eco-layer">
+      <div class="lab"><svg class="ic" aria-hidden="true"><use href="#i-particles"/></svg><div class="lv">L6</div><h3>Craft &amp; method</h3><p>Where the habits come from: pre-registration, noise floors, per-pass audit trails.</p></div>
+      <div class="eco-nodes">
+        <a class="node" href="https://github.com/jasonzheshiou/Piticle_Life"><span class="lv">L6</span><b>Piticle_Life</b><span>48 runs against questions written before the runs; 2 of 3 claims died at their own noise floor.</span></a>
+        <a class="node" href="https://github.com/jasonzheshiou/Pixel_Storybook"><span class="lv">L6</span><b>Pixel_Storybook</b><span>A vision model that writes pixel code, critiques its own render, keeps every pass and manifest.</span></a>
+        <a class="node" href="https://github.com/jasonzheshiou/little_games"><span class="lv">L6</span><b>little_games</b><span>Generators that refuse to paint a board they cannot defend — uniqueness by construction.</span></a>
+      </div>
+    </div>
+
+    <div class="eco-layer">
+      <div class="lab"><svg class="ic" aria-hidden="true"><use href="#i-queue"/></svg><div class="lv">L5</div><h3>Operations</h3><p>The model is a server with a queue. Watch it, schedule against it, keep the loop honest.</p></div>
+      <div class="eco-nodes">
+        <a class="node" href="https://github.com/jasonzheshiou/LLM_Status_Watch"><span class="lv">L5</span><b>LLM_Status_Watch</b><span>Prometheus metrics → ntfy push when the box goes idle. Stdlib only, no agent on the GPU host.</span></a>
+        <a class="node" href="https://github.com/jasonzheshiou/M365-Copilot-Agent-Loop"><span class="lv">L5</span><b>M365-Copilot-Agent-Loop</b><span>Concept blueprint: close an agentic loop through OneDrive sync with local execution logs.</span></a>
+      </div>
+    </div>
+
+    <div class="eco-layer">
+      <div class="lab"><svg class="ic" aria-hidden="true"><use href="#i-agents"/></svg><div class="lv">L4</div><h3>Governance &amp; decisions</h3><p>Where AI output has to survive an auditor: debate, escalation, deterministic rules, JSONL audit trail.</p></div>
+      <div class="eco-nodes">
+        <a class="node" href="https://github.com/jasonzheshiou/Multi-Agents_Underwriter"><span class="lv">L4</span><b>Multi-Agents_Underwriter</b><span>Medical / Financial / Compliance agents in structured debate over a deterministic rule engine. Rules as versioned JSON.</span></a>
+        <a class="node" href="https://github.com/jasonzheshiou/Standard_Inquirer"><span class="lv">L4</span><b>Standard_Inquirer</b><span>Conversational APRA compliance assessment over a ChromaDB knowledge base of 40+ standards, with severity-ranked gap reports.</span></a>
+      </div>
+    </div>
+
+    <div class="eco-layer">
+      <div class="lab"><svg class="ic" aria-hidden="true"><use href="#i-trend"/></svg><div class="lv">L3</div><h3>Judgement &amp; analysis</h3><p>The actuarial work itself — reading experience, setting assumptions, producing an audit-ready answer.</p></div>
+      <div class="eco-nodes">
+        <a class="node" href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard"><span class="lv">L3</span><b>Experience Analysis Dashboard</b><span>TPD incidence study: credibility, A/E, Mann-Kendall, GLM, RF/GBM, MOB, with pipeline audit and session persistence.</span></a>
+        <a class="node" href="https://github.com/jasonzheshiou/Data_Schema_analyser"><span class="lv">L3</span><b>Data_Schema_analyser</b><span>Schema inspection, join strategies, ERDs and executable pandas from a natural-language brief.</span></a>
+        <a class="node" href="https://github.com/jasonzheshiou/Excel-AI-Automator"><span class="lv">L3</span><b>Excel-AI-Automator</b><span>Natural language to 19 reviewable Excel actions, with an offline rule-based fallback.</span></a>
+      </div>
+    </div>
+
+    <div class="eco-layer">
+      <div class="lab"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg><div class="lv">L2</div><h3>Measurement</h3><p>The layer everything else is checked against: ground truth, strict scoring, false-alarm accounting, frozen provenance.</p></div>
+      <div class="eco-nodes">
+        <a class="node" href="/motion/research/life-insurance-experience-bench.html"><span class="lv">L2</span><b>Life Insurance Experience Bench</b><span>47 sealed scenarios, harness A/B, scorer v3, leak-gated zones, published corpora. ← the flagship.</span></a>
+        <a class="node" href="/motion/research/underwriting-output-variance.html"><span class="lv">L2</span><b>Output-Variance Study</b><span>Repeated-invocation testing of the underwriter: same case 100 times, Wilson intervals, tier distributions. The second measured instrument.</span></a>
+      </div>
+    </div>
+
+    <div class="eco-layer">
+      <div class="lab"><svg class="ic" aria-hidden="true"><use href="#i-seed"/></svg><div class="lv">L1</div><h3>Data</h3><p>A deterministic world with a known answer key, so “correct” means something.</p></div>
+      <div class="eco-nodes">
+        <a class="node" href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator"><span class="lv">L1</span><b>Synthetic Data Generator</b><span>Australian Death / CI / TPD / IP experience, A/E ≈ 1.0 by construction, planted controls on actuals only, seed <span class="num">42</span>.</span></a>
+      </div>
+    </div>
+
+    <div class="substrate"><b>Shared substrate.</b> Everything above talks to the same kind of thing: an
+    OpenAI-compatible endpoint serving local Qwen models (3.6-27B, 3.6-35B-A3B, 3.8-27B) on a box on the LAN.
+    No API keys, no cloud dependency — which is also what makes the accuracy and cost numbers on this site
+    reproducible on ordinary hardware.</div>
+  </div>
+</div>
+
+<div class="wrap band"><div class="split-32"><article class="prose">
+<h2 id="edges">The interlock, edge by edge</h2>
+<p>An ecosystem claim is worth nothing without named edges. Each of these is visible in a file, not implied by
+a tagline.</p>
+<div class="tablewrap"><table class="tbl">
+<thead><tr><th>from → to</th><th>what crosses the edge</th><th>where you can check it</th></tr></thead>
+<tbody>
+<tr><td><b>Generator → Bench</b></td><td>Every scenario. The bench never reimplements the generator; it imports it as a library, one pipeline call per scenario, pinned to commit <span class="mono">66a73d0</span>, seed 42, scale <em>full</em> (250 000 policies).</td><td><code>scripts/generate_scenarios.py</code> · <code>GEN_ROOT</code> sibling path · <code>config/scenarios.yaml</code></td></tr>
+<tr><td><b>Bench → Generator</b></td><td>Constraints back the other way: split-disjointness by benefit × control × window × factor, per-scenario sanity checks and a byte-level leak scan before anything reaches the model-facing tree.</td><td><code>tests/test_registry.py</code> · <code>scripts/leakcheck.py</code></td></tr>
+<tr><td><b>Generator → Underwriter</b></td><td>Bulk synthetic applicant profiles for testing and validation of the agent pipeline — no real policyholder data anywhere.</td><td><code>data/generate_synthetic.py</code>, cross-repo table in README</td></tr>
+<tr><td><b>Dashboard → Underwriter</b></td><td>Industry benchmark rates and claims experience feeding comparative evidence into underwriting decisions, and eventually into pricing and reserving assumptions.</td><td>benchmark data per 1 000 lives by age / occupation / gender</td></tr>
+<tr><td><b>Standard_Inquirer → Underwriter</b></td><td>Regulatory reference checks and policy-condition lookups: the same APRA / Actuaries Institute corpus, retrieved through a vector knowledge base.</td><td>ChromaDB store + standards ingestion pipeline</td></tr>
+<tr><td><b>Underwriter → Variance study</b></td><td>The engine becomes an instrument: <code>tests/stability/</code> runs one applicant through the LLM path ~100 times and records tier distributions, consistency rates, Wilson intervals and failure rates — the numbers behind <a href="/motion/research/underwriting-output-variance.html">the five findings</a>.</td><td><code>tests/stability/run_recorder.py</code> · <code>distribution_analyzer.py</code></td></tr>
+<tr><td><b>Variance study ↔ Bench</b></td><td>Two independent studies converging on one rule. The bench shows a harness tuned for one model loses accuracy on the next; the variance study shows a variance profile is only valid for the configuration tested. Same conclusion, different instruments.</td><td><a href="/motion/research/life-insurance-experience-bench.html">study 01</a> · <a href="/motion/research/underwriting-output-variance.html">study 02</a></td></tr>
+<tr><td><b>Underwriter → the Bench's rule</b></td><td>The underwriter's prompts, escalation thresholds and debate protocol are a harness. The bench's central finding says they must be re-measured whenever the model changes — output variance measured the same way (<span class="num">0 %</span> deterministic vs <span class="num">0–47 %</span> LLM path).</td><td><code>tests/stability/</code> · <code>docs/llm_temperature_sensitivity_results.md</code></td></tr>
+<tr><td><b>Bench → Operations</b></td><td>A 72-call held-out exam takes <span class="num">21.9 h</span> of one shared local slot. Scheduling against a busy server and knowing the moment it frees up stops being a convenience and becomes part of the experiment rig.</td><td><code>LLM_Status_Watch</code> — metrics poll, idle-held-5-min → push</td></tr>
+<tr><td><b>Bench ↔ Dashboard</b></td><td>The same actuarial statistics on two different hosts: the dashboard runs credibility, Mann-Kendall and GLM-style selection for a human reader; the bench's <code>stats_pack.py</code> computes gradient / R² / excursion / overdispersion diagnostics for a model.</td><td><code>scripts/stats_pack.py</code> · dashboard <code>README_Methodology.md</code></td></tr>
+<tr><td><b>Method → every layer</b></td><td>How the layers were built is part of what they can claim: delegated agent loops with execution logs and per-pass artefacts, black-box behavioural verification instead of code review, and asynchronous handoffs so a run can be left and resumed. That is why the artefacts are inspectable rather than merely present.</td><td><a href="/motion/method.html">method</a> · <code>docs/HANDOFF_CONTEXT.md</code> · <code>docs/HANDOFF_RUN_SCENARIOS.md</code> · per-pass manifests</td></tr>
+<tr><td><b>Craft layer → everything</b></td><td>Method habits, imported deliberately: write the question before the sweep, report the noise floor, keep a per-pass audit trail, and never generate a question you cannot defend.</td><td><code>Piticle_Life/docs/findings.md</code> · <code>Pixel_Storybook</code> manifests · <code>little_games</code> generator guarantees</td></tr>
+</tbody></table></div>
+
+<h2 id="rule">The one rule that binds the layers</h2>
+<blockquote>After any model change, re-measure the model-and-harness pair and re-tune on recorded evidence.</blockquote>
+<p>Three requirements fall out of that rule, and they are the reason the layers are ordered this way rather
+than being a pile of apps:</p>
+<div class="flow">
+  <div class="step"><div class="n">1</div><p><b>Ground truth must be generated, not curated.</b> A curated answer
+  key drifts, and you cannot regenerate it when you extend the test. That is L1's job.</p></div>
+  <div class="step"><div class="n">2</div><p><b>The scorer must count false alarms, not just hits.</b> Otherwise
+  a model can raise its score by talking more. That is L2's job, and it is the reason L2 sits above the
+  applications in the diagram rather than beside them.</p></div>
+  <div class="step"><div class="n">3</div><p><b>Every claim ships the bytes behind it.</b> Frozen harness
+  snapshots, pinned generator commits, decision logs, per-pass manifests — so the claim can be checked rather
+  than trusted. That is L4–L6's job.</p></div>
+</div>
+
+<h2 id="maturity">What each layer can actually support</h2>
+<p>The honest version of an ecosystem page says which parts are measured and which are still demonstrations.</p>
+<div class="tablewrap"><table class="tbl">
+<thead><tr><th>layer</th><th>evidence status</th><th>what is missing to raise it</th></tr></thead>
+<tbody>
+<tr><td>L1 Data</td><td><em>verified</em> — bit-deterministic on seed and commit; per-scenario sanity gates</td><td>lapse model is still a placeholder</td></tr>
+<tr><td>L2 Measurement</td><td><em>measured</em> — two model campaigns, published corpora, sealed truth</td><td>a fresh held-out exam (the current one is spent); real jail for tool calls</td></tr>
+<tr><td>L3 Judgement</td><td>demonstrated — methods and audit scaffolding are real, results are not scored</td><td>run dashboard outputs through the bench's scorer</td></tr>
+<tr><td>L4 Governance</td><td>partly measured — <a href="/motion/research/underwriting-output-variance.html">output variance is measured</a>; decision quality is not scored</td><td>an underwriting exam with planted outcomes, mirroring L2</td></tr>
+<tr><td>L5 Operations</td><td><em>in service</em> — LLM_Status_Watch runs on real hardware</td><td>M365 loop is an untested blueprint</td></tr>
+<tr><td>L6 Craft</td><td>measured where pre-registered</td><td>nothing — these are deliberate side projects</td></tr>
+</tbody></table></div>
+
+<h2 id="chain">How one thing led to the next</h2>
+<p>Months are the last recorded activity on each repository (read 2026-10-19). The order is the actual story: each
+project exists because the previous one hit a wall, which is what makes "ecosystem" more than a shared tag.</p>
+<div class="timeline">
+      <div class="t-item"><div class="when">2026 · Apr</div><h3>Fix the data plumbing first</h3>
+        <p>Schema inspection, join strategies and ERDs from a natural-language brief; natural language to a
+        reviewable list of Excel actions. Unglamorous, and the reason everything later had data to stand on.</p>
+        <div class="from">Data_Schema_analyser · Excel-AI-Automator</div></div>
+      <div class="t-item"><div class="when">2026 · May</div><h3>Do the real actuarial work, in the open</h3>
+        <p>A TPD incidence study with credibility, Mann-Kendall, GLM and tree models; conversational compliance
+        assessment against APRA standards. Both immediately wanted data nobody could publish.</p>
+        <div class="from">Experience Analysis Dashboard · Standard Inquirer</div></div>
+      <div class="t-item"><div class="when">2026 · Jun → Aug</div><h3>Build a world with a known answer</h3>
+        <p>So: a deterministic generator for Australian Death / CI / TPD / IP experience with planted controls and
+        A/E ≈ 1.0 by construction. Then a multi-agent underwriting engine on top — which instantly raised the
+        question of whether an LLM gives the same answer twice.</p>
+        <div class="from">Synthetic Data Generator · Multi-Agents Underwriter</div></div>
+      <div class="t-item"><div class="when">2026 · Aug → Oct</div><h3>Measure, or stop claiming</h3>
+        <p>The underwriter's variance studies and the A/E benchmark grew from one instinct: no claim without a
+        generated answer key, a scorer that counts false alarms, and frozen bytes behind the number.</p>
+        <div class="from">Output-variance study · Life Insurance Experience Bench</div></div>
+      <div class="t-item"><div class="when">2026 · Oct</div><h3>Operations, and the side quests that keep me honest</h3>
+        <p>A 21.9-hour exam on one shared local server makes scheduling an engineering problem. Two side projects
+        keep the habits sharp: pre-registered questions with noise floors, and generators that refuse to ask an
+        unfair question.</p>
+        <div class="from">LLM_Status_Watch · Piticle_Life · Pixel_Storybook</div></div>
+    </div>
+    
+<p class="small muted">The same order in checklist form, with the design lessons each step taught, is on the
+<a href="/motion/projects.html">projects page</a>; the development method they were built with is on the
+<a href="/motion/method.html">method page</a>.</p>
+
+<h2 id="open">Why open</h2>
+<p>Underwriting rules engines are the operational backbone of insurance: they encode what risks are
+acceptable, on what terms, at what price. Building them is hard; explaining them to auditors, regulators and
+business stakeholders is harder. A closed underwriting engine is a governance black box — and the profession's
+answer to a black box should not be another black box.</p>
+<p>So the design constraints repeat across layers: rules as declarative versioned documents rather than code
+buried in a service; escalation paths and permissions as first-class configuration rather than prompt
+wording; agents that propose while named humans decide; and every artifact MIT-licensed so a regulator, an
+auditor or another actuary can read the reasoning chain rather than take it on trust.</p>
+
+<div class="note"><h4>If you are an actuary, engineer or regulator</h4>
+<p>Corrections to the underwriting logic, the compliance mappings and the scoring rubric are the most useful
+contributions this ecosystem can receive. The decision record is in the repos' logs, so a disagreement can be
+argued against evidence rather than against a summary. Open an issue on the relevant repo.</p></div>
+
+</article><aside><div class="toc" role="navigation" aria-label="On this page">
+<h4 style="margin-top:0">On this page</h4>
+<a href="#edges">The interlock, edge by edge</a><br>
+<a href="#rule">The rule that binds them</a><br>
+<a href="#maturity">What each layer can support</a><br>
+<a href="#chain">How one thing led to the next</a><br>
+<a href="#open">Why open</a><br>
+<h4>Read next</h4>
+<a href="/motion/research/life-insurance-experience-bench.html">The benchmark findings</a><br>
+<a href="/motion/research/underwriting-output-variance.html">The variance study</a><br>
+<a href="/motion/research/findings.html">Findings ledger</a><br>
+<a href="/motion/method.html">How the work gets done</a><br>
+<a href="/motion/projects.html">All 13 repositories</a>
+</div></aside></div></div>
+
+</main>
+
+<footer class="site"><div class="wrap cols">
+  <div><h4>About this site</h4>
+    <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary. Open-source
+    life-insurance data tools, benchmarks and governance patterns for actuarial work with AI.</p></div>
+  <div><h4>Research</h4><ul>
+    <li><a href="/motion/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/motion/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/motion/research/findings.html">Findings ledger</a></li>
+    <li><a href="/motion/ecosystem.html">Ecosystem map</a></li></ul></div>
+  <div><h4>Elsewhere</h4><ul>
+    <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
+    <li><a href="/motion/method.html">How I work</a></li>
+    <li><a href="/">Line edition of this site</a></li>
+    <li><a href="/pixel/">Pixel-art site</a></li>
+    <li><a href="/motion/">Motion edition</a></li>
+    <li><a href="/motion/projects.html">All repositories</a></li></ul></div>
+</div><div class="wrap fine">
+  <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
+  <span class="prov">© 2026 Jason Ou · content MIT-licensed</span>
+</div></footer>
+</body>
+</html>

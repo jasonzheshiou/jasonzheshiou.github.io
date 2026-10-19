@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-ed="motion">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
+<title>The method — agent loops, black-box verification, and building in broken time · Jason Ou · motion edition</title>
+<meta name="description" content="The open-source work is a learning journey: delegating agent loops instead of lines of code, steering a black box by measuring its behaviour, and an asynchronous human-in-the-loop lifecycle built around fragmented hours between a full-time job and childcare.">
+<meta property="og:title" content="The method — agent loops, black-box verification, building in broken time">
+<meta property="og:description" content="Delegate the loop, not the line. Verify from outside the box. Leave the room, come back as the supervisor.">
+<meta property="og:url" content="https://jasonzheshiou.github.io/motion/method.html">
+<meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<meta name="twitter:image" content="https://jasonzheshiou.github.io/assets/og.png">
+<link rel="canonical" href="https://jasonzheshiou.github.io/motion/method.html">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/motion/motion.css">
+<script src="/assets/site.js" defer></script>
+<script src="/motion/motion.js" defer></script>
+<style>
+.pairs{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:1fr 1fr;margin:1.6rem 0}
+@media (max-width:820px){ .pairs{grid-template-columns:1fr} }
+.pairs > div{background:var(--panel-2);padding:1.1rem 1.15rem 1.2rem}
+.pairs h4{margin:0 0 .7rem;font-size:10.5px;letter-spacing:.18em}
+.pairs .stop h4{color:var(--red)} .pairs .start h4{color:var(--green)}
+.pairs ul{list-style:none;padding:0;margin:0;font-size:14.2px;color:var(--muted)}
+.pairs li{padding:.4rem 0 .4rem 1.15rem;position:relative;border-bottom:1px solid var(--line)}
+.pairs li:last-child{border-bottom:0}
+.pairs .stop li::before{content:"✕";position:absolute;left:0;color:var(--red);font-family:var(--mono);font-size:11px}
+.pairs .start li::before{content:"▸";position:absolute;left:0;color:var(--green);font-family:var(--mono);font-size:11px}
+.arc{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin:1.6rem 0}
+.arc > div{background:var(--panel-2);padding:1.1rem 1.15rem 1.2rem}
+.arc .n{font:500 10.5px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.arc h3{margin:.55rem 0 .35rem;font-size:1.06rem}
+.arc p{margin:0;font-size:13.8px;color:var(--muted)}
+.arc .then{margin-top:.7rem;font:400 12.5px/1.55 var(--mono);color:var(--dim)}
+.check{counter-reset:c;list-style:none;padding:0;margin:1.6rem 0}
+.check li{counter-increment:c;display:grid;grid-template-columns:34px 1fr;gap:.9rem;padding:.62rem 0;border-bottom:1px solid var(--line);font-size:14.4px}
+.check li::before{content:counter(c,decimal-leading-zero);font:500 11.5px/1.6 var(--mono);color:var(--cyan)}
+.check b{color:var(--ink)}
+.check span{display:block;font-size:13.4px;color:var(--muted)}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="/motion/"><span class="mark">JO</span><span>Jason Ou<small>FIAA · Actuarial AI</small></span></a>
+  <nav class="main">
+    <a href="/motion/">Home</a>
+    <a href="/motion/research/life-insurance-experience-bench.html">A/E Bench</a>
+    <a href="/motion/research/underwriting-output-variance.html">Variance</a>
+    <a href="/motion/research/findings.html">Findings</a>
+    <a href="/motion/ecosystem.html">Ecosystem</a>
+    <a href="/motion/projects.html">Projects</a>
+    <a href="/motion/method.html" aria-current="page">Method</a>
+    <a href="/motion/about.html">About</a>
+    <a class="ed-link" href="/" title="The same site without the motion">&#9664; Line site</a>
+    <a class="ed-link" href="/pixel/" title="The same site drawn in pixel art">Pixel site &#9654;</a>
+    <button class="theme-btn" type="button">☾</button>
+  </nav>
+</div></header>
+
+<main id="main">
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+
+  <symbol id="i-seed" viewBox="0 0 48 48">
+    <rect x="7" y="7" width="14" height="14" rx="2" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M14 21v6h8" stroke="var(--ic-cyan)" fill="none"/>
+    <g stroke-dasharray="1 3">
+      <path d="M27 27h14M27 33h14M27 39h14" stroke="var(--ic-dim)" fill="none"/>
+    </g>
+    <circle cx="34" cy="33" r="3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-target" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="24" cy="24" r="9" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="24" r="2.5" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <path d="M24 8v6M24 34v6M8 24h6M34 24h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M33 33l6 6M39 33l-6 6" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-agents" viewBox="0 0 48 48">
+    <rect x="6" y="8" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="6" y="32" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="19" y="20" width="10" height="8" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M16 12c6 0 3 12 3 12M16 36c6 0 3-8 3-8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M29 24h5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M34 17l7 7-7 7-7-7z" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-trend" viewBox="0 0 48 48">
+    <path d="M8 38h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M10 32l7-6 6 4 8-11 6 5" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="31" cy="19" r="6" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M35 23l4 4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-standard" viewBox="0 0 48 48">
+    <path d="M12 6h18l6 6v30H12z" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M30 6v6h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M17 20h14M17 26h14M17 32h8" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M30 33l3 3 6-7" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-gauge" viewBox="0 0 48 48">
+    <path d="M9 33a15 15 0 0 1 30 0" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 33l8-9" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="33" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M9 39h30" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M40 12l3 3-3 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-schema" viewBox="0 0 48 48">
+    <rect x="6" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="27" y="9" width="15" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="16" y="29" width="16" height="11" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M13 20v4h22v-4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 24v5" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-sheet" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 17h32M8 26h32M8 34h32M19 17v23M30 17v23" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M19 26l5 4 6-8" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-loop" viewBox="0 0 48 48">
+    <path d="M24 9a15 15 0 1 1-10.6 25.6" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M13 27v8h8" stroke="var(--ic-cyan)" fill="none"/>
+    <rect x="18" y="19" width="12" height="10" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M21 24h6" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-particles" viewBox="0 0 48 48">
+    <rect x="7" y="7" width="34" height="34" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="17" cy="18" r="2.5" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="30" cy="16" r="2" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="24" cy="30" r="3" stroke="var(--ic-cyan)" fill="none"/>
+    <circle cx="34" cy="30" r="1.5" stroke="var(--ic-amber)" fill="none"/>
+    <circle cx="15" cy="32" r="1.5" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M17 18l7 12 10-14" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-pixel" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="32" height="32" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 24h32M24 8v32" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="15" y="15" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <rect x="27" y="27" width="6" height="6" stroke="var(--ic-cyan)" fill="var(--ic-cyan)"/>
+    <rect x="27" y="15" width="6" height="6" stroke="var(--ic-amber)" fill="var(--ic-amber)"/>
+  </symbol>
+
+  <symbol id="i-puzzle" viewBox="0 0 48 48">
+    <rect x="8" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="26" y="8" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="8" y="26" width="14" height="14" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="26" y="26" width="14" height="14" rx="1" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M15 15h0M33 33h0" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-id" viewBox="0 0 48 48">
+    <rect x="6" y="11" width="36" height="26" rx="2" stroke="var(--ic-dim)" fill="none"/>
+    <circle cx="16" cy="22" r="4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M10 32c1-4 4-5 6-5s5 1 6 5" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M27 20h9M27 26h9" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-ruler" viewBox="0 0 48 48">
+    <rect x="6" y="18" width="36" height="12" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M13 18v6M20 18v4M27 18v6M34 18v4" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M24 12v4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M6 12h36" stroke-dasharray="2 3" stroke="var(--ic-cyan)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-shield" viewBox="0 0 48 48">
+    <path d="M24 7l14 5v12c0 9-6 14-14 17-8-3-14-8-14-17V12z" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M18 23l5 5 8-9" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-sign" viewBox="0 0 48 48">
+    <path d="M8 34h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M12 26c4-10 8 6 12-2s6 4 10-2" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M34 12l4 4-10 10-5 1 1-5z" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-clock" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="16" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M24 14v10l7 4" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M24 8v-0M40 24h0" stroke-dasharray="1 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M36 10l4 4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-blackbox" viewBox="0 0 48 48">
+    <rect x="14" y="14" width="20" height="20" rx="1" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M6 24h8M34 24h8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M42 20l0 8" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M10 12h10M10 36h10" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-handoff" viewBox="0 0 48 48">
+    <path d="M12 8h14l6 6v26H12z" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M26 8v6h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M17 22h10M17 28h6" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M32 24h10M38 20l4 4-4 4" stroke="var(--ic-amber)" fill="none"/>
+    <path d="M42 32v6" stroke-dasharray="2 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-architect" viewBox="0 0 48 48">
+    <path d="M24 6l16 8-16 8-16-8z" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M8 24l16 8 16-8" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M8 32l16 8 16-8" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-queue" viewBox="0 0 48 48">
+    <rect x="7" y="10" width="8" height="28" rx="1" stroke="var(--ic-dim)" fill="none"/>
+    <rect x="19" y="10" width="8" height="28" rx="1" stroke="var(--ic-cyan)" fill="none"/>
+    <rect x="31" y="10" width="8" height="28" rx="1" stroke-dasharray="2 3" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M19 24h-4M31 24h-4" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+  <symbol id="i-delta" viewBox="0 0 48 48">
+    <path d="M8 40h32" stroke="var(--ic-dim)" fill="none"/>
+    <path d="M14 40V22M22 40V14M30 40V26M38 40V18" stroke="var(--ic-cyan)" fill="none"/>
+    <path d="M12 12h26" stroke-dasharray="3 3" stroke="var(--ic-amber)" fill="none"/>
+  </symbol>
+
+</defs></svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="wrap hero">
+  <svg class="ic lg h-float" aria-hidden="true"><use href="#i-clock"/></svg>
+  <p class="eyebrow">Method · the journey is the syllabus</p>
+  <h1>I stopped writing code line by line, and had to become the architect.</h1>
+  <p class="lede">This is the part of the open-source journey that is not about insurance. Every repository here was
+  built in <strong>broken time</strong> — hours carved out around a full-time job and childcare — by delegating work
+  to agent loops, never opening the model, and leaving runs unfinished on purpose. The constraint turned out to be
+  a good teacher: it forced exactly the controls a regulated AI deployment needs, and it changed what kind of
+  engineer I am.</p>
+  <div class="hero-meta">
+    <span class="chip"><b>agent-loop</b> execution</span>
+    <span class="chip"><b>black-box</b> behavioural verification</span>
+    <span class="chip"><b>asynchronous</b> HITL lifecycle</span>
+    <span class="chip">role: <b>system architect</b></span>
+  </div>
+  <div class="btn-row">
+    <a class="btn" href="#loops">Agent loops</a>
+    <a class="btn ghost" href="#blackbox">Black-box steering</a>
+    <a class="btn ghost" href="#async">Broken time</a>
+    <a class="btn ghost" href="#architect">The role shift</a>
+  </div>
+</div>
+
+<div class="wrap tight">
+  <div class="ledger">
+    <div class="metric"><div class="v">21.9<i>h</i></div><div class="k">one unattended exam</div>
+      <div class="s">24 books × 3 runs, resume-safe, one shared local slot</div></div>
+    <div class="metric good"><div class="v">3<i>models</i></div><div class="k">separation of duties</div>
+      <div class="s">two subjects sat the exam; a third built it</div></div>
+    <div class="metric"><div class="v">307</div><div class="k">harness diary entries</div>
+      <div class="s">268 of them ending in a harness edit, one hypothesis each</div></div>
+    <div class="metric warn"><div class="v">228<i>tests</i></div><div class="k">runnable with no model at all</div>
+      <div class="s">44 + 139 + 45 offline checks across three repos</div></div>
+  </div>
+</div>
+
+<div class="wrap band"><div class="split-32">
+<article class="prose">
+
+<h2 id="why">Why the constraint became the method</h2>
+<p>A working evening is not continuous. It is 40 minutes here, 25 minutes there, a Saturday morning if the house
+is quiet. Anything that needs me to sit and watch it — a long model run, an agent iterating, a build I have to
+shepherd — cannot exist in that schedule. So every piece of machinery in these repositories had to satisfy one
+brutal design review: <em>can this be started, left alone, and picked up later by someone who has forgotten what
+I was thinking?</em> Usually that someone is me, three days later.</p>
+<p>Three things fell out of that requirement, and they are the three sections below. The first is what I delegate
+(<b>loops, not lines</b>). The second is how I know whether the delegation worked (<b>behaviour measured from
+outside the box</b>). The third is the shape of the work itself (<b>asynchronous, with me as the checkpoint</b>).
+Only after those were in place did the projects stop being experiments and start being evidence.</p>
+<div class="note"><h4>The honest framing</h4>
+<p>This is a personal engineering method, not an audited standard. It was learned by breaking runs at 11pm, and
+some of what follows is practice rather than measurement. Where a claim has a number behind it, the file is named.</p></div>
+
+<svg class="ic lg h-icon" aria-hidden="true"><use href="#i-loop"/></svg><h2 id="loops">1 · Agent-loop execution: delegate the loop, not the line</h2>
+<p>The earliest version of me typed instructions and pasted results. The version that shipped a benchmark hands
+over a <em>loop with an execution surface</em> and comes back to a verdict. Concretely, what I delegate now always
+has four parts: a written contract, a place to execute, an artefact trail, and a stopping rule.</p>
+<div class="tablewrap"><table class="tbl">
+<caption>What a delegated loop has to carry<span>Every repository below demonstrates at least one of these; the M365 blueprint states all four.</span></caption>
+<thead><tr><th>part</th><th>why it is non-negotiable</th><th>where it exists</th></tr></thead>
+<tbody>
+<tr><td><b>A written contract</b></td><td>The model cannot ask a clarifying question at 2am; the spec has to outlive my memory of it</td><td><code>SPEC.md</code> pre-registered claims · <code>docs/HANDOFF_CONTEXT.md</code> · <code>TEST_INSTRUCTIONS.md</code></td></tr>
+<tr><td><b>An execution surface</b></td><td>A loop without an execution log is a chat, not an agent. The log is what makes self-correction possible</td><td><code>M365-Copilot-Agent-Loop</code> watcher → <code>execution_log.txt</code> fed back for self-correction</td></tr>
+<tr><td><b>An artefact trail</b></td><td>I need to review outputs, not remember conversation. Per-pass files are what a supervisor can actually read</td><td><code>Pixel_Storybook</code>: <code>passNN_script.py</code>, <code>passNN_plate.png</code>, <code>critique.json</code>, <code>manifest.json</code>, <code>model_log.jsonl</code></td></tr>
+<tr><td><b>A stopping rule</b></td><td>An unbounded loop is a leak, not a tool. Budgets and bounded retries are architecture, not politeness</td><td>pass caps in the paint loop · bounded retry advice in the bench runbook: a failing validator "produces a retry loop, not a skipped run — <em>bound it</em>"</td></tr>
+</tbody></table></div>
+<p>Two results from this way of working are worth quoting, because they are the opposite of the usual promise.</p>
+<div class="flow">
+  <div class="step"><div class="n">A</div><p><b>The underwriter's application code was written by the model it studies.</b> Its README says so plainly: the entire application was developed using the local Qwen3.6-35B-A3B — code generation, debugging, refactoring and documentation. That is not a boast, it is the reason the variance study mattered: I could not reason about the system's stability from having written it, because I had not written it. <strong>When the code is delegated, only measurement remains.</strong></p></div>
+  <div class="step"><div class="n">B</div><p><b>Delegated work has to be shipped with its own air-gap.</b> The M365 loop keeps a manual copy-paste step <em>by design</em> — an air-gap so nothing is auto-injected into a corporate environment — and its README refuses to let the watcher run on a primary host, because a watcher that executes synchronised scripts is a remote-code-execution risk if the model hallucinates something destructive. That blueprint is untested and labelled as such; the constraint it encodes is not.</p></div>
+</div>
+<div class="caveat"><h4>What delegation did not buy me</h4>
+<p>The loop can iterate; it cannot decide which failure matters. In the benchmark's harness development, "a human
+chose which failures to pursue" is written into the record as a limitation of the method, next to the fact that an
+operator-side agent did the editing. Delegation moves effort; accountability does not move.</p></div>
+
+<svg class="ic lg h-icon" aria-hidden="true"><use href="#i-blackbox"/></svg><h2 id="blackbox">2 · Black-box behavioural verification — from testing to a development method</h2>
+<p>I have never had access to a model's weights, and I do not have it now. That sounds like a limitation and is
+actually the discipline: the only thing I can observe is the <em>distribution of what comes out</em>. Once you
+accept that, verification stops being a phase at the end and becomes the whole development method — <strong>black-box
+steering</strong>: change something outside the box, measure how the output distribution moved, keep it or revert it.</p>
+<p>This is literally the loop the benchmark's harness grew under, written down as six steps in the experiment
+index. It is worth reproducing because it is the method in miniature:</p>
+<div class="flow">
+  <div class="step"><div class="n">1</div><p><b>Run the frozen harness</b> over all 23 optimisation books.</p></div>
+  <div class="step"><div class="n">2</div><p><b>Score it, then read the evidence per unit</b> — recorded prompt,
+  answer, tool log, the scorer's per-control diff — and say out loud why each miss missed.</p></div>
+  <div class="step"><div class="n">3</div><p><b>One hypothesis, one edit:</b> a change to
+  <code>stats_pack.py</code>, the harness rules, or a newly pinned prompt file. Not three changes that might have
+  worked.</p></div>
+  <div class="step"><div class="n">4</div><p><b>Test it on the affected books, then re-check the neighbours</b> it
+  could have disturbed. Black-box means side-effects are invisible until measured.</p></div>
+  <div class="step"><div class="n">5</div><p><b>Keep or revert. Snapshot the code <em>and</em> the prompt</b> into
+  <code>results/&lt;corpus&gt;/harness_snapshot/</code> so the claim can be re-derived.</p></div>
+  <div class="step"><div class="n">6</div><p><b>Never read a held-out result before deciding an edit, and never
+  feed one back.</b> The held-out split is a wall, not a feedback channel.</p></div>
+</div>
+<p>Seven optimisation passes ran under that loop, producing <span class="mono">v1.0 → v1.6e</span>, 307
+per-scenario diary entries of which 268 ended in a harness review or edit, and a diagnostics file that grew from
+27 229 to 38 490 bytes. The harness was built by an <b>operator-side agent running a third model</b> — deliberately
+not one of the two being examined, so no model tuned the exam it later sat. That is a separation-of-duties control
+on the development process itself, and it is the single design decision I would defend hardest.</p>
+<h3 id="steer">What steering a black box actually consists of</h3>
+<div class="tablewrap"><table class="tbl">
+<caption>Levers outside the box, and the measured response</caption>
+<thead><tr><th>lever (outside the model)</th><th>observed behavioural response</th></tr></thead>
+<tbody>
+<tr><td>Prompt discipline and harness diagnostics</td><td>Recall and false-alarm rate moved in <b>opposite directions</b> for the two models under the same edit — which is why the loop allows one change at a time</td></tr>
+<tr><td>Combination rule in a multi-agent system</td><td>End-to-end spread fell from ~20 % to <b>0 % across 100 runs</b> with the model unchanged — architecture is a steering wheel</td></tr>
+<tr><td>Sampling settings (temperature, seed)</td><td>T 0.1 → 0.0 did not merely tighten the spread, it changed <b>which decision</b> the system returned</td></tr>
+<tr><td>Tool surface offered to the model</td><td>Offering a tool is not using one: 24 % of runs on one model, <b>0 of 144</b> on the other, and two attempts to activate it failed</td></tr>
+<tr><td>Concurrency and deployment environment</td><td>Parallel calls produced a degenerate thinking loop and empty output; sequential calls were clean</td></tr>
+</tbody></table></div>
+<div class="note"><h4>The method generalises beyond models</h4>
+<p>Most of the test surface in these repositories runs with no model at all — 44 offline tests in the paint loop,
+139 in the particle-life project, 45 state-machine checks in the status daemon, plus the leak scan and preflight in
+the benchmark. Offline checks are what make it possible to verify while the one model slot is busy, and they are
+where a black box can be pinned down cheaply: determinism on a seed, schema and parse validity, isolation
+boundaries, resume semantics.</p></div>
+
+<svg class="ic lg h-icon" aria-hidden="true"><use href="#i-handoff"/></svg><h2 id="async">3 · Fragmented hours: asynchronous human-in-the-loop engineering</h2>
+<p>Here is the part I did not plan. Because the hours are broken, I do not work in a session — I work in
+<strong>handoffs</strong>. The unit of work is not an hour at the keyboard, it is a document plus a run plus an
+artefact trail, and the human role inside it is not author but <em>supervisor and validation checkpoint</em>. That
+is asynchronous HITL, arrived at by necessity rather than ideology.</p>
+<div class="flow">
+  <div class="step"><div class="n">1</div><p><b>Write the handoff before the work.</b>
+  <code>docs/HANDOFF_CONTEXT.md</code> in the underwriter repo opens with "read this first when continuing in a
+  new chat", and records the task, the state of every section, and which decisions are already made — explicitly so
+  that continuing does not require re-deriving them. The benchmark has the same shape in
+  <code>docs/HANDOFF_RUN_SCENARIOS.md</code>: a command to run, a command to resume.</p></div>
+  <div class="step"><div class="n">2</div><p><b>Launch it and leave the physical context.</b> Full optimisation
+  passes are documented as "23 books, unattended, resume-safe" behind <code>setsid nohup</code>; a held-out exam is
+  wrapped in a retry script; the particle-life sweeps run headless on a Pi 2 in another room while the viewer —
+  which reads files and nothing else, bound to loopback — stays on the laptop.</p></div>
+  <div class="step"><div class="n">3</div><p><b>Make returning cheap.</b> Resumption is the default rather than a
+  recovery procedure: <code>--skip-existing</code> keeps anything already answered, <code>flock</code> guards
+  against a double launch after I have forgotten I started it, and one status file is rewritten after every
+  scenario (<span class="mono">RUNS FINISHED: n/141</span>) so a returning human is oriented in one line.</p></div>
+  <div class="step"><div class="n">4</div><p><b>Get called back rather than waiting.</b> A 21.9-hour exam on one
+  shared server makes queue position the real schedule, so <code>LLM_Status_Watch</code> watches the model server's
+  metrics on a Raspberry Pi and pushes my phone when it goes idle. That is the whole point: I leave, the machine
+  tells me when to return.</p></div>
+  <div class="step"><div class="n">5</div><p><b>Return as the checkpoint, not the typist.</b> Read the manifest and
+  the per-unit diffs; decide keep or revert; choose which failure to pursue next; write the next handoff. In the
+  paint loop this is formalised: <em>the best pass ships, not the last one</em> — the supervisor selects among
+  delegated attempts using measured scores, which is a completely different skill from producing them.</p></div>
+</div>
+<figure class="figscroll">
+<svg class="diagram" viewBox="0 0 640 250" role="img" aria-label="One work item in broken time: write the handoff, launch and leave, a long absence, get called back, return as the supervisor.">
+  <rect class="node" x="4" y="8" width="300" height="80" rx="2"/>
+  <path class="link" d="M5 24V9h15"/><path class="link" d="M303 72v15h-15"/>
+  <text class="node-k" x="20" y="32">STEP 1</text>
+  <text class="node-t" x="20" y="56" font-size="14">Write the handoff</text>
+  <text class="node-s" x="20" y="76">before the work starts</text>
+  <rect class="node" x="336" y="8" width="300" height="80" rx="2"/>
+  <path class="link" d="M337 24V9h15"/><path class="link" d="M635 72v15h-15"/>
+  <text class="node-k" x="352" y="32">STEP 2</text>
+  <text class="node-t" x="352" y="56" font-size="14">Launch, then leave</text>
+  <text class="node-s" x="352" y="76">unattended, resume-safe</text>
+  <rect class="node" x="336" y="162" width="300" height="80" rx="2"/>
+  <path class="link" d="M337 178V163h15"/><path class="link" d="M635 226v15h-15"/>
+  <text class="node-k" x="352" y="186">STEP 3</text>
+  <text class="node-t" x="352" y="210" font-size="14">Get called back</text>
+  <text class="node-s" x="352" y="230">the shared server frees up</text>
+  <rect class="node" x="4" y="162" width="300" height="80" rx="2"/>
+  <path class="link" d="M5 178V163h15"/><path class="link" d="M303 226v15h-15"/>
+  <text class="node-k" x="20" y="186">STEP 4</text>
+  <text class="node-t" x="20" y="210" font-size="14">Return as supervisor</text>
+  <text class="node-s" x="20" y="230">read, decide, keep or revert</text>
+<path class="flow" d="M304 48h26"/><path class="link" d="M324 43l7 5-7 5"/>
+<path class="flow" d="M486 88v74" stroke-dasharray="2 7"/>
+<text class="cap" x="250" y="120" text-anchor="middle">NOTHING FROM ME HERE</text>
+<text class="node-s" x="250" y="141" text-anchor="middle">days of other life</text>
+<path class="flow" d="M336 202h-14"/><path class="link" d="M322 197l-7 5 7 5"/>
+<path class="link" d="M636 202h-296" stroke-dasharray="0"/>
+</svg>
+<figcaption>The unit of work is not an hour at the keyboard. It is a handoff, a run that survives being left, and a return where the only job is judgement.</figcaption>
+</figure>
+<h3 id="cost">What the constraint actually cost, and what it bought</h3>
+<div class="split">
+<div>
+<p class="small muted" style="margin-top:0"><b>Cost</b></p>
+<ul>
+  <li>Everything must be resumable, idempotent and observable, which is more design work than writing the script.</li>
+  <li>The handoff document is a real deliverable and is easy to skip — every time I skipped it, I paid interest later.</li>
+  <li>Long cycles mean slow feedback: seven harness passes is weeks of calendar time for a small number of decisions.</li>
+</ul>
+</div>
+<div>
+<p class="small muted" style="margin-top:0"><b>Bought</b></p>
+<ul>
+  <li>Runs large enough to be evidence — 141 generations, 600 repeat decisions, 250 000-policy books.</li>
+  <li>Artefacts designed for a suspicious reader, because the returning supervisor is one.</li>
+  <li>Recovery paths that get exercised for real, since I rejoin interrupted runs constantly.</li>
+</ul>
+</div>
+</div>
+
+<svg class="ic lg h-icon" aria-hidden="true"><use href="#i-architect"/></svg><h2 id="architect">4 · The role shift: from developer to system architect</h2>
+<p>The honest summary of the last two years of this work is that my contribution moved outward — from inside the
+code to the boundaries around it. I did not set out to make that change; the schedule and the delegation made it for
+me, and the governance habit finished the job.</p>
+<div class="pairs">
+  <div class="stop"><h4>What I gave up</h4><ul>
+    <li>Authoring every line — the underwriter's code and most of the benchmark harness were written by models</li>
+    <li>Reading each generated line before it runs, replaced by validators, schema checks, budgets, and a jail I have admitted is still only advisory</li>
+    <li>Being inside the loop while it iterates: watching a run is not supervision, it is waiting</li>
+    <li>Trusting a plan I can describe over a behaviour I can measure</li>
+  </ul></div>
+  <div class="start"><h4>What I do instead</h4><ul>
+    <li>Define contracts and invariants: answer schema, per-unit scoring, what must never leak into a prompt</li>
+    <li>Design the observation surface — manifests, per-pass artefacts, status files, decision logs in JSONL</li>
+    <li>Set risk appetite and stopping rules: how many passes, what triggers escalation, which repair is declined</li>
+    <li>Choose which failures are worth a pass, and write the handoff that hands the next one over</li>
+    <li>Sign for the result, and publish the limits beside it</li>
+  </ul></div>
+</div>
+<h3 id="arc">The learning arc, as the repositories record it</h3>
+<div class="arc">
+  <div><span class="n">Movement 1 · tooling</span><h3>Propose, then let a human execute</h3>
+    <p>Schema analyser and the Excel automator: natural language to a <em>reviewable</em> list of actions, every
+    step editable before it runs, and a rule-based mode for when there is no model at all.</p>
+    <div class="then">learned: propose-then-execute is a control, not a crutch</div></div>
+  <div><span class="n">Movement 2 · delegation</span><h3>Build the loop and let it run</h3>
+    <p>The Copilot agent-loop blueprint, the multi-agent underwriter, the paint-and-critique loop. Loops got
+    execution logs, artefact trails, pass caps, sandboxes; untested ones got labelled untested.</p>
+    <div class="then">learned: a loop without an execution log is a chat; delegation without an artefact trail is unverifiable</div></div>
+  <div><span class="n">Movement 3 · measurement</span><h3>Own the instrument and the sign-off</h3>
+    <p>The A/E benchmark, the output-variance study, the status watcher. Once delegated work does the building, the
+    only thing left to own is the answer key, the scorer, the queue and the judgement.</p>
+    <div class="then">learned: the examiner is the job</div></div>
+</div>
+
+<h2 id="failures">Five failures that taught more than any success</h2>
+<div class="flow">
+  <div class="step"><div class="n">01</div><p><b>A loop that retried forever.</b> A malformed tool request — an
+  invalid JSON escape — could not be parsed, so the tool never ran, the answer validator failed, and the run retried
+  indefinitely instead of stopping. The escape-repair was <em>deliberately declined</em>: a documented defect stays
+  auditable, a silently patched one becomes a gap. The runbook now says to bound the retry.</p></div>
+  <div class="step"><div class="n">02</div><p><b>A sandbox that only advised.</b> "Sandbox" written by me turns out
+  to mean limits I hoped would hold. Real jails need rlimits or a container with no network, a read-only data mount
+  and write-only output. Still on the list, and stated as a gap rather than a feature.</p></div>
+  <div class="step"><div class="n">03</div><p><b>A tool nobody used.</b> Two attempts to make the second model call
+  its tool failed: <span class="num">0</span> calls in 144 runs. Offering capability is not obtaining behaviour —
+  the very heart of black-box verification.</p></div>
+  <div class="step"><div class="n">04</div><p><b>A failure that only appeared under load.</b> Parallel calls put the
+  reasoning model into a thinking loop that emitted nothing. The harness was clean, the model was clean, and the
+  <em>interaction</em> was neither: concurrency is now a variable in test plans.</p></div>
+  <div class="step"><div class="n">05</div><p><b>Claims that died at their own noise floor.</b> Two of three
+  pre-registered claims in the particle-life project failed once the sweeps ran. Writing the question before the
+  sweep is the only reason that was visible at all — in the models, and in myself.</p></div>
+</div>
+
+<h2 id="checklist">The method as a checklist</h2>
+<p>If another engineer asked me how to work this way — fragmented hours, delegated loops, models you cannot
+inspect — this is what I would hand them.</p>
+<ol class="check">
+  <li><b>Write the handoff before you start.</b> Assume the person returning has forgotten everything, because it is you.</li>
+  <li><b>Give every loop an execution log and an artefact trail.</b> No log, no agent.</li>
+  <li><b>One hypothesis, one edit, then re-check the neighbours.</b> Black boxes hide side-effects.</li>
+  <li><b>Verify offline whenever possible.</b> The model slot is the scarce resource; tests that need no model run any time.</li>
+  <li><b>Make resume the default.</b> Skip-existing, lock files, one status line a stranger can read in five seconds.</li>
+  <li><b>Budget every loop.</b> Bounded retries, pass caps, escalation when the budget is spent.</li>
+  <li><b>Separate duties across models.</b> The model that builds the test should not be the model that sits it.</li>
+  <li><b>Pre-register the question and publish the noise floor.</b> Yours is a black box too.</li>
+  <li><b>Label the untested.</b> A blueprint that says "untested" is honest engineering; one that doesn't is a liability.</li>
+  <li><b>Keep one failure on the record, unpatched, on purpose.</b> It is worth more as evidence than as a fixed bug.</li>
+</ol>
+
+<h2 id="mirror">Why a personal habit is also a governance argument</h2>
+<p>The pattern that broke time forced on me — delegate, walk away, come back with artefacts and make the call — is
+structurally identical to what I ask for in a deployed AI system. The human in a compliant loop is not a typist and
+not a spectator: they are a <strong>supervisor with a decision record</strong>, able to arrive late, read what
+happened, and either accept it or stop it. Everything that made my evenings survivable — handoff documents,
+per-pass artefacts, bounded retries, offline checks, resume-by-default — is the same furniture a model-risk manager
+would ask to see.</p>
+<p>Which is the most useful thing this journey taught me. The governance controls were not a compliance burden bolted
+onto hobby projects; they were the reason hobby projects could run without me at all. The architect's job is to build
+the loop so that a tired, interrupted, forgettable-today human can still be a competent checkpoint — and then to be
+honest, in writing, about what the loop has not proven.</p>
+<div class="caveat"><h4>Limits of this page</h4>
+<p>Single operator, one machine, no independent audit. The evidence cited is real and file-referenced, but the
+method has not been tested on a team, on a deadline imposed by someone else, or under a production on-call rota.
+Treat it as a working practice report, not a framework.</p></div>
+
+<div class="fn">
+<strong>Sources</strong>
+<p class="prov">Development statements and loop artefacts from
+<a href="https://github.com/jasonzheshiou/Multi-Agents_Underwriter">Multi-Agents_Underwriter</a> (README "AI-Generated
+Project Showcase"; <code>docs/HANDOFF_CONTEXT.md</code>) at <span class="mono">cbedb1b</span>; harness growth,
+operator-side agent build and unattended run commands from
+<a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench">Life_Insurance_Experience_Bench</a>
+(<code>docs/EXPERIMENT_INDEX.md</code> §"Who builds the harness", §8; <code>docs/HANDOFF_RUN_SCENARIOS.md</code>;
+<code>docs/HARNESS_GROWTH.md</code>) at <span class="mono">8067f00</span>; loop artefacts and timings from
+<a href="https://github.com/jasonzheshiou/Pixel_Storybook">Pixel_Storybook</a>; pre-registration and Pi
+architecture from <a href="https://github.com/jasonzheshiou/Piticle_Life">Piticle_Life</a>; air-gap HITL and RCE
+warnings from <a href="https://github.com/jasonzheshiou/M365-Copilot-Agent-Loop">M365-Copilot-Agent-Loop</a>;
+offline state-machine checks from <a href="https://github.com/jasonzheshiou/LLM_Status_Watch">LLM_Status_Watch</a>.
+Variance figures come from <a href="/motion/research/underwriting-output-variance.html">study 02</a>; behaviour-response
+figures from <a href="/motion/research/life-insurance-experience-bench.html">study 01</a>.</p>
+</div>
+
+</article>
+
+<aside><div class="toc" role="navigation" aria-label="On this page">
+<h4>On this page</h4>
+<a href="#why">Why constraint became method</a><br>
+<a href="#loops">1 · Agent-loop execution</a><br>
+<a href="#blackbox">2 · Black-box verification</a><br>
+<a href="#steer">· what steering consists of</a><br>
+<a href="#async">3 · Asynchronous HITL</a><br>
+<a href="#cost">· cost and what it bought</a><br>
+<a href="#architect">4 · Developer → architect</a><br>
+<a href="#arc">· the learning arc</a><br>
+<a href="#failures">Five teaching failures</a><br>
+<a href="#checklist">The checklist</a><br>
+<a href="#mirror">The governance mirror</a>
+</div></aside>
+</div></div>
+
+
+<section class="band">
+  <div class="wrap">
+    <h2 style="margin-top:0">Run a review plane across the chain</h2>
+    <p class="lede">The same six steps the work actually goes through, in order, each one leaving something on the
+    record. Move the pointer across the line — or use the arrow keys — to stand at a station. The plane changes what
+    you are shown; it changes nothing that was measured. If you have asked for less movement, the plane sits still
+    and the ledger below holds all of it.</p>
+    <div class="mv-stage" id="mv-stage" tabindex="0" role="slider" aria-label="Review plane across the decision chain"
+         aria-valuemin="1" aria-valuemax="6" aria-valuenow="1">
+      <div class="mv-track"></div><div class="mv-scan"><b>Station 1 / 6</b></div>
+    </div>
+    <div class="mv-read">
+      <div><div class="k">Station</div><div class="v" id="mv-station">—</div></div>
+      <div><div class="k">What happens here</div><div class="v q" id="mv-what">—</div></div>
+      <div><div class="k">What is on record</div><div class="v q" id="mv-record">—</div></div>
+    </div>
+    <div class="tablewrap">
+    <table class="mv-ledger" id="mv-ledger"><thead><tr>
+      <th>Station</th><th>What happens</th><th>On record</th><th>Standing</th>
+    </tr></thead><tbody>
+      <tr data-station="Synthetic book"><td>Synthetic book</td><td>Seeded generation of 250 000 lives across four benefit lines, with anomalies planted on purpose.</td><td class="code">src/generate.py · f629fee</td><td class="st">in service</td></tr>
+      <tr data-station="Sealed exam"><td>Sealed exam</td><td>47 scenarios built so the answer key is out of the models' reach.</td><td class="code">47 sealed scenarios · 8067f00</td><td class="st">measured</td></tr>
+      <tr data-station="Experience bench"><td>Experience bench</td><td>A/E measurement and harness comparison against that sealed key.</td><td class="code">41.9 % false alarms · 58.1 % precision · 8067f00</td><td class="st">measured</td></tr>
+      <tr data-station="Variance probe"><td>Variance probe</td><td>One applicant, decided twice by the same underwriting agent.</td><td class="code">0–47 % · 600 repeat runs, 0 diverged · cbedb1b</td><td class="st">measured</td></tr>
+      <tr data-station="Decision engine"><td>Decision engine</td><td>Three agent roles debate under fixed rules; a named actuary signs the outcome.</td><td class="code">pipeline/decision · 66a73d0</td><td class="st">demonstrated</td></tr>
+      <tr data-station="Async HITL method" data-plan="1"><td>Async HITL method</td><td>The working method this site is built with — human input in broken time, still being built.</td><td class="code">no figure claimed</td><td class="st">blueprint</td></tr>
+    </tbody></table>
+    </div>
+    <p class="small muted">Stations and standings are the same ones stated on the study pages; nothing here is a new claim.</p>
+  </div>
+</section>
+</main>
+
+<footer class="site"><div class="wrap cols">
+  <div><h4>About this site</h4>
+    <p class="small muted">Jason Ou — FIAA, senior data scientist and analytic actuary in Sydney. Open-source
+    life-insurance data tools, two measured studies of LLMs in actuarial work, and the method the open-source
+    journey forced along the way.</p></div>
+  <div><h4>Research</h4><ul>
+    <li><a href="/motion/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
+    <li><a href="/motion/research/underwriting-output-variance.html">Output-variance study</a></li>
+    <li><a href="/motion/research/findings.html">Findings ledger</a></li>
+    <li><a href="/motion/ecosystem.html">Ecosystem map</a></li></ul></div>
+  <div><h4>Elsewhere</h4><ul>
+    <li><a href="/motion/method.html">How I work</a></li>
+    <li><a href="/">Line edition of this site</a></li>
+    <li><a href="/pixel/">Pixel-art site</a></li>
+    <li><a href="/motion/">Motion edition</a></li>
+    <li><a href="https://github.com/jasonzheshiou">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></li>
+    <li><a href="/motion/projects.html">All repositories</a></li></ul></div>
+</div><div class="wrap fine">
+  <span>No analytics, no third-party scripts beyond the font stylesheet.</span>
+  <span class="prov">© 2026 Jason Ou · content MIT-licensed</span>
+</div></footer>
+</body>
+</html>

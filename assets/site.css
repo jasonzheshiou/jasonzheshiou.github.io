@@ -111,20 +111,24 @@ header.top {
   backdrop-filter: blur(14px) saturate(1.3);
 }
 .top .bar { display: flex; align-items: center; gap: 1.25rem; min-height: 62px; }
-.brand { display: flex; align-items: center; gap: .7rem; font-family: var(--disp); font-weight: 600; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
+.brand { display: flex; align-items: center; gap: .7rem; flex: none; font-family: var(--disp); font-weight: 600; letter-spacing: -.01em; color: var(--ink); text-decoration: none; }
 .brand .mark {
   width: 30px; height: 30px; border-radius: 3px; flex: none; display: grid; place-items: center;
   font-family: var(--mono); font-size: 13px; font-weight: 600; color: #04090f;
   background: linear-gradient(140deg, var(--cyan), var(--green)); box-shadow: var(--glow);
 }
-.brand small { display: block; font: 400 10.5px/1.4 var(--mono); color: var(--dim); letter-spacing: .1em; text-transform: uppercase; }
-nav.main { margin-left: auto; display: flex; gap: .1rem; flex-wrap: wrap; align-items: center; }
+.brand small { display: block; font: 400 10px/1.4 var(--mono); color: var(--dim); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+nav.main { margin-left: auto; display: flex; gap: .1rem; flex-wrap: wrap; align-items: center; justify-content: flex-end; flex: 1 1 auto; }
 nav.main a {
-  color: var(--muted); text-decoration: none; font: 500 12.5px/1 var(--mono);
-  letter-spacing: .06em; text-transform: uppercase; padding: .55rem .7rem; border: 1px solid transparent;
+  color: var(--muted); text-decoration: none; font: 500 12px/1 var(--mono);
+  letter-spacing: .05em; text-transform: uppercase; padding: .5rem .54rem; border: 1px solid transparent;
+  white-space: nowrap; flex: none;
 }
 nav.main a:hover { color: var(--ink); border-color: var(--line); }
 nav.main a[aria-current="page"] { color: var(--cyan); border-color: color-mix(in srgb, var(--cyan) 40%, var(--line)); background: var(--cyan-bg); }
+/* the other two editions are not other pages: smaller and dimmer, so the nine page links stay primary */
+nav.main a.ed-link { color: var(--dim); font-size: 10px; letter-spacing: .13em; padding: .5rem .44rem; }
+nav.main a.ed-link:hover { color: var(--cyan); border-color: var(--line-2); }
 .theme-btn {
   margin-left: .35rem; width: 32px; height: 32px; border-radius: 3px; cursor: pointer;
   background: var(--panel); border: 1px solid var(--line-2); color: var(--cyan); font-size: 14px;

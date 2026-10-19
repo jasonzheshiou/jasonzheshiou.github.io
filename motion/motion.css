@@ -1,0 +1,131 @@
+/* ── Motion edition ─────────────────────────────────────────────────────────────
+   Same words, same markup, same tokens as the line edition: this file only adds
+   behaviour. Everything here is additive and every rule is inert when the reader
+   has asked for less movement, or is on a device with no pointer to follow.
+   ───────────────────────────────────────────────────────────────────────────── */
+html[data-ed="motion"] { scroll-behavior: smooth; }
+
+/* pointer light: one fixed radial gradient, no painting on every mousemove */
+html[data-ed="motion"] body::after {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 30%),
+              rgba(53, 214, 255, .075), transparent 68%);
+  transition: opacity .4s ease;
+}
+html[data-ed="motion"][data-theme="light"] body::after {
+  background: radial-gradient(560px circle at var(--mx, 50%) var(--my, 30%),
+              rgba(15, 127, 158, .07), transparent 68%);
+}
+html[data-ed="motion"] header.top, html[data-ed="motion"] main, html[data-ed="motion"] footer.site { position: relative; z-index: 1; }
+
+/* a second grid, drifting a little slower than the page behind the content */
+html[data-ed="motion"] .gridlayer {
+  position: fixed; inset: -10%; z-index: 0; pointer-events: none; opacity: .85;
+  background: linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 64px 64px,
+              linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 64px 64px;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+  will-change: transform;
+}
+
+/* scroll progress */
+html[data-ed="motion"] .rail {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 40;
+  transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+}
+
+/* magnetic nav and buttons */
+html[data-ed="motion"] .main a, html[data-ed="motion"] .btn { display: inline-block; }
+html[data-ed="motion"] .main a, html[data-ed="motion"] .btn {
+  transform: translate3d(var(--dx, 0), var(--dy, 0), 0);
+  transition: transform .16s ease-out, color .2s ease, background .2s ease, border-color .2s ease;
+}
+
+/* surfaces that answer the cursor */
+html[data-ed="motion"] .two > a, html[data-ed="motion"] .what > div,
+html[data-ed="motion"] .mean > div, html[data-ed="motion"] .card,
+html[data-ed="motion"] .plain .row { position: relative; }
+html[data-ed="motion"] .two > a::after, html[data-ed="motion"] .what > div::after,
+html[data-ed="motion"] .mean > div::after, html[data-ed="motion"] .card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  transition: opacity .3s ease;
+  background: radial-gradient(240px circle at var(--cx, 50%) var(--cy, 50%), var(--cyan-bg), transparent 62%);
+}
+html[data-ed="motion"] .two > a:hover::after, html[data-ed="motion"] .what > div:hover::after,
+html[data-ed="motion"] .mean > div:hover::after, html[data-ed="motion"] .card:hover::after { opacity: 1; }
+html[data-ed="motion"] .tilting { transform-style: preserve-3d; transition: transform .18s ease-out; }
+
+/* depth: elements marked data-depth drift against the pointer */
+html[data-ed="motion"] [data-depth] {
+  transform: translate3d(calc(var(--px, 0px) * var(--depth, 1)), calc(var(--py, 0px) * var(--depth, 1)), 0);
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* ── the traverse ─────────────────────────────────────────────────────────────
+   A review plane: the pointer (or the arrow keys) walks a station of the chain,
+   and the ledger below marks where you are standing.
+   ────────────────────────────────────────────────────────────────────────── */
+.mv-stage { position: relative; height: 232px; margin: 1.2rem 0 .2rem; border: 1px solid var(--line);
+  background: var(--panel-2); cursor: crosshair; touch-action: none; }
+.mv-stage:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.mv-track { position: absolute; left: 6%; right: 6%; top: 50%; height: 1px; background: var(--line-2); }
+.mv-scan { position: absolute; top: 8%; bottom: 8%; left: var(--pos, 50%); width: 1px;
+  background: linear-gradient(180deg, transparent, var(--cyan), transparent); box-shadow: var(--glow); }
+.mv-scan b { position: absolute; top: -2px; left: 9px; white-space: nowrap;
+  font: 500 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); }
+.mv-node { position: absolute; top: 50%; width: 13px; height: 13px; margin: -7px 0 0 -7px;
+  border: 1px solid var(--line-2); background: var(--solid); transform: rotate(45deg);
+  transition: border-color .25s, background .25s, transform .25s; }
+.mv-node.on { border-color: var(--cyan); background: var(--cyan); transform: rotate(45deg) scale(1.3); }
+.mv-node.plan { border-style: dashed; border-color: var(--green); }
+.mv-lab { position: absolute; top: 63%; transform: translateX(-50%); white-space: nowrap;
+  font: 500 9.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--dim);
+  transition: color .25s; }
+.mv-lab.up { top: 21%; }
+.mv-lab.on { color: var(--ink); }
+.mv-read { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 1rem; }
+@media (min-width: 820px) { .mv-read { grid-template-columns: .8fr 1.4fr 1fr; } }
+.mv-read > div { background: var(--panel-2); padding: .95rem 1.05rem 1.05rem; }
+.mv-read .k { font: 500 9.5px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--dim); }
+.mv-read .v { font-family: var(--disp); font-size: 1.05rem; margin-top: .55rem; }
+.mv-read .v.q { font-size: .95rem; color: var(--muted); font-family: var(--sans); }
+table.mv-ledger { width: 100%; border-collapse: collapse; margin-top: 1.1rem; }
+table.mv-ledger th { font: 500 9.5px/1.4 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+  color: var(--dim); text-align: left; padding: .6rem .9rem .6rem 0; border-bottom: 1px solid var(--line-2); }
+table.mv-ledger td { padding: .7rem .9rem .7rem 0; border-bottom: 1px solid var(--line);
+  font-size: 13.6px; color: var(--muted); vertical-align: top; }
+table.mv-ledger td:first-child { color: var(--ink); font-weight: 500; }
+table.mv-ledger td.st { font: 500 9.5px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+table.mv-ledger td.code { font-family: var(--mono); font-size: 11.8px; overflow-wrap: anywhere; }
+table.mv-ledger tr { transition: background .25s; }
+table.mv-ledger tr.on td { background: var(--cyan-bg); color: var(--ink); }
+table.mv-ledger tr.on td:first-child { box-shadow: inset 3px 0 0 var(--cyan); padding-left: .6rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* reveals: bound to the scroll position, not to a listener */
+  @supports (animation-timeline: view()) {
+    html[data-ed="motion"] .mv-rise { animation: mv-rise linear both; animation-timeline: view(); animation-range: entry 4% cover 34%; }
+    html[data-ed="motion"] .mv-wipe { animation: mv-wipe linear both; animation-timeline: view(); animation-range: entry 2% cover 40%; }
+    @keyframes mv-rise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+    @keyframes mv-wipe { from { clip-path: inset(0 100% 0 0); opacity: .4; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+  }
+  html[data-ed="motion"] .rail { animation: mv-rail linear both; animation-timeline: scroll(root block); }
+  @keyframes mv-rail { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-ed="motion"] { scroll-behavior: auto; }
+  html[data-ed="motion"] .rail, html[data-ed="motion"] body::after, html[data-ed="motion"] .gridlayer { display: none; }
+  html[data-ed="motion"] .main a, html[data-ed="motion"] .btn,
+  html[data-ed="motion"] [data-depth], html[data-ed="motion"] .tilting { transition: none; transform: none; }
+}
+@media (hover: none) {
+  html[data-ed="motion"] body::after { display: none; }
+  html[data-ed="motion"] .two > a::after, html[data-ed="motion"] .what > div::after,
+  html[data-ed="motion"] .mean > div::after, html[data-ed="motion"] .card::after { display: none; }
+}
+
+/* `?pointer=force` re-arms the pointer layer where the device metadata says there is
+   no hover — useful on a machine that lies about itself, and for testing this file. */
+html[data-ed="motion"][data-pointer="force"] body::after,
+html[data-ed="motion"][data-pointer="force"] .two > a::after, html[data-ed="motion"][data-pointer="force"] .what > div::after,
+html[data-ed="motion"][data-pointer="force"] .mean > div::after, html[data-ed="motion"][data-pointer="force"] .card::after { display: block; }
