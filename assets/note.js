@@ -4,7 +4,7 @@
 (function () {
   "use strict";
   var now = document.querySelector(".nhead .now");
-  var looks = [].slice.call(document.querySelectorAll(".look[data-head]"));
+  var looks = [].slice.call(document.querySelectorAll("[data-head]"));
   var links = [].slice.call(document.querySelectorAll('.nhead nav a[href^="#"]'));
   if (!now || !looks.length || !("IntersectionObserver" in window)) { return; }
 

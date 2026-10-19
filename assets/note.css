@@ -1,26 +1,32 @@
 /* ═══════════════════════════════════════════════════════════════════════════════════════════
    note.css — the reading edition of the front page (html[data-ed="note"]).
-   Written against four sources rather than a mood board:
+   Written against sources rather than a mood board. From print, for comfort:
      · Butterick, Practical Typography — body text decides the page; measure 45–90 characters,
        leading 120–145 %, body 15–25 px.
-     · Tufte CSS — off-black and off-white, never pure; greyscale everywhere, colour only where
-       there is a measurement; sidenotes close to the sentence and out of the eye's way; figures
-       inside the measure; two heading levels and small-caps lead-ins after that.
-     · Nielsen Norman Group, Progressive Disclosure — what appears on the first display is what
-       you are saying is important, so the first display carries the claim and nothing else.
-     · Running heads from book typography — the corner word says which part of the argument you
-       are in, in place of navigation chrome.
-   Everything here is a print idiom moved onto a screen. Motion is a soft arrival and the running
-   head; under prefers-reduced-motion the page is the same page.
+     · Tufte CSS — off-black and off-white, never pure; greyscale text, colour where there is a
+       measurement; notes close to the sentence and out of the eye's way; figures inside the
+       measure; two heading levels, small-caps lead-ins after that.
+   From the web, so it is a site and not a long post:
+     · NN/g, Homepage Design: 5 Fundamental Principles (Wang, 2024) — a home page has to say who
+       you are and what you do, reveal the content through examples, and prompt an action.
+     · NN/g, 5 Steps to Creating a UX-Design Portfolio (Krause, 2019) — readers do not read word
+       for word: be scannable, choose three takeaways, show a few detailed case studies, break
+       the text with artefacts, and navigate to destinations.
+     · NN/g, progressive disclosure — what appears on the first display is what you say matters.
+   So: a measure for the reading, and a shell for the furniture. Modules are boxes with edges and
+   destinations; the reading stays a column. Motion is a soft arrival, the running head, and
+   nothing that loops.
    ═══════════════════════════════════════════════════════════════════════════════════════════ */
 
 html[data-ed="note"] {
   --paper:#121310; --ink:#e9e5db; --prose:#ded9cd; --soft:#a9a497; --dim:#8d897b; --faint:#878372;
-  --hair:#292922; --hair2:#393930; --amber:#e2a63f; --bar:rgba(18,19,16,.86); --sel:rgba(226,166,63,.26);
+  --hair:#292922; --hair2:#393930; --panel:#191a16; --panel2:#1f201b; --amber:#e2a63f;
+  --bar:rgba(18,19,16,.86); --sel:rgba(226,166,63,.26); --onamber:#121310;
 }
 html[data-ed="note"][data-theme="light"] {
-  --paper:#f6f3ea; --ink:#171a14; --prose:#2b2e27; --soft:#5c6154; --dim:#6c7161; --faint:#7b8071;
-  --hair:#dedccf; --hair2:#c7c5b4; --amber:#8a5410; --bar:rgba(246,243,234,.88); --sel:rgba(138,84,16,.2);
+  --paper:#f6f3ea; --ink:#171a14; --prose:#2b2e27; --soft:#4c5143; --dim:#565b48; --faint:#666b5b;
+  --hair:#dedccf; --hair2:#c7c5b4; --panel:#fffdf6; --panel2:#efeade; --amber:#8a5410;
+  --bar:rgba(246,243,234,.88); --sel:rgba(138,84,16,.2); --onamber:#fffdf6;
 }
 
 html[data-ed="note"] body {
@@ -31,6 +37,12 @@ html[data-ed="note"] body {
 html[data-ed="note"] ::selection { background:var(--sel); }
 html[data-ed="note"] img, html[data-ed="note"] svg { max-width:100%; height:auto; }
 html[data-ed="note"] a { color:inherit; }
+html[data-ed="note"] .shell { max-width:76rem; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.6rem); }
+html[data-ed="note"] .mono, html[data-ed="note"] .kicker, html[data-ed="note"] .nhead .mark,
+html[data-ed="note"] aside, html[data-ed="note"] .stat .l, html[data-ed="note"] .cards .k,
+html[data-ed="note"] .figcap, html[data-ed="note"] .nfine, html[data-ed="note"] footer.nfoot h3 {
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+}
 
 /* ── the skip link: hidden until it has focus ─────────────────────────────────────────────── */
 html[data-ed="note"] .skip {
@@ -39,75 +51,211 @@ html[data-ed="note"] .skip {
 }
 html[data-ed="note"] .skip:focus { left:1rem; top:1rem; }
 
-/* ── the running head ─────────────────────────────────────────────────────────────────────── */
+/* ── the masthead: destinations, not a table of contents ──────────────────────────────────── */
 html[data-ed="note"] .nhead {
-  position:fixed; top:0; left:0; right:0; z-index:6; display:flex; align-items:center; gap:1.4rem;
-  padding:.85rem clamp(1.1rem,4vw,2.6rem); background:var(--bar); border-bottom:1px solid var(--hair);
-  -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px);
+  position:fixed; top:0; left:0; right:0; z-index:6; background:var(--bar);
+  border-bottom:1px solid var(--hair); -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px);
 }
-html[data-ed="note"] .nhead .mark {
-  font:500 10px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--soft); white-space:nowrap;
+html[data-ed="note"] .nhead .shell {
+  display:flex; align-items:center; gap:1.5rem; padding-top:.8rem; padding-bottom:.8rem;
 }
+html[data-ed="note"] .nhead .brand {
+  display:flex; align-items:baseline; gap:.6rem; text-decoration:none; color:var(--ink);
+  font:500 15px/1 "Spectral",Georgia,serif; white-space:nowrap;
+}
+html[data-ed="note"] .nhead .brand .mark {
+  font-size:9.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+}
+html[data-ed="note"] .nhead nav.main { display:flex; align-items:center; gap:1.25rem; margin-left:1rem; }
+html[data-ed="note"] .nhead nav.main a {
+  color:var(--soft); text-decoration:none; font:400 14px/1 "Spectral",Georgia,serif; white-space:nowrap;
+  padding-bottom:.25rem; border-bottom:1px solid transparent;
+}
+html[data-ed="note"] .nhead nav.main a:hover { color:var(--ink); border-bottom-color:var(--hair2); }
+html[data-ed="note"] .nhead .right { margin-left:auto; display:flex; align-items:center; gap:1.1rem; }
 html[data-ed="note"] .nhead .now {
-  font:400 13.5px/1 "Spectral",Georgia,serif; font-style:italic; color:var(--amber); white-space:nowrap;
+  font:400 13px/1 "Spectral",Georgia,serif; font-style:italic; color:var(--amber); white-space:nowrap;
 }
-html[data-ed="note"] .nhead nav { margin-left:auto; display:flex; align-items:center; gap:1.15rem; }
-html[data-ed="note"] .nhead nav a {
-  color:var(--dim); text-decoration:none; font:400 12.5px/1 "Spectral",Georgia,serif; white-space:nowrap;
-}
-html[data-ed="note"] .nhead nav a:hover { color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
-html[data-ed="note"] .nhead nav a.on { color:var(--amber); }
 html[data-ed="note"] .theme-btn {
   background:none; border:1px solid var(--hair2); color:var(--soft); cursor:pointer;
   width:26px; height:26px; border-radius:50%; font:400 11px/1 "JetBrains Mono",monospace; padding:0;
 }
 html[data-ed="note"] .theme-btn:hover { color:var(--ink); border-color:var(--faint); }
 
-/* ── the sheet ────────────────────────────────────────────────────────────────────────────── */
-html[data-ed="note"] main {
-  max-width:calc(38rem + 21rem); margin:0 auto; padding:8rem clamp(1.1rem,4vw,2.6rem) 2.5rem;
+/* ── buttons: the loud thing is ink on paper, so amber stays on measurements ───────────────── */
+html[data-ed="note"] .btn {
+  display:inline-block; padding:.72rem 1.15rem; text-decoration:none; border:1px solid var(--ink);
+  background:var(--ink); color:var(--paper); font:500 14px/1 "Spectral",Georgia,serif;
 }
-html[data-ed="note"] .look {
-  display:grid; grid-template-columns:38rem 19rem; gap:3rem; align-items:start;
-  padding:5.5rem 0; border-top:1px solid var(--hair);
-}
-html[data-ed="note"] .look:first-of-type { border-top:0; padding-top:1.5rem; }
-html[data-ed="note"] .look > .art { max-width:38rem; min-width:0; }
-
-/* ── type ─────────────────────────────────────────────────────────────────────────────────── */
-html[data-ed="note"] .kicker {
-  display:block; margin-bottom:1.5rem;
-  font:500 10px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.24em; text-transform:uppercase;
-  color:var(--faint);
-}
-html[data-ed="note"] h1 {
-  margin:0 0 1.4rem; font-weight:300; font-size:clamp(2.35rem,4.4vw,3.5rem); line-height:1.1;
-  letter-spacing:-.018em; color:var(--ink);
-}
-html[data-ed="note"] .look h2 {
-  margin:0 0 1.2rem; max-width:34ch; font-weight:400; font-size:clamp(1.5rem,2.5vw,2.05rem);
-  line-height:1.28; letter-spacing:-.01em; color:var(--ink);
-}
-html[data-ed="note"] p { margin:0 0 1.1rem; max-width:38rem; }
-html[data-ed="note"] p.lead { font-size:21px; color:var(--ink); }
-html[data-ed="note"] strong { font-weight:600; color:var(--ink); }
-html[data-ed="note"] .ns {
-  font-variant:small-caps; letter-spacing:.05em; font-weight:500; font-size:1.06em; color:var(--ink);
-}
+html[data-ed="note"] .btn:hover { background:var(--paper); color:var(--ink); }
+html[data-ed="note"] .btn.sm { padding:.5rem .85rem; font-size:13px; }
+html[data-ed="note"] .btn.ghost { background:none; color:var(--ink); border-color:var(--hair2); }
+html[data-ed="note"] .btn.ghost:hover { border-color:var(--ink); }
+html[data-ed="note"] .cta-row { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.9rem; }
 html[data-ed="note"] a.in {
   color:var(--ink); text-decoration:underline; text-decoration-color:var(--hair2); text-underline-offset:4px;
 }
 html[data-ed="note"] a.in:hover { text-decoration-color:var(--amber); }
-html[data-ed="note"] .mono { font-family:"JetBrains Mono",ui-monospace,monospace; font-size:.78em; color:var(--dim); }
+html[data-ed="note"] .go {
+  display:inline-block; color:var(--ink); text-decoration:underline; text-decoration-color:var(--hair2);
+  text-underline-offset:4px; font:400 14px/1.5 "Spectral",Georgia,serif;
+}
+html[data-ed="note"] .go:hover { text-decoration-color:var(--amber); }
 
-/* ── the receipt in the margin ────────────────────────────────────────────────────────────── */
-html[data-ed="note"] aside {
-  position:sticky; top:5.4rem; align-self:start; padding-left:1.1rem; border-left:1px solid var(--hair2);
+/* ── type ─────────────────────────────────────────────────────────────────────────────────── */
+html[data-ed="note"] .kicker {
+  display:block; margin-bottom:1.3rem; font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--faint);
+}
+html[data-ed="note"] h1 {
+  margin:0 0 1.3rem; max-width:20ch; font-weight:300; font-size:clamp(2.5rem,4.6vw,3.85rem);
+  line-height:1.08; letter-spacing:-.02em; color:var(--ink);
+}
+html[data-ed="note"] h2 {
+  margin:0 0 1.1rem; max-width:32ch; font-weight:400; font-size:clamp(1.45rem,2.4vw,2rem);
+  line-height:1.26; letter-spacing:-.01em; color:var(--ink);
+}
+html[data-ed="note"] h3 { margin:0 0 .45rem; font-weight:600; font-size:17px; color:var(--ink); }
+html[data-ed="note"] p { margin:0 0 1.1rem; max-width:38rem; }
+html[data-ed="note"] p.lead { font-size:20.5px; color:var(--ink); }
+html[data-ed="note"] strong { font-weight:600; color:var(--ink); }
+html[data-ed="note"] .ns {
+  font-variant:small-caps; letter-spacing:.05em; font-weight:500; font-size:1.06em; color:var(--ink);
+}
+html[data-ed="note"] .deck { font-size:20px; color:var(--prose); max-width:34rem; }
+html[data-ed="note"] .note-line { margin:.4rem 0 0; font-size:12px; color:var(--faint); }
+
+/* ── bands: the page is composed out of modules with edges ────────────────────────────────── */
+html[data-ed="note"] .band { padding:clamp(3.2rem,6vw,5.4rem) 0; border-top:1px solid var(--hair); }
+html[data-ed="note"] .band.tint { background:var(--panel); }
+html[data-ed="note"] .band-head {
+  display:flex; align-items:baseline; justify-content:space-between; gap:2rem; flex-wrap:wrap;
+  margin-bottom:2.4rem;
+}
+html[data-ed="note"] .band-head h2 { margin:0; }
+html[data-ed="note"] .band-head .go { margin:0; }
+
+/* hero */
+html[data-ed="note"] .hero { border-top:0; }
+html[data-ed="note"] .hero .shell, html[data-ed="note"] .hero.shell {
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:clamp(2rem,5vw,4.5rem);
+  align-items:start; padding-top:clamp(7.5rem,11vw,10rem); padding-bottom:clamp(3rem,6vw,5.2rem);
+}
+html[data-ed="note"] .receipt {
+  border:1px solid var(--hair2); background:var(--panel); padding:1.5rem 1.6rem 1.6rem; margin:0;
+}
+html[data-ed="note"] .receipt > .t, html[data-ed="note"] .look > aside .t {
+  display:block; margin-bottom:.8rem; font:500 9.5px/1.6 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+}
+html[data-ed="note"] .receipt .r {
+  display:block; margin-bottom:.55rem; font:400 12.5px/1.62 "JetBrains Mono",ui-monospace,monospace;
+  color:var(--dim); overflow-wrap:anywhere;
+}
+html[data-ed="note"] .receipt .r b { font-weight:500; color:var(--soft); }
+html[data-ed="note"] .receipt .st {
+  display:block; margin-top:1rem; padding-top:.85rem; border-top:1px solid var(--hair);
+  font:400 12.5px/1.5 "JetBrains Mono",ui-monospace,monospace; color:var(--amber);
+}
+
+/* start-here wayfinding under the hero receipt */
+html[data-ed="note"] .hero .side { display:grid; gap:1.4rem; }
+html[data-ed="note"] .starts { border-top:1px solid var(--hair); }
+html[data-ed="note"] .starts a {
+  display:grid; grid-template-columns:6.5rem 1fr; gap:.8rem; align-items:baseline; padding:.7rem 0;
+  border-bottom:1px solid var(--hair); text-decoration:none; color:var(--soft);
+  font:400 14.5px/1.5 "Spectral",Georgia,serif;
+}
+html[data-ed="note"] .starts a:hover { color:var(--ink); }
+html[data-ed="note"] .starts span {
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--faint);
+}
+
+/* the stat strip: proof the eye can cross in one pass */
+html[data-ed="note"] .strip { border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); padding:0; }
+html[data-ed="note"] .strip .shell { display:grid; grid-template-columns:repeat(4,1fr); }
+html[data-ed="note"] .stat { padding:1.5rem 1.4rem 1.6rem; border-left:1px solid var(--hair); }
+html[data-ed="note"] .stat:first-child { border-left:0; padding-left:0; }
+html[data-ed="note"] .stat .n {
+  display:block; font-weight:300; font-size:clamp(1.7rem,2.6vw,2.3rem); line-height:1;
+  letter-spacing:-.02em; color:var(--ink);
+}
+html[data-ed="note"] .stat .n em { font-style:normal; color:var(--amber); }
+html[data-ed="note"] .stat .l { display:block; margin-top:.5rem; font-size:11px; line-height:1.5; color:var(--dim); }
+
+/* three-up: what I do */
+html[data-ed="note"] .cols { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair); }
+html[data-ed="note"] .cols > div { background:var(--paper); padding:1.5rem 1.5rem 1.7rem; }
+html[data-ed="note"] .band.tint .cols > div { background:var(--panel2); }
+html[data-ed="note"] .cols .k {
+  display:block; margin-bottom:.7rem; font:500 9.5px/1.6 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+}
+html[data-ed="note"] .cols p { margin:0; font-size:15.5px; line-height:1.6; color:var(--soft); }
+
+/* study features: the artefact beside the argument */
+html[data-ed="note"] .feature .shell {
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,25rem); gap:clamp(2rem,4vw,4rem);
+  align-items:start;
+}
+html[data-ed="note"] .feature.flip .shell > .txt { order:2; }
+html[data-ed="note"] .facts { margin:1.4rem 0 0; border-top:1px solid var(--hair); }
+html[data-ed="note"] .facts > div {
+  display:grid; grid-template-columns:9.5rem 1fr; gap:1rem; padding:.6rem 0; border-bottom:1px solid var(--hair);
+  font:400 12.5px/1.6 "JetBrains Mono",ui-monospace,monospace;
+}
+html[data-ed="note"] .facts dt { color:var(--faint); }
+html[data-ed="note"] .facts dd { margin:0; color:var(--soft); }
+html[data-ed="note"] .plate { border:1px solid var(--hair2); background:var(--panel); padding:1.6rem; }
+html[data-ed="note"] .band.tint .plate { background:var(--panel2); }
+html[data-ed="note"] .plate .big {
+  font-weight:300; font-size:clamp(2.9rem,6vw,4rem); line-height:.92; letter-spacing:-.03em;
+  color:var(--amber); margin:0;
+}
+html[data-ed="note"] .plate .big small { font-size:.38em; letter-spacing:0; color:var(--soft); }
+html[data-ed="note"] .figcap { display:block; margin-top:.9rem; font-size:11.5px; line-height:1.6; color:var(--dim); }
+html[data-ed="note"] .figcap b { color:var(--amber); font-weight:500; }
+html[data-ed="note"] .bars { display:flex; gap:5px; margin:1.1rem 0 0; }
+html[data-ed="note"] .bars i { flex:1 1 0; height:26px; border:1px solid var(--hair2); }
+html[data-ed="note"] .bars i.on { background:var(--amber); border-color:var(--amber); }
+html[data-ed="note"] .brow {
+  display:grid; grid-template-columns:7.2rem 1fr 3.2rem; gap:.7rem; align-items:center; margin-top:.9rem;
+  font:400 11px/1.4 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
+}
+html[data-ed="note"] .brow .track { position:relative; height:14px; border-bottom:1px solid var(--hair2); }
+html[data-ed="note"] .brow .track i { position:absolute; left:0; top:0; bottom:0; background:var(--amber); }
+html[data-ed="note"] .brow .track u { position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--soft); }
+html[data-ed="note"] .brow b { color:var(--ink); font-weight:500; text-align:right; }
+
+/* cards: the work, scannable, each one a destination */
+html[data-ed="note"] .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hair); border:1px solid var(--hair); }
+html[data-ed="note"] .cards > a {
+  background:var(--panel); padding:1.4rem 1.5rem 1.6rem; text-decoration:none; color:var(--prose); display:block;
+}
+html[data-ed="note"] .cards > a:hover { background:var(--panel2); }
+html[data-ed="note"] .cards .k {
+  display:block; margin-bottom:.6rem; font:500 9.5px/1.6 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+}
+html[data-ed="note"] .cards h3 { margin-bottom:.5rem; }
+html[data-ed="note"] .cards p { margin:0; font-size:15px; line-height:1.6; color:var(--soft); }
+html[data-ed="note"] .cards .fig {
+  display:block; margin-top:.9rem; font:400 11.5px/1.5 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
+}
+html[data-ed="note"] .cards .fig em { font-style:normal; color:var(--amber); }
+
+/* the reading column, kept for the parts that need reading */
+html[data-ed="note"] .look {
+  display:grid; grid-template-columns:minmax(0,38rem) minmax(0,19rem); gap:3rem;
+  justify-content:center; align-items:start;
+}
+html[data-ed="note"] .look > aside {
+  position:sticky; top:5.6rem; align-self:start; padding-left:1.1rem; border-left:1px solid var(--hair2);
   font:400 12.5px/1.62 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
 }
-html[data-ed="note"] aside .t {
-  display:block; margin-bottom:.7rem; font-size:9.5px; letter-spacing:.22em; text-transform:uppercase;
+html[data-ed="note"] .look > aside .t {
+  display:block; margin-bottom:.8rem; font-size:9.5px; letter-spacing:.22em; text-transform:uppercase;
   color:var(--faint);
 }
 html[data-ed="note"] aside .r { display:block; margin-bottom:.55rem; overflow-wrap:anywhere; }
@@ -115,96 +263,99 @@ html[data-ed="note"] aside .r b { font-weight:500; color:var(--soft); }
 html[data-ed="note"] aside .st {
   display:block; margin-top:1rem; padding-top:.85rem; border-top:1px solid var(--hair); color:var(--amber);
 }
+html[data-ed="note"] .look > .art { min-width:0; }
 
-/* ── figures live in the measure, not beside it ───────────────────────────────────────────── */
-html[data-ed="note"] figure { margin:2.1rem 0; max-width:38rem; }
-html[data-ed="note"] figure figcaption {
-  margin-top:.85rem; font:400 12px/1.6 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
-}
-html[data-ed="note"] figure figcaption b { color:var(--amber); font-weight:500; }
-html[data-ed="note"] .bars { display:flex; gap:6px; height:26px; }
-html[data-ed="note"] .bars i { flex:1 1 0; border:1px solid var(--hair2); }
-html[data-ed="note"] .bars i.on { background:var(--amber); border-color:var(--amber); }
-html[data-ed="note"] .big {
-  font-weight:300; font-size:clamp(2.6rem,6vw,3.9rem); line-height:.94; letter-spacing:-.028em;
-  color:var(--amber); margin:0 0 .6rem;
-}
-
-/* ── lists, in the same two registers ─────────────────────────────────────────────────────── */
+/* labelled rows, standing */
 html[data-ed="note"] dl.chain { margin:.4rem 0 0; }
 html[data-ed="note"] dl.chain > div {
-  display:flex; gap:1rem; align-items:baseline; padding:.6rem 0; border-top:1px solid var(--hair);
+  display:grid; grid-template-columns:11rem 1fr; gap:1rem; padding:.6rem 0; border-top:1px solid var(--hair);
 }
-html[data-ed="note"] dl.chain dt { flex:0 0 11rem; font:400 13.5px/1.5 "Spectral",Georgia,serif; color:var(--ink); }
-html[data-ed="note"] dl.chain dd {
-  margin:0; font:400 12px/1.6 "JetBrains Mono",ui-monospace,monospace; color:var(--dim);
-}
+html[data-ed="note"] dl.chain dt { font:400 13.5px/1.5 "Spectral",Georgia,serif; color:var(--ink); }
+html[data-ed="note"] dl.chain dd { margin:0; font:400 12px/1.6 "JetBrains Mono",ui-monospace,monospace; color:var(--dim); }
 html[data-ed="note"] dl.chain dd em { font-style:normal; color:var(--amber); }
-html[data-ed="note"] ul.not { list-style:none; margin:0; padding:0; }
-html[data-ed="note"] ul.not li {
-  position:relative; padding:.7rem 0 .7rem 1.4rem; border-top:1px solid var(--hair); color:var(--soft);
-}
-html[data-ed="note"] ul.not li:last-child { border-bottom:1px solid var(--hair); }
-html[data-ed="note"] ul.not li::before {
-  content:""; position:absolute; left:0; top:1.15rem; width:.6rem; height:1px; background:var(--faint);
-}
-html[data-ed="note"] ol.work { list-style:none; counter-reset:w; margin:0; padding:0; }
-html[data-ed="note"] ol.work > li {
-  counter-increment:w; border-top:1px solid var(--hair); padding:1.05rem 0;
-  display:grid; grid-template-columns:2rem 1fr; gap:.4rem 1rem;
-}
-html[data-ed="note"] ol.work > li::before {
-  content:counter(w,decimal-leading-zero); grid-row:span 2;
-  font:500 11px/1.9 "JetBrains Mono",ui-monospace,monospace; color:var(--faint);
-}
-html[data-ed="note"] ol.work b { font-weight:600; color:var(--ink); font-size:17px; }
-html[data-ed="note"] ol.work b a { text-decoration:underline; text-decoration-color:var(--hair2); text-underline-offset:4px; }
-html[data-ed="note"] ol.work span { font-size:14.5px; color:var(--soft); }
 
-/* ── footer ───────────────────────────────────────────────────────────────────────────────── */
-html[data-ed="note"] footer.nfoot {
-  border-top:1px solid var(--hair); margin-top:3rem; padding:2.2rem 0 0;
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr)); gap:1.6rem 2rem;
+/* what this does not claim */
+html[data-ed="note"] ul.not { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:0 2.4rem; }
+html[data-ed="note"] ul.not li {
+  position:relative; padding:.8rem 0 .8rem 1.4rem; border-top:1px solid var(--hair); color:var(--soft);
+  font-size:16.5px; line-height:1.6;
 }
+html[data-ed="note"] ul.not li::before {
+  content:""; position:absolute; left:0; top:1.35rem; width:.6rem; height:1px; background:var(--faint);
+}
+
+/* closing call to action */
+html[data-ed="note"] .cta .shell {
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2rem; align-items:center;
+  border:1px solid var(--hair2); background:var(--panel); padding:clamp(1.8rem,3.5vw,2.6rem);
+}
+html[data-ed="note"] .cta h2 { margin:0 0 .5rem; }
+html[data-ed="note"] .cta p { margin:0; max-width:44rem; color:var(--soft); font-size:16.5px; }
+html[data-ed="note"] .cta .btn { white-space:nowrap; }
+html[data-ed="note"] .cta .where {
+  margin-top:.9rem; font:400 12px/1.6 "JetBrains Mono",ui-monospace,monospace; color:var(--faint);
+}
+html[data-ed="note"] .cta .where a { color:var(--soft); }
+
+/* ── footer: the sitemap a blog does not need and a site does ─────────────────────────────── */
+html[data-ed="note"] footer.nfoot { border-top:1px solid var(--hair); background:var(--panel); padding:3rem 0 1.6rem; }
+html[data-ed="note"] footer.nfoot .grid {
+  display:grid; grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(0,1fr)); gap:2rem;
+}
+html[data-ed="note"] footer.nfoot .whois { max-width:22rem; font-size:15px; line-height:1.65; color:var(--soft); margin:0; }
 html[data-ed="note"] footer.nfoot h3 {
-  margin:0 0 .7rem; font:500 9.5px/1.6 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.22em;
-  text-transform:uppercase; color:var(--faint); font-weight:500;
+  margin:0 0 .8rem; font-size:9.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint);
+  font-weight:500;
 }
 html[data-ed="note"] footer.nfoot ul { list-style:none; margin:0; padding:0; }
-html[data-ed="note"] footer.nfoot li { margin-bottom:.35rem; }
-html[data-ed="note"] footer.nfoot a {
-  color:var(--dim); text-decoration:none; font:400 13px/1.7 "Spectral",Georgia,serif;
-}
+html[data-ed="note"] footer.nfoot li { margin-bottom:.4rem; }
+html[data-ed="note"] footer.nfoot a { color:var(--dim); text-decoration:none; font:400 14px/1.7 "Spectral",Georgia,serif; }
 html[data-ed="note"] footer.nfoot a:hover { color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
 html[data-ed="note"] p.nfine {
-  margin:2.4rem 0 0; padding-top:1rem; border-top:1px solid var(--hair);
+  margin:2.6rem 0 0; padding-top:1.1rem; border-top:1px solid var(--hair);
   font:400 11.5px/1.7 "JetBrains Mono",ui-monospace,monospace; color:var(--faint);
-  display:flex; gap:2rem; justify-content:space-between; flex-wrap:wrap;
+  display:flex; gap:.6rem 2rem; justify-content:space-between; flex-wrap:wrap;
 }
 
 /* ── the only motion ──────────────────────────────────────────────────────────────────────── */
 @keyframes note-rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
 @media (prefers-reduced-motion:no-preference) {
   @supports (animation-timeline: view()) {
-    html[data-ed="note"] .look > .art, html[data-ed="note"] .look > aside {
+    html[data-ed="note"] .band > .shell, html[data-ed="note"] .look > .art, html[data-ed="note"] .look > aside {
       animation:note-rise linear both; animation-timeline:view(); animation-range:entry 0% cover 26%;
     }
   }
 }
 
-/* ── narrow: the margin drops below its sentence ──────────────────────────────────────────── */
+/* ── narrow: stack the modules, keep the measure ──────────────────────────────────────────── */
 @media (max-width:1080px) {
-  html[data-ed="note"] main { padding-top:6.4rem; }
-  html[data-ed="note"] .look { grid-template-columns:1fr; gap:1.5rem; padding:3.6rem 0; }
-  html[data-ed="note"] .look > .art, html[data-ed="note"] p, html[data-ed="note"] figure { max-width:none; }
-  html[data-ed="note"] aside { position:static; border-left:0; border-top:1px solid var(--hair); padding:1.05rem 0 0; }
-  html[data-ed="note"] .nhead nav a.hide-n { display:none; }
-  html[data-ed="note"] dl.chain > div { display:block; }
-  html[data-ed="note"] dl.chain dt { flex:none; }
+  html[data-ed="note"] .hero .shell, html[data-ed="note"] .hero.shell { grid-template-columns:1fr; padding-top:8.5rem; }
+  html[data-ed="note"] .feature .shell, html[data-ed="note"] .feature.flip .shell { grid-template-columns:1fr; }
+  html[data-ed="note"] .feature.flip .shell > .txt { order:0; }
+  html[data-ed="note"] .cols, html[data-ed="note"] .cards { grid-template-columns:1fr 1fr; }
+  html[data-ed="note"] .strip .shell { grid-template-columns:1fr 1fr; }
+  html[data-ed="note"] .stat { padding-left:1.2rem; border-left:1px solid var(--hair); }
+  html[data-ed="note"] .stat:nth-child(odd) { border-left:0; padding-left:0; }
+  html[data-ed="note"] .stat:nth-child(n+3) { border-top:1px solid var(--hair); }
+  html[data-ed="note"] .look { grid-template-columns:1fr; gap:1.6rem; }
+  html[data-ed="note"] .look > aside { position:static; border-left:0; border-top:1px solid var(--hair); padding:1.05rem 0 0; }
+  html[data-ed="note"] p { max-width:none; }
+  html[data-ed="note"] ul.not { grid-template-columns:1fr; }
+  html[data-ed="note"] .cta .shell { grid-template-columns:1fr; }
+  html[data-ed="note"] footer.nfoot .grid { grid-template-columns:1fr 1fr; }
+  html[data-ed="note"] .nhead nav.main a.opt { display:none; }
 }
-
-/* on a phone the running head is the only chrome worth keeping */
-@media (max-width:560px) {
-  html[data-ed="note"] .nhead nav a { display:none; }
-  html[data-ed="note"] main { padding-top:5.6rem; }
+@media (max-width:780px) {
+  html[data-ed="note"] .nhead .btn.sm, html[data-ed="note"] .nhead .brand .mark { display:none; }
+}
+@media (max-width:640px) {
+  html[data-ed="note"] .cols, html[data-ed="note"] .cards, html[data-ed="note"] footer.nfoot .grid { grid-template-columns:1fr; }
+  html[data-ed="note"] .nhead .now { display:none; }
+  html[data-ed="note"] .nhead .shell { gap:.9rem; }
+  html[data-ed="note"] .nhead nav.main { gap:.9rem; margin-left:.2rem; }
+  html[data-ed="note"] .nhead nav.main a { font-size:13px; }
+  html[data-ed="note"] .cta-row .btn { flex:1 1 auto; text-align:center; }
+  html[data-ed="note"] .strip .shell { grid-template-columns:1fr; }
+  html[data-ed="note"] .stat { border-left:0; padding-left:0; border-top:1px solid var(--hair); }
+  html[data-ed="note"] .stat:first-child { border-top:0; }
 }

@@ -190,13 +190,18 @@ archive/console/ · line/ · pixel/       three older drawings of the front page
 
 ### The reading edition, and three archived drawings
 
-`/` is written as a reading edition rather than a dashboard: a 38-rem measure with 1.72 leading, warm off-white ink on
-warm off-black (or paper in the light theme), greyscale everywhere with the one saturated pigment reserved for a
-measured figure, one claim per screen, the provenance of every figure sitting in the right margin beside the sentence
-it belongs to, and a running head in the corner saying which part of the argument you are in. The only motion is a soft
-arrival as a section enters and the running head changing words; the reduced-motion page is the same page. The rules
-behind it are Butterick on measure and leading, Tufte CSS on sidenotes and colour, and NN/g's progressive disclosure:
-what appears on the first display is what you are saying is important.
+`/` is written as a reading edition rather than a dashboard, and as a **site** rather than a long post: a masthead with
+the brand and real destinations plus a call to action, a hero that says who I am, what I do and what to click, a proof
+strip, three-up lanes, one feature per study with the measured figure set beside the argument, a card grid for the
+repositories, a closing call to action and a sitemap footer. Inside those modules the reading keeps print rules: a
+38-rem measure at 1.72 leading, warm off-white ink on warm off-black (paper in the light theme), greyscale everywhere
+with the one saturated pigment reserved for a measured figure, the provenance of every figure sitting beside the
+sentence it belongs to, and a running head in the corner saying which part of the argument you are in. Buttons are ink
+on paper, not amber, so the pigment still marks only measurements. The only motion is a soft arrival as a band enters
+and the running head changing words; the reduced-motion page is the same page. The rules behind it are Butterick on
+measure and leading, Tufte CSS on sidenotes and colour, NN/g's progressive disclosure, and NN/g's homepage and
+portfolio guidance: state who you are and what you do, reveal the work through examples, prompt an action, and stay
+scannable for a reader who will not read word for word.
 
 The inner pages are still the console edition — the grid, the pointer light, the traverse — authored in the same files.
 
