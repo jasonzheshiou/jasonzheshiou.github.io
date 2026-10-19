@@ -29,6 +29,7 @@ html[data-ed="note"][data-theme="light"] {
   --bar:rgba(246,243,234,.88); --sel:rgba(138,84,16,.2); --onamber:#fffdf6;
 }
 
+html[data-ed="note"] { scroll-padding-top:5rem; }
 html[data-ed="note"] body {
   margin:0; background:var(--paper); color:var(--prose);
   font:400 19px/1.72 "Spectral",Georgia,"Times New Roman",serif;
@@ -349,6 +350,16 @@ html[data-ed="note"] p.nfine {
   html[data-ed="note"] .nhead .btn.sm, html[data-ed="note"] .nhead .brand .mark { display:none; }
 }
 @media (max-width:640px) {
+  /* label above the value: two mono columns at 390 px wraps numbers mid-figure */
+  html[data-ed="note"] .facts > div, html[data-ed="note"] dl.chain > div { display:block; }
+  html[data-ed="note"] .facts dt, html[data-ed="note"] dl.chain dt {
+    display:block; margin-bottom:.2rem; font-size:9.5px; letter-spacing:.2em; text-transform:uppercase;
+  }
+  html[data-ed="note"] .facts dd, html[data-ed="note"] dl.chain dd { margin:0; }
+  html[data-ed="note"] .brow { grid-template-columns:5.6rem 1fr 2.9rem; }
+  html[data-ed="note"] .starts a { grid-template-columns:1fr; gap:.15rem; }
+}
+@media (max-width:560px) {
   html[data-ed="note"] .cols, html[data-ed="note"] .cards, html[data-ed="note"] footer.nfoot .grid { grid-template-columns:1fr; }
   html[data-ed="note"] .nhead .now { display:none; }
   html[data-ed="note"] .nhead .shell { gap:.9rem; }
