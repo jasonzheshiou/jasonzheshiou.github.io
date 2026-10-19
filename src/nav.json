@@ -1,0 +1,11 @@
+[
+  { "label": "Home",        "href": "/" },
+  { "label": "A/E Bench",   "href": "/research/life-insurance-experience-bench.html" },
+  { "label": "Variance",    "href": "/research/underwriting-output-variance.html" },
+  { "label": "Findings",    "href": "/research/findings.html" },
+  { "label": "Ecosystem",   "href": "/ecosystem.html" },
+  { "label": "Projects",    "href": "/projects.html" },
+  { "label": "Method",      "href": "/method.html" },
+  { "label": "Writing",     "href": "/writing.html" },
+  { "label": "About",       "href": "/about.html" }
+]

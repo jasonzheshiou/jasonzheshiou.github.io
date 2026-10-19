@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /archive/
+Disallow: /src/
 
 Sitemap: https://jasonzheshiou.github.io/sitemap.xml
