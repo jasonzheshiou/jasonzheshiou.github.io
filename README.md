@@ -70,7 +70,7 @@ again and again, over a rule engine that never varies, measures that spread — 
 can set a risk appetite against and decide where a human has to stay.
 
 [Multi-Agents_Underwriter](https://github.com/jasonzheshiou/Multi-Agents_Underwriter) ·
-[Output variance in LLM underwriting](https://jasonzheshiou.github.io/research/underwriting-output-variance.html)
+[Measuring and managing output uncertainty](https://github.com/jasonzheshiou/Multi-Agents_Underwriter/blob/main/Measuring_and_Managing_Output_Uncertainty_in_LLM-Based_Underwriting.md)
 
 **2 · The coevolution of an LLM and its harness**
 
@@ -78,7 +78,7 @@ The model is the brain and the harness is its body — the prompts, the tools an
 around it. Change the brain and the body has to change too.
 
 [Life_Insurance_Experience_Bench](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench) ·
-[The A/E benchmark study](https://jasonzheshiou.github.io/research/life-insurance-experience-bench.html)
+[Model and harness evolution](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench/blob/main/docs/MODEL_AND_HARNESS_EVOLUTION.md)
 
 ---
 
