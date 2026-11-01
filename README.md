@@ -74,8 +74,9 @@ can set a risk appetite against and decide where a human has to stay.
 
 **2 · The coevolution of an LLM and its harness**
 
-Sealed exams against a scorer that counts inventions, run across harnesses, to show how much of a
-result belongs to the scaffolding rather than to the model.
+The model is the brain and the harness is its body — the prompts, the tools and the checks wrapped
+around it. Change the brain and the body has to change too, so the same sealed exams were run across
+models and harnesses together, to see which part of the result belongs to which.
 
 [Life_Insurance_Experience_Bench](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench) ·
 [The A/E benchmark study](https://jasonzheshiou.github.io/research/life-insurance-experience-bench.html)
