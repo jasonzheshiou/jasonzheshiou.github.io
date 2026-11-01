@@ -10,9 +10,6 @@ Building open-source life insurance AI ecosystems · Strategic Analytic Actuary 
 
 ## Projects
 
-Come in through the door you came for. Each one is a thing someone arrives wanting; what sits behind
-it is what was measured, not what was intended.
-
 #### Test whether a model can read actuarial experience
 
 `THE BENCHMARK`
