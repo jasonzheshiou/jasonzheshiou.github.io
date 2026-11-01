@@ -65,8 +65,9 @@ server is free.
 
 **1 · Managing an LLM through a stochastic lens**
 
-Three agents above a deterministic rule engine, run again and again on the same case, to measure how
-much of an underwriting answer is the model's own run-to-run variance rather than the risk.
+An LLM does not give the same answer twice to the same case. Running the same applicant through it
+again and again, over a rule engine that never varies, measures that spread — which is the thing you
+can set a risk appetite against and decide where a human has to stay.
 
 [Multi-Agents_Underwriter](https://github.com/jasonzheshiou/Multi-Agents_Underwriter) ·
 [Output variance in LLM underwriting](https://jasonzheshiou.github.io/research/underwriting-output-variance.html)
