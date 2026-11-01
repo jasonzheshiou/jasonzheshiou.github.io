@@ -1,238 +1,122 @@
-# Hi, I'm Jason 👋
+# Jason Ou
 
-**Senior Data Scientist / Strategic Analytic Actuary (FIAA)**
+Building open-source life insurance AI ecosystems · Strategic Analytic Actuary (FIAA) · Senior Data Scientist
 
-> 12+ years transforming complex data into actionable insights for the insurance and financial services sectors.
-
-**🌐 Site:** <https://jasonzheshiou.github.io> — who I am, two measured studies, and how these repositories interlock as one open actuarial AI ecosystem.
-
----
-
-## 🔬 The research, first
-
-**[Life Insurance Experience Bench](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench)** —
-47 sealed synthetic portfolios (250 000 policies each, Death / CI / TPD / IP), two Qwen 27B models crossed with
-two harnesses, scored strict on a held-out split with false alarms counted.
-
-| measured | result |
-|---|---|
-| strict accuracy (best cell) | **71.2 %** — 79 hits / 111 units |
-| false alarms when it spoke | **41.9 %** (precision 58.1 %) |
-| does a harness transfer between models? | **no** — cross-loading cost 0.9 accuracy, 1.2 precision points |
-| tuning split → unseen books | **−32.1 / −28.6 points** for the two models |
-| cost of the same exam | 0.89 M tokens / 5.9 h vs **1.95 M / 21.9 h** |
-
-Data comes from [Synthetic_Life_Insurance_Data_Generator](https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator)
-(deterministic, seed 42, planted controls on actuals only). Findings and provenance:
-<https://jasonzheshiou.github.io/research/findings.html>.
-
-## 📐 The second study: output variance
-
-**[Multi-Agents_Underwriter](https://github.com/jasonzheshiou/Multi-Agents_Underwriter)** — the same applicant run
-through the LLM decision path ~100 times, with Wilson 95 % intervals on every proportion. Measured on
-Qwen3.6-35B-A3B (local, temperature 0.1); synthetic applicants, no ground truth, so this measures **consistency,
-not accuracy**.
-
-| measured | result |
-|---|---|
-| deterministic rule path | **0 %** variance across 600 runs |
-| LLM path, clear → borderline cases | **0 % → 26 % → 42 %** (widest evidence path 47 %) |
-| temperature 0.1 → 0.0 | changed the **decision** (decline 58 % / loading 42 % → flat loading) |
-| debate + most-conservative combine | **100/100** identical, absorbing a ~20 % agent variance |
-
-Findings, method and governance asks:
-<https://jasonzheshiou.github.io/research/underwriting-output-variance.html>.
-
-## 🛠 How the work actually gets done
-
-Built in broken time between a full-time job and childcare, which forced a method:
-
-- **Agent-loop execution** — delegate the loop, not the line: a written contract, an execution surface, an artefact
-  trail and a stopping rule. The underwriter's application code was written by the local model it studies; the
-  benchmark's harness was built by an agent on a third model, so no model tuned the exam it sat.
-- **Black-box behavioural verification** — one hypothesis, one edit, re-check the neighbours, keep or revert,
-  snapshot the bytes. Held-out results never feed tuning. Steering happens outside the model: prompts, harness,
-  rules, combine rules, sampling settings, tool surface.
-- **Asynchronous human-in-the-loop** — write the handoff document, launch the unattended run, leave, get pinged when
-  the shared server frees up, return as the supervisor and validation checkpoint. Resume is the default
-  (`--skip-existing`, `flock`, one status line).
-
-Method write-up with the evidence: <https://jasonzheshiou.github.io/method.html>.
+> Code is being commoditised, the chart was never issued, and what is left is judgement. A Fellow of
+> the Institute of Actuaries of Australia, publishing the architecture and governance of AI in life
+> insurance as I build it.
 
 ---
 
-## About Me
+## Projects
 
-I'm a **Fellow of the Institute of Actuaries of Australia (FIAA)** with deep experience in regulated environments. My expertise spans machine learning in production, predictive underwriting, data integration, business intelligence, and process automation.
+Come in through the door you came for. Each one is a thing someone arrives wanting; what sits behind
+it is what was measured, not what was intended.
 
-I thrive at the intersection of **technical depth** and **executive communication** - turning complex datasets into clear, strategic insights that drive measurable business outcomes.
+#### Test whether a model can read actuarial experience
 
-Beyond the day job, I'm passionate about **AI cooperation** - building tools where humans and models work together, not in competition. I believe the best systems don't replace people; they amplify them. I'm actively exploring how AI can augment analytical workflows, improve data governance, and help teams make better decisions, faster.
+`THE BENCHMARK`
 
----
+Sealed exams and a scorer that counts inventions, so a claim about a model is a measured thing.
 
-## 🔧 Tech Stack
+[Life_Insurance_Experience_Bench](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench)
 
-<p>
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white" alt="SQL"/>
-  <img src="https://img.shields.io/badge/VBA-503A77?style=for-the-badge&logo=microsoft-excel&logoColor=white" alt="VBA"/>
-  <img src="https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black" alt="Power BI"/>
-  <img src="https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white" alt="Excel"/>
-</p>
+#### Run an experiment without touching policyholder data
 
-<p>
-  <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas"/>
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit"/>
-  <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn"/>
-  <img src="https://img.shields.io/badge/Generative_AI-412991?style=for-the-badge&logo=openai&logoColor=white" alt="Generative AI"/>
-  <img src="https://img.shields.io/badge/Graphviz-2E8B57?style=for-the-badge&logo=graphviz&logoColor=white" alt="Graphviz"/>
-</p>
+`THE DATA`
 
----
+A life-insurance portfolio with the answer key sealed, generated on your own machine.
 
-## 💼 Experience
+[Synthetic_Life_Insurance_Data_Generator](https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator)
 
-### **Pacific Life Re** — Senior Data Scientist / Strategic Analytic Actuary (FIAA)
-*Jun 2025 – Present · Sydney, NSW*
+#### Apply and audit a real experience-analysis method
 
-- **Predictive Underwriting ML** — Built and productionised a machine learning solution to increase STS outcomes while controlling portfolio risk across a multi-benefit suite with application-level decisioning.
-- **End-to-End Modelling Ownership** — Owned the full modelling lifecycle: data processing, time-based validation/OOT testing, feature selection/tuning, threshold optimisation, and sensitivity analysis aligned to business risk tolerances.
-- **Production Deployment** — Defined client implementation approach (packaging/container options, environment requirements, JSON I/O conventions) and partnered with engineering/architecture to enable secure deployment and retraining.
-- **Governance & Approvals** — Assisted in governance and approvals across underwriting, pricing, technology, risk, model risk, legal/privacy, and information security. Created monitoring plans and internal/external documentation variants.
-- **Adviser & Portfolio Analytics** — Developed adviser/portfolio analytics and a ranking methodology to support partner relationship management through **Streamlit**.
-- **Programme Management** — Managed competing priorities across simultaneous programmes, balancing delivery timelines and stakeholder needs through clear prioritisation and proactive communication.
+`THE METHOD`
 
-### **Resolution Life Australasia** — Data Scientist / Actuary (FIAA)
-*Apr 2020 – Jun 2025 · Sydney, NSW*
+Credibility weighting, trend tests and model selection, with every step on the record.
 
-- **Data Integration & Quality** — Extracted, cleaned, and integrated large complex datasets using SQL and Python across Actuarial, Finance, IT, and Claims teams. Reduced reporting turnaround from **days to hours**.
-- **Business Intelligence & Automation** — Designed interactive Power BI dashboards and Excel reports delivering real-time insights. Improved a critical KPI by **20% in 2024**.
-- **Executive Reporting** — Authored comprehensive monthly performance reports and business papers for CEO, CFO, and external auditors.
-- **Process Improvement** — Automated workflows using VBA and Python, securing Senior Leadership endorsement for newly implemented performance metrics.
-- **Emerging Technologies** — Explored generative AI and deep learning to refine data models and support predictive evaluation of workforce and operational impacts.
+[Life_Insurance_Experience_Analysis_Dashboard](https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard)
 
-### **Zurich Financial Services Australia** — Data Analyst / Actuarial Analyst
-*May 2013 – Apr 2020 · Sydney, NSW*
+#### See where a human has to stay in an underwriting decision
 
-- **Financial Modeling** — Designed and maintained complex financial models integrating multiple data sources for robust risk assessment and forecasting.
-- **Automation** — Streamlined multimillion-dollar monthly transactions using Excel, VBA, and SQL. Increased process efficiency by **60%**.
-- **Cross-Functional Collaboration** — Partnered with actuarial, finance, and legal teams to enhance data integration and ensure regulatory compliance.
-- **Self-Taught Development** — Independently mastered Python, SQL, VBA, and Power BI to expand analytical capabilities and deliver actionable insights to senior stakeholders.
+`THE VARIANCE STUDY`
+
+Three agents above a deterministic rule engine, and the same case landing differently each run.
+
+[Multi-Agents_Underwriter](https://github.com/jasonzheshiou/Multi-Agents_Underwriter)
+
+#### Check a process against APRA standards, with citations
+
+`COMPLIANCE`
+
+Questionnaires generated from your own knowledge base and cited to the standard, not paraphrased.
+
+[Standard_Inquirer](https://github.com/jasonzheshiou/Standard_Inquirer)
+
+#### Get the boring parts off your desk
+
+`THE TOOLS`
+
+Schema inspection, join planning, spreadsheet automation, and a watch that says when the shared model
+server is free.
+
+[LLM_Status_Watch](https://github.com/jasonzheshiou/LLM_Status_Watch)
 
 ---
 
-## 🎓 Credentials
+## The research
 
-| Credential | Issued By | Date |
-|------------|-----------|------|
-| **FIAA** — Fellow of the Institute of Actuaries of Australia | Actuaries Institute | Dec 2021 |
-| Credential ID: 19258 | | |
+**1 · Managing an LLM through a stochastic lens**
 
----
+Three agents above a deterministic rule engine, run again and again on the same case, to measure how
+much of an underwriting answer is the model's own run-to-run variance rather than the risk.
 
-## 🚀 Featured Projects
+[Multi-Agents_Underwriter](https://github.com/jasonzheshiou/Multi-Agents_Underwriter) ·
+[Output variance in LLM underwriting](https://jasonzheshiou.github.io/research/underwriting-output-variance.html)
 
-<table>
-  <tr>
-    <td width="50%">
-      <h3>🔍 Data Schema Analyser</h3>
-      <p>LLM-powered web application that analyzes data dictionaries, generates pandas join strategies, ERD diagrams, and executable code — all through a Streamlit interface.</p>
-      <p><i>Python · Streamlit · pandas · OpenAI · Graphviz</i></p>
-      <a href="https://github.com/jasonzheshiou/Data_Schema_analyser">View Project →</a>
-    </td>
-    <td width="50%">
-      <h3>📊 EA Dashboard</h3>
-      <p>Interactive analytics dashboard for experience analysis and performance monitoring.</p>
-      <p><i>Python · Data Visualization · Analytics</i></p>
-      <a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard">View Project →</a>
-    </td>
-  </tr>
-</table>
+**2 · The coevolution of an LLM and its harness**
+
+Sealed exams against a scorer that counts inventions, run across harnesses, to show how much of a
+result belongs to the scaffolding rather than to the model.
+
+[Life_Insurance_Experience_Bench](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench) ·
+[The A/E benchmark study](https://jasonzheshiou.github.io/research/life-insurance-experience-bench.html)
+
+No figure is quoted on this page. Every number sits in the study beside the method that produced it,
+the version it was measured on and the date it was measured.
 
 ---
 
-## 📫 Connect
+## How the work gets done
 
-- **LinkedIn:** [linkedin.com/in/zheshi-jason-ou](https://www.linkedin.com/in/zheshi-jason-ou-8780203a)
-- **GitHub:** [@jasonzheshiou](https://github.com/jasonzheshiou)
+Built in broken time between a full-time job and childcare, which forced a method.
+
+- **Agent-loop execution** — delegate the loop, not the line: a written contract, an execution
+  surface, an artefact trail and a stopping rule. The underwriter's application code was written by
+  the local model it studies; the benchmark's harness was built by an agent on a third model, so no
+  model tuned the exam it sat.
+- **Behavioural verification** — one hypothesis, one edit, re-check the neighbours, keep or revert,
+  snapshot the bytes. Held-out results never feed tuning. Steering happens outside the model:
+  prompts, harness, rules, sampling settings, tool surface.
+- **Asynchronous human-in-the-loop** — write the handoff document, launch the unattended run, leave,
+  get pinged when the shared server frees up, return as the supervisor and validation checkpoint.
+  Resume is the default.
+
+The method, with its evidence: [method.html](https://jasonzheshiou.github.io/method.html).
 
 ---
 
-<p align="center">
-  <em>"Turning data into decisions, one insight at a time."</em>
-</p>
+## Elsewhere
+
+[The site](https://jasonzheshiou.github.io/) — the same material, with the ecosystem as a drawing you
+can move through.
+
+[LinkedIn](https://www.linkedin.com/in/zheshi-jason-ou-8780203a) · ouzheshi@gmail.com
 
 ---
 
-## 🌐 This repository also serves the site
+This repository also serves the site. Plain HTML, CSS and a little JavaScript at the root; no
+framework and no analytics. Pages is published from this branch and this folder: **Settings → Pages →
+Source: Deploy from a branch → main, root**.
 
-`jasonzheshiou.github.io` is built from the root of this repository: six hand-authored pages, plain HTML/CSS/JS,
-**no build step, no dependencies, no analytics** — charts are hand-drawn SVG plotted from the benchmark's
-published CSVs.
-
-```
-index.html                              the front door — the reading edition, authored here
-research/life-insurance-experience-bench.html   the flagship write-up
-research/findings.html                  eight measured findings
-ecosystem.html                          how the 13 repos interlock
-projects.html · about.html · method.html · pixel.html · writing.html · 404.html
-posts/                                  one page per post, built from ../posts/*.md
-feed.xml                                RSS for the published posts, built from the same files
-assets/site.css · site.js · charts.js   one stylesheet, three small scripts, shared
-assets/note.css · note.js               the reading edition: measure, margin receipts, running head
-assets/motion.css · motion.js           the console layer: pointer, scroll timelines, the traverse
-assets/sprite.html                      22 inline icons
-assets/pixel-sprite.html                the same 22 as pixel art
-assets/pixel-sheet.png                  all 22 glyphs on one contact sheet, 3.6 KB
-archive/console/ · line/ · pixel/       three older drawings of the front page, generated and noindexed
-```
-
-### The reading edition, and three archived drawings
-
-`/` is written as a reading edition rather than a dashboard, and as a **site** rather than a long post: a masthead with
-the brand and real destinations plus a call to action, a hero that says who I am, what I do and what to click, a proof
-strip, three-up lanes, one feature per study with the measured figure set beside the argument, a card grid for the
-repositories, a closing call to action and a sitemap footer. Inside those modules the reading keeps print rules: a
-38-rem measure at 1.72 leading, warm off-white ink on warm off-black (paper in the light theme), greyscale everywhere
-with the one saturated pigment reserved for a measured figure, the provenance of every figure sitting beside the
-sentence it belongs to, and a running head in the corner saying which part of the argument you are in. Buttons are ink
-on paper, not amber, so the pigment still marks only measurements. The only motion is a soft arrival as a band enters
-and the running head changing words; the reduced-motion page is the same page. The rules behind it are Butterick on
-measure and leading, Tufte CSS on sidenotes and colour, NN/g's progressive disclosure, and NN/g's homepage and
-portfolio guidance: state who you are and what you do, reveal the work through examples, prompt an action, and stay
-scannable for a reader who will not read word for word.
-
-The inner pages are still the console edition — the grid, the pointer light, the traverse — authored in the same files.
-
-Three older drawings are generated under `/archive/`, noindexed and disallowed in `robots.txt`: **`/archive/console/`**
-is the previous front page, kept from a frozen snapshot in `tools/snapshots/` so it keeps showing what it showed;
-**`/archive/line/`** is the site with the behaviour stripped back out; **`/archive/pixel/`** draws the same 22 glyphs
-as 32 × 32 pixel art with the Bresenham and midpoint primitives from
-[Pixel_Storybook](https://github.com/jasonzheshiou/Pixel_Storybook), a pixel typeface and flat surfaces; nine glyphs
-did not survive that conversion automatically and were redrawn by hand as character matrices. A sentence corrected here
-is correct in all three on the next run of `tools/build_archives.py`.
-
-### Writing
-
-Posts are Markdown in `posts/` with front matter (`title`, `date`, `summary`, `tags`, `status`, `linkedin`), built
-by `tools/build_posts.py` into `/posts/*.html`, the `/writing.html` index and `/feed.xml`. Nothing renders at
-request time and nothing third-party is involved: publishing is drop a file in, run the script, commit the output.
-`status: draft` renders the page with a note on it and keeps it out of the index count and the feed; a `linkedin:`
-line adds an "also published on LinkedIn" link, so a post can live here and point at its LinkedIn copy.
-
-
-Two things worth knowing if you poke at it. A clone behind `<use>` is invisible to document CSS, so sprite shapes
-carry presentation attributes driven by custom properties (`stroke="var(--ic-cyan)"`) rather than classes; the
-first version painted black blobs while the markup looked perfect. And the pixel sheet is not inlined on the vector
-site — it is fetched where it is actually shown, so the default page stays at 33 KB (9 KB gzipped) and the icons
-still render with JavaScript switched off.
-
-Preview locally, then push to `main`:
-
-```bash
-python3 -m http.server 8080       # then open http://127.0.0.1:8080
-```
-
-Settings → Pages → **Source: main branch, root folder**. Everything is MIT-licensed; every figure on the site
-names the file and commit it came from.
+© 2026 Jason Ou · content MIT-licensed
