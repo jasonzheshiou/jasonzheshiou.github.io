@@ -1,0 +1,21 @@
+/* The mark, left exactly as it was drawn. Everything here is a veil, a hotspot or a line laid on
+   top of it: none of it changes the artwork, and none of it is visible until something is lit. */
+.eco.mark svg { overflow: visible; max-width: 34rem; margin: 0 auto }
+.eco.mark .veil { fill: var(--fig); opacity: 0; transition: opacity .28s ease; pointer-events: none }
+.eco.mark.lit-mode .veil { opacity: .62 }
+.eco.mark svg a.node { cursor: pointer }
+.eco.mark svg .stop { fill: transparent; stroke: none }
+.eco.mark svg .leaf { fill: none; stroke: var(--acc); stroke-width: 1.6; opacity: 0;
+  transition: opacity .2s ease }
+.eco.mark svg .halo { fill: var(--acc); opacity: 0 }
+.eco.mark svg a.node.lit .leaf { opacity: 1 }
+.eco.mark svg a.node.lit .halo { opacity: .18 }
+.eco.mark svg [data-edge] { stroke: var(--acc); opacity: 0 }
+.eco.mark.lit-mode svg [data-edge] { opacity: 0 }
+.eco.mark.lit-mode svg [data-edge].lit { opacity: .95 }
+.eco.mark svg text[data-lab], .eco.mark svg path[data-lab] { opacity: 0; transition: opacity .2s ease }
+.eco.mark svg text[data-lab].on, .eco.mark svg path[data-lab].on { opacity: 1 }
+.eco.mark svg text[data-lab] { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px }
+.eco.mark svg .lead { stroke: var(--acc); stroke-width: .9; fill: none }
+.eco.mark.lit-mode svg a.node { opacity: 1 }
+@media (prefers-reduced-motion: reduce) { .eco.mark svg * { transition: none !important } }

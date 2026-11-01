@@ -61,7 +61,7 @@ server is free.
 
 ---
 
-## The research
+## AI governance
 
 **1 · Managing an LLM through a stochastic lens**
 

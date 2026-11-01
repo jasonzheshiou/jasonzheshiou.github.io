@@ -1,0 +1,16 @@
+/* The ecosystem drawn as the brand mark: the ring, the trunk, five limbs, nodes for repositories.
+   Everything the lighting needs is already in eco.css; this only draws the tree and lets a whole
+   limb answer to the pointer, which a traced outline never could. */
+.eco.tree .ring { fill: none; stroke: var(--shell); stroke-width: 1.4; opacity: .8 }
+.eco.tree .ring.inner { stroke-width: .8; opacity: .45 }
+.eco.tree .bark { fill: none; stroke: var(--acc); stroke-width: 2.6; opacity: .85 }
+.eco.tree .root { fill: none; stroke: var(--shell); stroke-width: 1.6; opacity: .8 }
+.eco.tree .limb-main { fill: none; stroke: var(--acc); stroke-width: 3.2; opacity: .62; stroke-linecap: round }
+.eco.tree .twig { fill: none; stroke: var(--acc); stroke-width: 1.7; opacity: .5; stroke-linecap: round }
+.eco.tree .hit { fill: none; stroke: transparent; stroke-width: 22; cursor: pointer }
+.eco.tree .berry { fill: var(--acc); opacity: .5 }
+.eco.tree .limb:hover .limb-main, .eco.tree .limb:hover .twig,
+.eco.tree .limb:focus-within .limb-main, .eco.tree .limb:focus-within .twig { opacity: 1 }
+.eco.tree .limb:hover .disc, .eco.tree .limb:focus-within .disc { fill: var(--infl); stroke: var(--acc) }
+.eco.tree svg a.node { outline: none }
+.eco.tree svg a.node:focus-visible .disc { stroke: #93c2d4; stroke-width: 2 }
