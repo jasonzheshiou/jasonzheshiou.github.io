@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>try{var q=new URLSearchParams(location.search).get("theme");var t=q||localStorage.getItem("theme")||"dark";if(q){try{localStorage.setItem("theme",q)}catch(e){}}document.documentElement.dataset.theme=t}catch(e){}</script>
-<title>Jason Ou — actuary building inspectable AI for life insurance</title>
-<meta name="description" content="Jason Ou, FIAA, Sydney. Senior data scientist in life reinsurance. Two measured studies of LLMs in actuarial work, thirteen public repositories, and the method the open-source journey forced along the way. No figure without a denominator.">
+<title>Jason Ou — Strategic Analytic Actuary (FIAA), Senior Data Scientist</title>
+<meta name="description" content="Jason Ou, FIAA, Sydney. Strategic analytic actuary and senior data scientist. Building open-source AI ecosystems: thirteen public repositories, drawn from the repositories themselves.">
 <meta property="og:type" content="profile">
-<meta property="og:title" content="Jason Ou — actuary building inspectable AI for life insurance">
+<meta property="og:title" content="Jason Ou — Strategic Analytic Actuary (FIAA), Senior Data Scientist">
 <meta property="og:description" content="Two measured studies, thirteen repositories, and what an inspectable AI decision actually requires. No analytics, no figures without a denominator.">
 <meta property="og:url" content="https://jasonzheshiou.github.io/">
 <meta property="og:image" content="https://jasonzheshiou.github.io/assets/og.png">
@@ -19,26 +19,59 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/note.css">
+<link rel="stylesheet" href="/assets/eco.css">
 <script src="/assets/site.js" defer></script>
 <script src="/assets/note.js" defer></script>
+<script src="/assets/sphere.js" defer></script>
+<script src="/assets/intro.js" defer></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Jason Ou","jobTitle":"Senior Data Scientist and Strategic Analytic Actuary (FIAA)","url":"https://jasonzheshiou.github.io/","sameAs":["https://github.com/jasonzheshiou","https://www.linkedin.com/in/zheshi-jason-ou-8780203a"],
 "hasCredential":{"@context":"https://schema.org","@type":"EducationalOccupationalCredential","credentialCategory":"Fellow of the Institute of Actuaries of Australia (FIAA)","recognizedBy":{"name":"Actuaries Institute"},"dateCreated":"2021-12"}}
 </script>
+  <style>
+/* the way in, framed as a need: the grid is the cards' grid, the difference is only what it asks */
+html[data-ed="note"] #work .band-head h2 { margin-bottom: 0 }
+html[data-ed="note"] .cards > a h3 { font-size: 1.32rem; line-height: 1.35; margin: .55rem 0 .7rem }
+/* the entries sit on the same ground as the rest of the page: ruled cells, not boxes floated on a
+   lighter panel, which is how the research list below them is already ruled. The grid draws its
+   rules out of its own background showing through 1px gaps, so each cell is filled with the page
+   ground rather than left open, or the rules become a slab. The amber heading is the hover. */
+html[data-ed="note"] #work .cards > a { background: var(--paper) }
+html[data-ed="note"] #work .cards > a:hover { background: var(--paper) }
+html[data-ed="note"] #work .cards > a:hover h3 { color: var(--amber) }
+</style>
+  <style>
+/* the research, listed rather than sold: a number, one sentence, and the two things to open */
+#work .keys { margin: 3rem 0 0 }
+#work .keys > .kicker { font: 500 11px/1 "JetBrains Mono", monospace; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--amber); margin: 0 0 1.4rem }
+#work .key { border-top: 1px solid var(--hair); padding: 1.5rem 0 1.6rem; display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr); gap: 0 1.2rem }
+#work .key .n { font: 500 11px/1.9 "JetBrains Mono", monospace; color: var(--amber) }
+#work .key h3 { font: 600 1.45rem/1.3 Spectral, Georgia, serif; color: var(--ink); margin: 0 0 .5rem }
+#work .key p { margin: 0; color: var(--prose); font: 400 1.05rem/1.68 Spectral, Georgia, serif;
+  max-width: 62ch }
+#work .key .ln { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .55rem 2rem }
+#work .key .ln a { white-space: nowrap; font: 400 12px/1 "JetBrains Mono", monospace; letter-spacing: .06em;
+  color: var(--amber); text-decoration: none; border-bottom: 1px solid var(--hair2) }
+#work .key .ln a:hover { border-bottom-color: var(--amber) }
+@media (max-width: 640px) { #work .key h3 { font-size: 1.24rem } }
+/* one column of links left in the footer, so it reads as a line rather than an abandoned column */
+html[data-ed="note"] footer.nfoot ul { display: flex; flex-wrap: wrap; gap: .4rem 1.8rem }
+html[data-ed="note"] footer.nfoot li { margin-bottom: 0 }
+html[data-ed="note"] footer.nfoot .grid { grid-template-columns: 1fr }
+</style>
 </head>
 <body>
+<div class="intro" id="eco-intro" role="dialog" aria-modal="true" aria-label="The brand introduction">
+  <video muted playsinline preload="none" aria-hidden="true"></video>
+  <button class="intro-skip" type="button">Skip the introduction</button>
+</div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nhead">
   <div class="shell">
-    <a class="brand" href="/">Jason Ou <span class="mark">FIAA · Sydney</span></a>
-    <nav class="main" aria-label="Sections of this site">
-      <a href="/research/life-insurance-experience-bench.html">Studies</a>
-      <a href="/projects.html">Work</a>
-      <a href="/method.html">Method</a>
-      <a class="opt" href="/writing.html">Writing</a>
-      <a class="opt" href="/about.html">About</a>
-    </nav>
+    <a class="brand" href="/"><span class="sigil"></span>Jason Ou <span class="mark">FIAA · Sydney</span></a>
     <div class="right">
       <span class="now">the claim</span>
       <button class="theme-btn" type="button">☀</button>
@@ -49,295 +82,45 @@
 
 <main id="main">
 
-<!-- ── the hero: who I am, what I do, and what to do next ────────────────────────────────── -->
+<!-- ── the name, and the title that goes with it ──────────────────────────────────────────── -->
 <header class="hero shell" data-head="the claim">
   <div>
-    <span class="kicker">Life reinsurance · actuarial AI · Sydney</span>
-    <h1>An actuary cannot sign a decision the actuary cannot inspect.</h1>
-    <p class="deck">So I build the inspectable version, in the open: a book of synthetic lives with a known answer,
-    a sealed exam for the models, and engines whose reasoning an auditor could actually read.</p>
-    <p class="mono note-line">SENIOR DATA SCIENTIST · FIAA 19258 · PACIFIC LIFE RE · 13 PUBLIC REPOSITORIES</p>
-    <div class="cta-row">
-      <a class="btn" href="/research/life-insurance-experience-bench.html">Read the two studies</a>
-      <a class="btn ghost" href="https://github.com/jasonzheshiou">Browse the repositories</a>
-    </div>
-  </div>
-  <div class="side">
-  <aside class="receipt">
-    <span class="t">In one line</span>
-    <span class="r"><b>role</b> Pacific Life Re · predictive underwriting in production</span>
-    <span class="r"><b>credential</b> FIAA · 19258 · in the industry since 2013</span>
-    <span class="r"><b>open work</b> 13 public repositories, MIT</span>
-    <span class="r"><b>figures</b> none without a denominator</span>
-    <span class="r"><b>stack</b> Python · SQL · pandas · Streamlit · Power BI</span>
-    <span class="st">status · open to collaborate</span>
-  </aside>
-  <nav class="starts" aria-label="Start here">
-    <a href="/research/life-insurance-experience-bench.html"><span>study one</span>Can a model read an experience study? &#8594;</a>
-    <a href="/research/underwriting-output-variance.html"><span>study two</span>Is the same decision the same decision twice? &#8594;</a>
-    <a href="/method.html"><span>method</span>Measurement, governance, accountability &#8594;</a>
-  </nav>
+  <span class="sigil"></span>
+    <h1 class="name">Jason&nbsp;Ou</h1>
+    <p class="title-line"><span>Building open-source life insurance AI ecosystems &nbsp;·</span> <span>Strategic Analytic Actuary (FIAA) &nbsp;·</span> <span>Senior Data Scientist</span></p>
+    <p class="lede">Code is being commoditised, the chart was never issued, and what is left is judgement. A Fellow of the
+    Institute of Actuaries of Australia, publishing the architecture and governance of AI in life insurance as I build it.</p>
   </div>
 </header>
 
-<!-- ── the strip: proof the eye can cross in one pass ────────────────────────────────────── -->
-<section class="band strip" data-head="the receipts">
-  <div class="shell">
-    <div class="stat"><span class="n">41.9&thinsp;%</span><span class="l">of the model's flags were false alarms &mdash; study one</span></div>
-    <div class="stat"><span class="n">0–47&thinsp;%</span><span class="l">across repeat underwriting decisions &mdash; study two</span></div>
-    <div class="stat"><span class="n">600 <em>/ 0</em></span><span class="l">repeat test runs &middot; divergence found: none</span></div>
-    <div class="stat"><span class="n">13</span><span class="l">public repositories, MIT licensed</span></div>
-  </div>
-</section>
-
-<!-- ── what I do ─────────────────────────────────────────────────────────────────────────── -->
-<section class="band tint" data-head="what I do">
+<!-- ── what I am building ─────────────────────────────────────────────────────────────────── -->
+<section class="band" id="ecosystem" data-head="building open-source life insurance AI ecosystems">
   <div class="shell">
     <div class="band-head">
-      <h2>Three lanes, one question.</h2>
-      <a class="go" href="/about.html">Background and principles &#8594;</a>
+      <h2>Building open-source life&nbsp;insurance AI&nbsp;ecosystems.</h2>
     </div>
-    <div class="cols">
-      <div>
-        <span class="k">Day job</span>
-        <h3>Predictive underwriting, in production</h3>
-        <p>Life reinsurance, Sydney. Models that go live: out-of-time validation, thresholds set against a stated
-        risk tolerance, sign-off from underwriting, pricing, risk, model risk, legal and security.</p>
-      </div>
-      <div>
-        <span class="k">Open work</span>
-        <h3>Insurance data tools with receipts</h3>
-        <p>A synthetic experience generator, a benchmark built on it, a multi-agent underwriting engine, a compliance
-        assessor, and the plumbing that makes a shared local model usable.</p>
-      </div>
-      <div>
-        <span class="k">The point</span>
-        <h3>Measured, not claimed</h3>
-        <p>Two studies that ran to real numbers &mdash; whether a model can read an experience study, and whether the
-        same underwriting decision twice is the same decision. Failures published beside the results.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── study one ─────────────────────────────────────────────────────────────────────────── -->
-<section class="band feature" id="finding" data-head="the finding">
-  <div class="shell">
-    <div class="txt">
-      <span class="kicker">Study one · can a model read an experience study</span>
-      <h2>Two in five of the model's flags were false alarms.</h2>
-      <p>Before the benchmark existed, &ldquo;an LLM can do experience analysis&rdquo; was a vibe. After it there was a
-      number with a denominator, and a price: every flag costs an analyst an hour whether it was real or not. The
-      uncomfortable parts are on the record too &mdash; tuning scores ran 30 points optimistic against the held-out
-      split, and the two models cost 3.4&times; different amounts for near-identical answers.</p>
-      <dl class="facts">
-        <div><dt>figure</dt><dd>41.9&#8239;% false alarms · 58.1&#8239;% precision · 71.2&#8239;% best cell</dd></div>
-        <div><dt>denominator</dt><dd>47 sealed exams, the answer key held out of the weights</dd></div>
-        <div><dt>apparatus</dt><dd>two Qwen 27B models &times; two harnesses · scorer counts inventions</dd></div>
-        <div><dt>commit</dt><dd>8067f00 · book f629fee</dd></div>
-      </dl>
-      <a class="go" href="/research/life-insurance-experience-bench.html">Read the study, including what failed &#8594;</a>
-    </div>
-    <div class="plate">
-      <p class="big">41.9&thinsp;%<small> of flags</small></p>
-      <div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
-      <span class="figcap">Two in five, rounded for the eye. The measured figure is <b>41.9 %</b>, not 40&#8239;%.
-      Synthetic book, so &ldquo;false alarm&rdquo; means nothing was planted where the model flagged.</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── study two ─────────────────────────────────────────────────────────────────────────── -->
-<section class="band tint feature flip" id="cost" data-head="the variance">
-  <div class="shell">
-    <div class="txt">
-      <span class="kicker">Study two · the same applicant, decided twice</span>
-      <h2>The spread ran from nothing at all to 47&nbsp;%, and it concentrated where the rules are ambiguous.</h2>
-      <p>One synthetic case file, one underwriting agent, the same rules and documents each time. Setting temperature
-      to zero changed which decision came back. The plumbing is deterministic &mdash; so the variance is judgement,
-      not code. That is the useful split, and it is the one people usually conflate.</p>
-      <dl class="facts">
-        <div><dt>spread</dt><dd>0&ndash;47&#8239;% across repeat decisions on one case file</dd></div>
-        <div><dt>where it bites</dt><dd>at rule boundaries, where a human belongs</dd></div>
-        <div><dt>plumbing</dt><dd>600 repeat runs, 0 divergence · 228 offline tests, no network</dd></div>
-        <div><dt>commit</dt><dd>cbedb1b · engine 66a73d0</dd></div>
-      </dl>
-      <a class="go" href="/research/underwriting-output-variance.html">Read the variance study &#8594;</a>
-    </div>
-    <div class="plate">
-      <p class="big">0&ndash;47&thinsp;%<small> spread</small></p>
-      <div class="brow"><span>rule-based path</span><span class="track"><u></u></span><b>0 %</b></div>
-      <div class="brow"><span>at the boundaries</span><span class="track"><i style="width:94%"></i></span><b>47 %</b></div>
-      <span class="figcap">Lowest and highest observed spread across repeat decisions, same case file, axis to 50&#8239;%.
-      Zero on the deterministic path is the point: the model is not wobbling everywhere.</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── how it is made ────────────────────────────────────────────────────────────────────── -->
-<section class="band" id="making" data-head="how it is made">
-  <div class="shell">
-    <div class="band-head">
-      <h2>Three things have to be true before an AI output can enter an insurance decision.</h2>
-      <a class="go" href="/method.html">The method, written up &#8594;</a>
-    </div>
-    <div class="cols">
-      <div>
-        <span class="k">Measurement</span>
-        <h3>Generate the truth, never curate it</h3>
-        <p>A curated answer key drifts and cannot be regenerated as the test grows. Both studies start from a
-        deterministic generator and are scored by a scorer that counts false alarms.</p>
-      </div>
-      <div>
-        <span class="k">Governance</span>
-        <h3>Every claim ships the bytes behind it</h3>
-        <p>Frozen harness snapshots, prompt hashes, decisions logged in JSONL, sealed manifests per scenario. A number
-        without the instrument that produced it is an anecdote &mdash; mine included.</p>
-      </div>
-      <div>
-        <span class="k">Accountability</span>
-        <h3>Agents propose, a named human signs</h3>
-        <p>Escalation rules, permissions and conservatism belong in the architecture, not in the prompt wording. Three
-        roles debate above a deterministic rule engine; a person signs the outcome.</p>
-      </div>
-    </div>
-    <dl class="chain" style="margin-top:2.4rem">
-      <div><dt>Sealed exam</dt><dd><em>measured</em> · 47 exams, the key held out of the weights</dd></div>
-      <div><dt>Experience bench</dt><dd><em>measured</em> · 41.9&#8239;% · 58.1&#8239;% · 8067f00</dd></div>
-      <div><dt>Variance probe</dt><dd><em>verified</em> · 600 runs, 0 divergence · cbedb1b</dd></div>
-      <div><dt>Decision engine</dt><dd><em>demonstrated</em> · three roles debate, a named actuary signs · 66a73d0</dd></div>
-      <div><dt>Async HITL method</dt><dd>blueprint · designed in broken time, no figure claimed yet</dd></div>
-    </dl>
+    <p class="deck">Hover or tap a repository to find out more.</p>
+    <figure class="eco" data-duo><div class="eco-inner"><svg viewBox="0 0 1120 560" role="img" aria-label="A sphere of twelve discs, the largest the most often named by the others, with lines between the repositories that refer to one another."><radialGradient id="pg"><stop offset="0" stop-color="var(--acc)" stop-opacity=".13"/><stop offset="1" stop-color="var(--acc)" stop-opacity="0"/></radialGradient><circle class="glow" data-glow r="170" fill="url(#pg)" opacity="0"/><circle class="shell" cx="560" cy="280" r="224"/><ellipse class="grid3" cx="560" cy="280" rx="190" ry="179"/><ellipse class="grid3" cx="560" cy="280" rx="220" ry="207"/><ellipse class="grid3" cx="560" cy="280" rx="220" ry="207"/><ellipse class="grid3" cx="560" cy="280" rx="190" ry="179"/><ellipse class="grid3" cx="560" cy="280" rx="100" ry="210"/><path data-edge="Synthetic_Life_Insurance_Data_Generator Life_Insurance_Experience_Bench" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M601 280Q555 276 509 324"/><path data-edge="Synthetic_Life_Insurance_Data_Generator Multi-Agents_Underwriter" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M601 280Q585 212 568 197"/><path data-edge="Life_Insurance_Experience_Bench Multi-Agents_Underwriter" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M509 324Q538 234 568 197"/><path data-edge="Life_Insurance_Experience_Bench Synthetic_Life_Insurance_Data_Generator" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M509 324Q555 276 601 280"/><path data-edge="Multi-Agents_Underwriter Life_Insurance_Experience_Bench" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M568 197Q538 234 509 324"/><path data-edge="Multi-Agents_Underwriter Standard_Inquirer" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M568 197Q505 203 443 261"/><path data-edge="Multi-Agents_Underwriter Synthetic_Life_Insurance_Data_Generator" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M568 197Q585 212 601 280"/><path data-edge="Standard_Inquirer Life_Insurance_Experience_Bench" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M443 261Q476 266 509 324"/><path data-edge="Standard_Inquirer Synthetic_Life_Insurance_Data_Generator" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M443 261Q522 244 601 280"/><path data-edge="Life_Insurance_Experience_Analysis_Dashboard Synthetic_Life_Insurance_Data_Generator" fill="none" stroke="var(--chord)" stroke-width="1.1" d="M490 153Q545 190 601 280"/><a class="node" data-node="little_games" href="https://github.com/jasonzheshiou/little_games" data-note="<b>little_games</b> — Two self-contained browser games. No build step, no dependencies, no network — open a file and play. " class="node" style="--d:0.70" aria-label="little_games. Two self-contained browser games. No build step, no dependencies, no network — open a file and play." title="little_games — Two self-contained browser games. No build step, no dependencies, no network — open a file and play."><circle class="disc" cx="616.6" cy="449.5" r="15.2"/><circle class="inr" cx="616.6" cy="449.5" r="9.4"/></a><a class="node" data-node="Pixel_Storybook" href="https://github.com/jasonzheshiou/Pixel_Storybook" data-note="<b>Pixel_Storybook</b> — A local vision-language model paints pixel art by writing code that places pixels, looks at what it drew, names what is wrong by coordinate, and rewrites the code. No diffusion. No image model. Everything runs against a model… " class="node" style="--d:0.73" aria-label="Pixel_Storybook. A local vision-language model paints pixel art by writing code that places pixels, looks at what it drew, names what is wrong by coordinate, and rewrites the code. No diffusion. No image model. Everything runs against a model…" title="Pixel_Storybook — A local vision-language model paints pixel art by writing code that places pixels, looks at what it drew, names what is wrong by coordinate, and rewrites the code. No diffusion. No image model. Everything runs against a model…"><circle class="disc" cx="636.6" cy="126.2" r="15.2"/><circle class="inr" cx="636.6" cy="126.2" r="9.4"/></a><a class="node" data-node="Piticle_Life" href="https://github.com/jasonzheshiou/Piticle_Life" data-note="<b>Piticle_Life</b> — A particle-life simulation with a behavioural layer on top, running headless on a Raspberry Pi 2 and watched from a localhost web page on the main machine. " class="node" style="--d:0.75" aria-label="Piticle_Life. A particle-life simulation with a behavioural layer on top, running headless on a Raspberry Pi 2 and watched from a localhost web page on the main machine." title="Piticle_Life — A particle-life simulation with a behavioural layer on top, running headless on a Raspberry Pi 2 and watched from a localhost web page on the main machine."><circle class="disc" cx="401.1" cy="341.6" r="15.2"/><circle class="inr" cx="401.1" cy="341.6" r="9.4"/></a><a class="node" data-node="M365-Copilot-Agent-Loop" href="https://github.com/jasonzheshiou/M365-Copilot-Agent-Loop" data-note="<b>M365-Copilot-Agent-Loop</b> — Public on GitHub. No summary is published in the repository description, and it is not checked out locally to quote from.  Not measured yet." class="node" style="--d:0.78" aria-label="M365-Copilot-Agent-Loop. Public on GitHub. No summary is published in the repository description, and it is not checked out locally to quote from." title="M365-Copilot-Agent-Loop — Public on GitHub. No summary is published in the repository description, and it is not checked out locally to quote from."><circle class="disc" cx="712.7" cy="332.4" r="15.2"/><circle class="inr" cx="712.7" cy="332.4" r="9.4"/></a><a class="node" data-node="Life_Insurance_Experience_Analysis_Dashboard" href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard" data-note="<b>Life_Insurance_Experience_Analysis_Dashboard</b> — AI‑powered experience analysis, audit‑ready reporting, and modular design – built for life insurance actuaries. It refers to Synthetic_Life_Insurance_Data_Generator." class="node" style="--d:0.80" aria-label="Life_Insurance_Experience_Analysis_Dashboard. AI‑powered experience analysis, audit‑ready reporting, and modular design – built for life insurance actuaries." title="Life_Insurance_Experience_Analysis_Dashboard — AI‑powered experience analysis, audit‑ready reporting, and modular design – built for life insurance actuaries."><circle class="disc" cx="489.6" cy="152.5" r="15.2"/><circle class="inr" cx="489.6" cy="152.5" r="9.4"/></a><a class="node" data-node="LLM_Status_Watch" href="https://github.com/jasonzheshiou/LLM_Status_Watch" data-note="<b>LLM_Status_Watch</b> — Pushes a notification to your phone when the LLM server goes idle, and when it stops answering. Runs on a Raspberry Pi, reads only Prometheus metrics over HTTP, needs nothing installed and nothing changed on the LLM server. " class="node" style="--d:0.83" aria-label="LLM_Status_Watch. Pushes a notification to your phone when the LLM server goes idle, and when it stops answering. Runs on a Raspberry Pi, reads only Prometheus metrics over HTTP, needs nothing installed and nothing changed on the LLM server." title="LLM_Status_Watch — Pushes a notification to your phone when the LLM server goes idle, and when it stops answering. Runs on a Raspberry Pi, reads only Prometheus metrics over HTTP, needs nothing installed and nothing changed on the LLM server."><circle class="disc" cx="523.1" cy="409.2" r="15.2"/><circle class="inr" cx="523.1" cy="409.2" r="9.4"/></a><a class="node" data-node="Excel-AI-Automator" href="https://github.com/jasonzheshiou/Excel-AI-Automator" data-note="<b>Excel-AI-Automator</b> — Automate any Excel task with AI " class="node" style="--d:0.86" aria-label="Excel-AI-Automator. Automate any Excel task with AI" title="Excel-AI-Automator — Automate any Excel task with AI"><circle class="disc" cx="670.5" cy="213.9" r="15.2"/><circle class="inr" cx="670.5" cy="213.9" r="9.4"/></a><a class="node" data-node="Standard_Inquirer" href="https://github.com/jasonzheshiou/Standard_Inquirer" data-note="<b>Standard_Inquirer</b> — Standard Inquirer - A private, LLM‑powered tool that generates compliance questionnaires from your knowledge base and evaluates the results. Build locally. Question intelligently. Analyse thoroughly. It refers to Life_Insurance_Experience_Bench, Synthetic_Life_Insurance_Data_Generator." class="node infl" style="--d:0.88" aria-label="Standard_Inquirer. Standard Inquirer - A private, LLM‑powered tool that generates compliance questionnaires from your knowledge base and evaluates the results. Build locally. Question intelligently. Analyse thoroughly." title="Standard_Inquirer — Standard Inquirer - A private, LLM‑powered tool that generates compliance questionnaires from your knowledge base and evaluates the results. Build locally. Question intelligently. Analyse thoroughly."><circle class="disc" cx="443.2" cy="260.6" r="25.6"/><circle class="inr" cx="443.2" cy="260.6" r="15.9"/></a><a class="node" data-node="Data_Schema_analyser" href="https://github.com/jasonzheshiou/Data_Schema_analyser" data-note="<b>Data_Schema_analyser</b> — An AI powered Data Structure Analyzer & Mapper " class="node infl" style="--d:0.91" aria-label="Data_Schema_analyser. An AI powered Data Structure Analyzer & Mapper" title="Data_Schema_analyser — An AI powered Data Structure Analyzer & Mapper"><circle class="disc" cx="623.8" cy="358.2" r="25.6"/><circle class="inr" cx="623.8" cy="358.2" r="15.9"/></a><a class="node" data-node="Multi-Agents_Underwriter" href="https://github.com/jasonzheshiou/Multi-Agents_Underwriter" data-note="<b>Multi-Agents_Underwriter</b> — Reimagining the future of risk: a multi-agent underwriting system that showcases human-AI collaboration among actuaries, underwriters, and intelligent automation. It refers to Life_Insurance_Experience_Bench, Standard_Inquirer, Synthetic_Life_Insurance_Data_Generator." class="node infl" style="--d:0.93" aria-label="Multi-Agents_Underwriter. Reimagining the future of risk: a multi-agent underwriting system that showcases human-AI collaboration among actuaries, underwriters, and intelligent automation." title="Multi-Agents_Underwriter — Reimagining the future of risk: a multi-agent underwriting system that showcases human-AI collaboration among actuaries, underwriters, and intelligent automation."><circle class="disc" cx="567.8" cy="196.8" r="30.0"/><circle class="inr" cx="567.8" cy="196.8" r="18.6"/></a><a class="node" data-node="Life_Insurance_Experience_Bench" href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench" data-note="<b>Life_Insurance_Experience_Bench</b> — A framework for generating life-insurance experience data, testing an LLM on it, and measuring what it finds. The data is life-insurance experience measured as actual over expected (A/E). It refers to Multi-Agents_Underwriter, Synthetic_Life_Insurance_Data_Generator." class="node infl" style="--d:0.96" aria-label="Life_Insurance_Experience_Bench. A framework for generating life-insurance experience data, testing an LLM on it, and measuring what it finds. The data is life-insurance experience measured as actual over expected (A/E)." title="Life_Insurance_Experience_Bench — A framework for generating life-insurance experience data, testing an LLM on it, and measuring what it finds. The data is life-insurance experience measured as actual over expected (A/E)."><circle class="disc" cx="508.9" cy="324.0" r="33.3"/><circle class="inr" cx="508.9" cy="324.0" r="20.6"/></a><a class="node" data-node="Synthetic_Life_Insurance_Data_Generator" href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator" data-note="<b>Synthetic_Life_Insurance_Data_Generator</b> — Synthetic Australian life insurance data generator & Streamlit dashboard for Death, CI, TPD, and IP — built with a local LLM for educational and prototyping purposes only. It refers to Life_Insurance_Experience_Bench, Multi-Agents_Underwriter." class="node infl" style="--d:0.99" aria-label="Synthetic_Life_Insurance_Data_Generator. Synthetic Australian life insurance data generator & Streamlit dashboard for Death, CI, TPD, and IP — built with a local LLM for educational and prototyping purposes only." title="Synthetic_Life_Insurance_Data_Generator — Synthetic Australian life insurance data generator & Streamlit dashboard for Death, CI, TPD, and IP — built with a local LLM for educational and prototyping purposes only."><circle class="disc" cx="601.2" cy="280.0" r="36.1"/><circle class="inr" cx="601.2" cy="280.0" r="22.4"/></a><path class="lead" d="M637 280L806 276H812"/><text class="nm" data-lab="Synthetic_Life_Insurance_Data_Generator" x="812" y="280" text-anchor="start">Synthetic_Life_Insurance_Data_Generator</text><path class="lead" d="M484 345L379 435H373"/><text class="nm" data-lab="Life_Insurance_Experience_Bench" x="373" y="439" text-anchor="end">Life_Insurance_Experience_Bench</text><path class="lead" d="M570 169L582 42H588"/><text class="nm" data-lab="Multi-Agents_Underwriter" x="588" y="46" text-anchor="start">Multi-Agents_Underwriter</text><path class="lead" d="M639 377L710 462H716"/><text class="nm" data-lab="Data_Schema_analyser" x="716" y="466" text-anchor="start">Data_Schema_analyser</text><path class="lead" d="M418 256L318 235H312"/><text class="nm" data-lab="Standard_Inquirer" x="312" y="239" text-anchor="end">Standard_Inquirer</text><path class="lead" d="M683 206L768 150H774"/><text class="nm" data-lab="Excel-AI-Automator" x="774" y="154" text-anchor="start">Excel-AI-Automator</text><path class="lead" d="M519 423L496 503H490"/><text class="nm" data-lab="LLM_Status_Watch" x="490" y="507" text-anchor="end">LLM_Status_Watch</text><path class="lead" d="M483 140L447 67H441"/><text class="nm" data-lab="Life_Insurance_Experience_Analysis_Dashboard" x="441" y="71" text-anchor="end">Life_Insurance_Experience_Analysis_Dashboard</text><path class="lead" d="M727 337L791 357H797"/><text class="nm" data-lab="M365-Copilot-Agent-Loop" x="797" y="361" text-anchor="start">M365-Copilot-Agent-Loop</text><path class="lead" d="M387 347L333 366H327"/><text class="nm" data-lab="Piticle_Life" x="327" y="370" text-anchor="end">Piticle_Life</text><path class="lead" d="M643 113L664 63H670"/><text class="nm" data-lab="Pixel_Storybook" x="670" y="67" text-anchor="start">Pixel_Storybook</text><path class="lead" d="M621 463L634 500H640"/><text class="nm" data-lab="little_games" x="640" y="504" text-anchor="start">little_games</text></svg>
+<p class="eco-note" data-caption></p><div class="strip"><div><h4>play</h4><a class="chip" data-node="Piticle_Life" href="https://github.com/jasonzheshiou/Piticle_Life" data-note="<b>Piticle_Life</b> — A particle-life simulation with a behavioural layer on top, running headless on a Raspberry Pi 2 and watched from a localhost web page on the main machine. " title="Piticle_Life — A particle-life simulation with a behavioural layer on top, running headless on a Raspberry Pi 2 and watched from a localhost web page on the main machine."><span class="nm2">Piticle_Life</span><span class="dsc">A particle-life simulation with a behavioural layer on top, running headless on a Raspberry Pi 2 and watched from a localhost web page on the main machine.</span></a><a class="chip" data-node="Pixel_Storybook" href="https://github.com/jasonzheshiou/Pixel_Storybook" data-note="<b>Pixel_Storybook</b> — A local vision-language model paints pixel art by writing code that places pixels, looks at what it drew, names what is wrong by coordinate, and rewrites the code. No diffusion. No image model. Everything runs against a model… " title="Pixel_Storybook — A local vision-language model paints pixel art by writing code that places pixels, looks at what it drew, names what is wrong by coordinate, and rewrites the code. No diffusion. No image model. Everything runs against a model…"><span class="nm2">Pixel_Storybook</span><span class="dsc">A local vision-language model paints pixel art by writing code that places pixels, looks at what it drew, names what is wrong by coordinate, and rewrites the code. No diffusion. No image model. Everything runs against a model…</span></a><a class="chip" data-node="little_games" href="https://github.com/jasonzheshiou/little_games" data-note="<b>little_games</b> — Two self-contained browser games. No build step, no dependencies, no network — open a file and play. " title="little_games — Two self-contained browser games. No build step, no dependencies, no network — open a file and play."><span class="nm2">little_games</span><span class="dsc">Two self-contained browser games. No build step, no dependencies, no network — open a file and play.</span></a></div><div><h4>judgement</h4><a class="chip" data-node="LLM_Status_Watch" href="https://github.com/jasonzheshiou/LLM_Status_Watch" data-note="<b>LLM_Status_Watch</b> — Pushes a notification to your phone when the LLM server goes idle, and when it stops answering. Runs on a Raspberry Pi, reads only Prometheus metrics over HTTP, needs nothing installed and nothing changed on the LLM server. " title="LLM_Status_Watch — Pushes a notification to your phone when the LLM server goes idle, and when it stops answering. Runs on a Raspberry Pi, reads only Prometheus metrics over HTTP, needs nothing installed and nothing changed on the LLM server."><span class="nm2">LLM_Status_Watch</span><span class="dsc">Pushes a notification to your phone when the LLM server goes idle, and when it stops answering. Runs on a Raspberry Pi, reads only Prometheus metrics over HTTP, needs nothing installed and nothing changed on the LLM server.</span></a><a class="chip" data-node="M365-Copilot-Agent-Loop" href="https://github.com/jasonzheshiou/M365-Copilot-Agent-Loop" data-note="<b>M365-Copilot-Agent-Loop</b> — Public on GitHub. No summary is published in the repository description, and it is not checked out locally to quote from.  Not measured yet." title="M365-Copilot-Agent-Loop — Public on GitHub. No summary is published in the repository description, and it is not checked out locally to quote from."><span class="nm2">M365-Copilot-Agent-Loop</span><span class="dsc">Public on GitHub. No summary is published in the repository description, and it is not checked out locally to quote from.</span></a><a class="chip" data-node="Standard_Inquirer" href="https://github.com/jasonzheshiou/Standard_Inquirer" data-note="<b>Standard_Inquirer</b> — Standard Inquirer - A private, LLM‑powered tool that generates compliance questionnaires from your knowledge base and evaluates the results. Build locally. Question intelligently. Analyse thoroughly. It refers to Life_Insurance_Experience_Bench, Synthetic_Life_Insurance_Data_Generator." title="Standard_Inquirer — Standard Inquirer - A private, LLM‑powered tool that generates compliance questionnaires from your knowledge base and evaluates the results. Build locally. Question intelligently. Analyse thoroughly."><span class="nm2">Standard_Inquirer</span><span class="dsc">Standard Inquirer - A private, LLM‑powered tool that generates compliance questionnaires from your knowledge base and evaluates the results. Build locally. Question intelligently. Analyse thoroughly.</span></a><a class="chip" data-node="Excel-AI-Automator" href="https://github.com/jasonzheshiou/Excel-AI-Automator" data-note="<b>Excel-AI-Automator</b> — Automate any Excel task with AI " title="Excel-AI-Automator — Automate any Excel task with AI"><span class="nm2">Excel-AI-Automator</span><span class="dsc">Automate any Excel task with AI</span></a><a class="chip" data-node="Data_Schema_analyser" href="https://github.com/jasonzheshiou/Data_Schema_analyser" data-note="<b>Data_Schema_analyser</b> — An AI powered Data Structure Analyzer & Mapper " title="Data_Schema_analyser — An AI powered Data Structure Analyzer & Mapper"><span class="nm2">Data_Schema_analyser</span><span class="dsc">An AI powered Data Structure Analyzer & Mapper</span></a></div><div><h4>ground</h4><a class="chip" data-node="Synthetic_Life_Insurance_Data_Generator" href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator" data-note="<b>Synthetic_Life_Insurance_Data_Generator</b> — Synthetic Australian life insurance data generator & Streamlit dashboard for Death, CI, TPD, and IP — built with a local LLM for educational and prototyping purposes only. It refers to Life_Insurance_Experience_Bench, Multi-Agents_Underwriter." title="Synthetic_Life_Insurance_Data_Generator — Synthetic Australian life insurance data generator & Streamlit dashboard for Death, CI, TPD, and IP — built with a local LLM for educational and prototyping purposes only."><span class="nm2">Synthetic_Life_Insurance_Data_Generator</span><span class="dsc">Synthetic Australian life insurance data generator & Streamlit dashboard for Death, CI, TPD, and IP — built with a local LLM for educational and prototyping purposes only.</span></a></div><div><h4>instrument</h4><a class="chip" data-node="Life_Insurance_Experience_Bench" href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench" data-note="<b>Life_Insurance_Experience_Bench</b> — A framework for generating life-insurance experience data, testing an LLM on it, and measuring what it finds. The data is life-insurance experience measured as actual over expected (A/E). It refers to Multi-Agents_Underwriter, Synthetic_Life_Insurance_Data_Generator." title="Life_Insurance_Experience_Bench — A framework for generating life-insurance experience data, testing an LLM on it, and measuring what it finds. The data is life-insurance experience measured as actual over expected (A/E)."><span class="nm2">Life_Insurance_Experience_Bench</span><span class="dsc">A framework for generating life-insurance experience data, testing an LLM on it, and measuring what it finds. The data is life-insurance experience measured as actual over expected (A/E).</span></a></div><div><h4>decisions</h4><a class="chip" data-node="Multi-Agents_Underwriter" href="https://github.com/jasonzheshiou/Multi-Agents_Underwriter" data-note="<b>Multi-Agents_Underwriter</b> — Reimagining the future of risk: a multi-agent underwriting system that showcases human-AI collaboration among actuaries, underwriters, and intelligent automation. It refers to Life_Insurance_Experience_Bench, Standard_Inquirer, Synthetic_Life_Insurance_Data_Generator." title="Multi-Agents_Underwriter — Reimagining the future of risk: a multi-agent underwriting system that showcases human-AI collaboration among actuaries, underwriters, and intelligent automation."><span class="nm2">Multi-Agents_Underwriter</span><span class="dsc">Reimagining the future of risk: a multi-agent underwriting system that showcases human-AI collaboration among actuaries, underwriters, and intelligent automation.</span></a><a class="chip" data-node="Life_Insurance_Experience_Analysis_Dashboard" href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard" data-note="<b>Life_Insurance_Experience_Analysis_Dashboard</b> — AI‑powered experience analysis, audit‑ready reporting, and modular design – built for life insurance actuaries. It refers to Synthetic_Life_Insurance_Data_Generator." title="Life_Insurance_Experience_Analysis_Dashboard — AI‑powered experience analysis, audit‑ready reporting, and modular design – built for life insurance actuaries."><span class="nm2">Life_Insurance_Experience_Analysis_Dashboard</span><span class="dsc">AI‑powered experience analysis, audit‑ready reporting, and modular design – built for life insurance actuaries.</span></a></div></div>
+</div></figure>
   </div>
 </section>
 
 <!-- ── the work ──────────────────────────────────────────────────────────────────────────── -->
-<section class="band tint" id="work" data-head="the work">
+<section class="band" id="work" data-head="the work">
   <div class="shell">
     <div class="band-head">
-      <h2>The projects, plainly.</h2>
-      <a class="go" href="/projects.html">All thirteen, with the ecosystem map &#8594;</a>
+      <h2>Projects.</h2>
     </div>
-    <div class="cards">
-      <a href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator">
-        <span class="k">Data</span><h3>Synthetic data generator</h3>
-        <p>Australian death, trauma, disability and income-protection experience with the answer key sealed.</p>
-        <span class="fig"><em>250 000</em> seeded policies · four benefit lines</span>
-      </a>
-      <a href="/research/life-insurance-experience-bench.html">
-        <span class="k">Measurement</span><h3>Experience bench</h3>
-        <p>Forty-seven sealed exams, two models crossed with two harnesses, a scorer that counts inventions.</p>
-        <span class="fig"><em>41.9 %</em> false alarms · 71.2&#8239;% best cell</span>
-      </a>
-      <a href="/research/underwriting-output-variance.html">
-        <span class="k">Decisions</span><h3>Multi-agent underwriter</h3>
-        <p>Medical, financial and compliance agents debating above a deterministic rule engine, human signing on top.</p>
-        <span class="fig"><em>0&ndash;47 %</em> spread · shows where the human goes</span>
-      </a>
-      <a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard">
-        <span class="k">Judgement</span><h3>Analysis dashboard</h3>
-        <p>A trauma-incidence study with credibility weighting, trend tests and model selection, audit trail included.</p>
-        <span class="fig">the real method, <em>open to argue with</em></span>
-      </a>
-      <a href="https://github.com/jasonzheshiou/Standard_Inquirer">
-        <span class="k">Compliance</span><h3>Standard Inquirer</h3>
-        <p>Conversational assessment against 40+ APRA standards retrieved from a knowledge base, cited to the standard.</p>
-        <span class="fig"><em>40+</em> standards · cites, not recites</span>
-      </a>
-      <a href="https://github.com/jasonzheshiou/LLM_Status_Watch">
-        <span class="k">Operations</span><h3>Status watch &amp; tooling</h3>
-        <p>A Raspberry Pi that says when the shared model server is free, plus schema inspection and join planning.</p>
-        <span class="fig">measurement <em>needs a queue</em></span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ── the journey: the one part that needs reading ──────────────────────────────────────── -->
-<section class="band" id="journey" data-head="the journey">
-  <div class="shell look">
-    <div class="art">
-      <span class="kicker">What open-sourcing it has meant</span>
-      <h2>I started publishing for a dull reason: I wanted the work to be checkable.</h2>
-      <p><span class="ns">A CV can say anything.</span> A repository with a generator, a scorer and a log either
-      supports the claim or it does not, and I would rather be argued with against evidence than admired against a
-      summary.</p>
-      <p><span class="ns">It turned into something else.</span> Everything here was built in broken time &mdash; forty
-      minutes between a full-time job and childcare &mdash; which meant nothing could need me to sit and watch it. So
-      I stopped writing code line by line and started designing loops I could delegate, then measuring what came out,
-      because I could no longer inspect the models or my own code the way I used to. The same three-part discipline
-      the profession needs: delegate the work, verify the behaviour, keep the sign-off. The constraint was the
-      teacher.</p>
-      <p>It also made me a better actuary. Reading a benchmark result, a variance distribution or a vendor's model
-      card is a different task once you have been the one who had to produce all three honestly.</p>
-    </div>
-    <aside>
-      <span class="t">Receipts over claims</span>
-      <span class="r">the habit came from being wrong in public, with the record proving which part was wrong</span>
-      <span class="r">failures are the useful part: a run that retried forever, a tool nobody used, two claims that
-      died at their noise floor</span>
-      <span class="r">architecture over heroics: delegation, resumable runs, handoff documents</span>
-    </aside>
-  </div>
-</section>
-
-<!-- ── the boundaries ────────────────────────────────────────────────────────────────────── -->
-<section class="band tint" id="not" data-head="what I will not claim">
-  <div class="shell">
-    <div class="band-head">
-      <h2>What this work does not say.</h2>
-    </div>
-    <ul class="not">
-      <li>No real policyholder data appears anywhere. Every book is synthetic and seeded from one number.</li>
-      <li>No claim of accuracy beyond the sealed key &mdash; and the key is synthetic, so &ldquo;false alarm&rdquo;
-      means nothing was planted there.</li>
-      <li>No production deployment of the agent engines, no regulatory sign-off, and no replacement for a signing
-      actuary.</li>
-      <li>Lapse and expense A/E work is planned and deliberately untested, so it carries no number here.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── the call to action ────────────────────────────────────────────────────────────────── -->
-<section class="band cta" id="next" data-head="say hello">
-  <div class="shell">
-    <div>
-      <h2>Bring me a hard question.</h2>
-      <p>The most useful message I can get is a reason why one of these results does not hold. Decision records live
-      in the repositories' logs, so a disagreement can be argued against evidence rather than against a summary of
-      it. Glad to talk with actuaries, engineers and regulators about the governance patterns.</p>
-      <p class="where">or find me on <a href="https://github.com/jasonzheshiou">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/zheshi-jason-ou-8780203a">LinkedIn</a></p>
-    </div>
-    <a class="btn" href="mailto:ouzheshi@gmail.com">ouzheshi@gmail.com</a>
+    <div class="cards"><a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench"><span class="k">the benchmark</span><h3>Test whether a model can read actuarial experience</h3><p>Sealed exams and a scorer that counts inventions, so a claim about a model is a measured thing.</p></a><a href="https://github.com/jasonzheshiou/Synthetic_Life_Insurance_Data_Generator"><span class="k">the data</span><h3>Run an experiment without touching policyholder data</h3><p>A life-insurance portfolio with the answer key sealed, generated on your own machine.</p></a><a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Analysis_Dashboard"><span class="k">the method</span><h3>Apply and audit a real experience-analysis method</h3><p>Credibility weighting, trend tests and model selection, with every step on the record.</p></a><a href="/research/underwriting-output-variance.html"><span class="k">the variance study</span><h3>See where a human has to stay in an underwriting decision</h3><p>Three agents above a deterministic rule engine, and the same case landing differently each run.</p></a><a href="https://github.com/jasonzheshiou/Standard_Inquirer"><span class="k">compliance</span><h3>Check a process against APRA standards, with citations</h3><p>Questionnaires generated from your own knowledge base and cited to the standard, not paraphrased.</p></a><a href="https://github.com/jasonzheshiou/LLM_Status_Watch"><span class="k">the tools</span><h3>Get the boring parts off your desk</h3><p>Schema inspection, join planning, spreadsheet automation, and a watch that says when the shared model server is free.</p></a></div><div class="keys"><p class="kicker">the research</p><div class="key"><span class="n">1</span><div><h3>Managing an LLM through a stochastic lens</h3><p>Three agents above a deterministic rule engine, run again and again on the same case, to measure how much of an underwriting answer is the model's own run-to-run variance rather than the risk.</p><p class="ln"><a href="https://github.com/jasonzheshiou/Multi-Agents_Underwriter">Multi-Agents_Underwriter</a><a href="/research/underwriting-output-variance.html">Output variance in LLM underwriting</a></p></div></div><div class="key"><span class="n">2</span><div><h3>The coevolution of an LLM and its harness</h3><p>Sealed exams against a scorer that counts inventions, run across harnesses, to show how much of a result belongs to the scaffolding rather than to the model.</p><p class="ln"><a href="https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench">Life_Insurance_Experience_Bench</a><a href="/research/life-insurance-experience-bench.html">The A/E benchmark study</a></p></div></div></div>
   </div>
 </section>
 
 <footer class="nfoot">
   <div class="shell">
     <div class="grid">
-      <p class="whois">Jason Ou &mdash; FIAA, senior data scientist and analytic actuary in Sydney. Open-source
-      life-insurance data tools, two measured studies of LLMs in actuarial work, and the method the open-source
-      journey forced along the way.</p>
-      <div>
-        <h3>Research</h3>
-        <ul>
-          <li><a href="/research/life-insurance-experience-bench.html">The A/E benchmark</a></li>
-          <li><a href="/research/underwriting-output-variance.html">Output-variance study</a></li>
-          <li><a href="/research/findings.html">Findings ledger</a></li>
-          <li><a href="/ecosystem.html">Ecosystem map</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>The site</h3>
-        <ul>
-          <li><a href="/projects.html">Projects</a></li>
-          <li><a href="/method.html">How I work</a></li>
-          <li><a href="/about.html">Background and principles</a></li>
-          <li><a href="/writing.html">Writing</a></li>
-          <li><a href="/pixel.html">The pixel edition essay</a></li>
-        </ul>
-      </div>
+      
+      
       <div>
         <h3>Elsewhere</h3>
         <ul>
@@ -346,19 +129,10 @@
           <li><a href="mailto:ouzheshi@gmail.com">Email</a></li>
         </ul>
       </div>
-      <div>
-        <h3>Other editions</h3>
-        <ul>
-          <li><a href="/archive/console/">Console edition of this page</a></li>
-          <li><a href="/archive/line/">Static edition</a></li>
-          <li><a href="/archive/pixel/">Pixel edition</a></li>
-        </ul>
-      </div>
+      
     </div>
     <p class="nfine">
       <span>© 2026 Jason Ou · content MIT-licensed</span>
-      <span>No analytics, no third-party scripts beyond the font stylesheet</span>
-      <span>Charts plotted from published CSVs</span>
     </p>
   </div>
 </footer>

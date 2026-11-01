@@ -1,0 +1,101 @@
+.eco{--fig:#121310;--shell:#393930;--grid:#292922;--disc:#191a16;--discs:#71725f;--infl:#2b2416;--infls:#8a6a2c;--acc:#e2a63f;--nm:#a9a497;--sub:#878372;--rule:#292922;--nm2:#ded9cd;--dim:#8d897b;--chord:#4a4436;background:transparent;margin:0}
+.eco{margin:0;border:none;background:var(--fig)}
+.eco figcaption{display:flex;justify-content:space-between;gap:2rem;border-top:1px solid var(--rule);padding:.9rem 1rem}
+.eco figcaption .note{font:400 12px/1.6 "JetBrains Mono",monospace;color:var(--dim);margin:0;max-width:64rem}
+.eco figcaption .note b{color:var(--nm2);font-weight:400}
+.eco figcaption .keys{font:400 9.5px/1.6 "JetBrains Mono",monospace;color:var(--sub);letter-spacing:.12em;text-transform:uppercase;text-align:right;margin:0}
+.eco svg{display:block;width:100%;height:auto}
+.eco svg .shell{fill:none;stroke:var(--shell)}
+.eco svg .grid3{fill:none;stroke:var(--grid)}
+.eco svg .disc{fill:var(--disc);stroke:var(--discs);stroke-width:1.6}
+.eco svg .disc.infl{fill:var(--infl);stroke:var(--infls)}
+.eco svg .nm{font-family:"JetBrains Mono",monospace;font-size:10px;fill:var(--nm);letter-spacing:.02em}
+.eco svg .lead{fill:none;stroke:var(--sub);stroke-width:1;opacity:.55}
+.eco svg .pip{fill:var(--sub)}
+.eco svg .inr{fill:none;stroke:var(--discs);stroke-width:1;opacity:.45}
+.eco svg .node.infl .inr{stroke:var(--infls);opacity:.6}
+.eco svg a.node{cursor:pointer;outline:none;opacity:var(--d,1)}
+.eco svg a.node:focus-visible .disc{stroke:var(--acc);stroke-width:2}
+.eco .glow{pointer-events:none;opacity:0;transition:opacity .4s ease}
+.eco .strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0 1.6rem;padding:1.4rem 1rem 1.6rem}
+.eco .strip h4{font:500 9.5px/1.7 "JetBrains Mono",monospace;color:var(--sub);letter-spacing:.22em;text-transform:uppercase;margin:0 0 .5rem;padding-top:.55rem;border-top:1px solid var(--rule)}
+.eco .strip a.chip{display:block;text-decoration:none;outline:none;padding:.55rem 0;border-bottom:1px solid var(--rule)}
+.eco .strip a.chip .nm2{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--nm2);display:block;margin-bottom:.3rem;overflow-wrap:anywhere}
+.eco .strip a.chip .dsc{font:400 10.5px/1.55 "JetBrains Mono",monospace;color:var(--dim)}
+.eco .strip a.chip:focus-visible .nm2, .eco .strip a.chip.lit .nm2{color:var(--acc)}
+.eco.lit-mode svg a.node{opacity:.13}
+.eco.lit-mode svg a.node.lit{opacity:1}
+.eco.lit-mode svg a.node.far{opacity:.6}
+.eco svg .disc, .eco svg .inr{transition:fill .25s ease,stroke .25s ease}
+.eco svg .nm{transition:fill .2s ease}
+.eco.lit-mode svg a.node.lit:not(.far) .disc{fill:var(--acc);stroke:var(--acc)}
+.eco.lit-mode svg a.node.lit:not(.far) .inr{stroke:#121310;opacity:.55}
+.eco.lit-mode svg text[data-lab].on{fill:var(--acc);font-weight:500}
+.eco.lit-mode svg path[data-lab].on{stroke:var(--acc);opacity:1}
+.eco.lit-mode svg [data-edge]{opacity:.05}
+.eco.lit-mode svg [data-edge].lit{opacity:1;stroke:var(--acc);stroke-width:1.6}
+.eco.lit-mode .strip a.chip{opacity:.24}
+.eco.lit-mode .strip a.chip.lit{opacity:1}
+.eco .glow{transition:none}
+
+/* the front-page arrangement: name and title, then the figure inside the note shell */
+.hero .name{font:600 clamp(3.4rem,7vw,6rem)/1 Spectral,serif;letter-spacing:-.028em;margin:0}
+.hero .title-line{font:500 12px/1.7 "JetBrains Mono",monospace;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim,#8d897b);margin:1.1rem 0 0}
+.hero .title-line span{white-space:nowrap}
+/* the front page speaks in two colours: the reading stays ivory, the voice that names a section,
+   files a card or points onward is amber. Scoped as note.css scopes, so it actually wins. */
+html[data-ed="note"] .band-head h2 { color: var(--amber) }
+html[data-ed="note"] .band-head .go { color: var(--amber) }
+html[data-ed="note"] .cards .k { color: var(--amber) }
+html[data-ed="note"] .strip h4 { color: var(--amber) }
+html[data-ed="note"] .hero .title-line { color: var(--soft) }
+@media (max-width:699px){.hero .title-line span{white-space:normal}
+  .hero .title-line{font-size:10.5px;letter-spacing:.14em}}
+.hero .lede{font:400 1.2rem/1.68 Spectral,serif;color:var(--prose,#ded9cd);max-width:62ch;margin:2.2rem 0 0}
+.eco{margin-top:2.6rem}
+.eco svg{max-width:64rem;margin:0 auto}
+.eco figcaption{flex-direction:column;gap:.7rem}
+.eco figcaption .keys{text-align:left}
+/* the paragraph above the figure runs the full width of the pipeline, not a column in the corner */
+#ecosystem .deck{max-width:58ch}
+@media (max-width:860px){.eco .strip{grid-template-columns:1fr;gap:0}.eco .strip h4{margin-top:1.1rem}}
+/* on a phone the drawing is cropped to the sphere: the ring of identifiers goes, and the name
+   and summary of whatever you tapped appear in the line under the drawing */
+.eco .eco-note{display:none;padding:1rem 0 0;font:400 11.5px/1.6 "JetBrains Mono",monospace;
+  color:var(--dim,#8d897b);opacity:.5;transition:opacity .2s ease}
+.eco .eco-note b{color:var(--nm2,#e9e5db);font-weight:400}
+/* the opening: eight seconds of the ecosystem assembling, once per browser, then the page */
+html.intro-off .intro{display:none}
+html.intro-on body{overflow:hidden}
+.intro{position:fixed;inset:0;z-index:90;background:#0a0d14;display:grid;place-items:center;
+  overflow:hidden;transition:opacity .7s ease}
+.intro.out{opacity:0;pointer-events:none}
+.intro video{width:100%;height:100%;object-fit:contain;background:#0a0d14}
+.intro .intro-skip{position:absolute;right:1.4rem;bottom:1.4rem;appearance:none;cursor:pointer;
+  font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase;
+  color:#9fb4c7;background:none;border:1px solid #2b3540;padding:.7rem 1rem}
+.intro .intro-skip:hover,.intro .intro-skip:focus-visible{color:#e9e5db;border-color:#93c2d4;outline:none}
+/* on a phone the film is 16:9 in a tall screen: enlarging it slightly and letting the dark
+   edges run past the frame is what makes the sphere readable, the framing stays centred */
+@media (max-width:700px){.intro video{transform:scale(1.18)}}
+@media (max-width:700px){
+  .eco svg{height:auto}
+  .eco svg .nm,.eco svg .lead,.eco svg .pip{display:none}
+  .eco .eco-note{display:block}
+  .eco.lit-mode .eco-note{opacity:1}
+  .eco .strip a.chip .nm2{font-size:11.5px}
+  /* on a phone the pipeline list is the same words as the cards below, so it stands down
+     and the projects come straight after the sphere and whatever you lit */
+  .eco .strip{display:none}
+  /* with the identifiers hidden, the lit disc and its links have to carry the whole answer */
+  .eco.lit-mode svg a.node.lit .disc{stroke:var(--acc);fill:#2b2416;stroke-width:2}
+  .eco.lit-mode svg a.node.far .disc{stroke:var(--acc);opacity:.85}
+  .eco.lit-mode svg [data-edge].lit{stroke-width:2.2}
+}
+
+/* the sound control on the opening: same furniture as the skip, and it announces its own state */
+.intro .intro-sound { position: absolute; right: 1.4rem; bottom: 4.2rem; appearance: none; cursor: pointer;
+  background: none; border: 1px solid #393930; color: #a9a497; padding: .55rem .85rem;
+  font: 400 11px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
+.intro .intro-sound:hover, .intro .intro-sound:focus-visible { color: #e9e5db; border-color: #e2a63f; outline: none }

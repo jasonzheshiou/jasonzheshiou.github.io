@@ -1,0 +1,106 @@
+/*
+ * note-map.css — brings the console-edition pages onto the front page's look.
+ *
+ * site.css and motion.css are driven almost entirely by custom properties, so the ground,
+ * the ink, the accent and the type can be retargeted here rather than rewritten page by page.
+ * Loaded after motion.css on every page that is not the note edition. Nothing in this file
+ * changes what a page says: it changes only what it looks like.
+ */
+:root[data-theme="dark"] {
+  --bg:       #121310;   /* the same ground as the reading edition */
+  --bg-2:     #16170f;
+  --solid:    #191a16;
+  --panel:    rgba(6, 32, 80, 0.72);
+  --panel-2:  rgba(10, 39, 89, 0.86);
+  --line:     #292922;
+  --line-2:   #393930;
+  --ink:      #e9e5db;
+  --muted:    #a9a497;
+  --dim:      #8d897b;
+
+  /* the console edition's cyan does the work the note edition gives to amber;
+     the two accents stay distinguishable, but they now belong to one palette */
+  --cyan:     #d9b56a;
+  --cyan-2:   #8a6a2c;
+  --cyan-bg:  rgba(226, 166, 63, 0.07);
+  --amber:    #e2a63f;
+  --amber-bg: rgba(226, 166, 63, 0.07);
+  --red:      #c9705f;
+  --red-bg:   rgba(201, 112, 95, 0.08);
+  --green:    #9fbf8e;
+  --violet:   #a89bb0;
+  --grid:     rgba(226, 166, 63, 0.05);
+  --glow:     0 0 22px rgba(226, 166, 63, 0.12);
+  --radius:   2px;
+
+  /* Spectral for prose and headings, JetBrains Mono for meta, as on the front page */
+  --sans: "Spectral", Georgia, "Times New Roman", serif;
+  --disp: "Spectral", Georgia, "Times New Roman", serif;
+  color-scheme: dark;
+}
+
+body { background: var(--bg); color: #ded9cd; }
+
+/* the shell: the same hairline and the same amber mark as the reading edition */
+header.top {
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.brand .mark { background: var(--amber); color: #121310; box-shadow: none; border-radius: 2px; }
+.brand small { color: var(--dim); }
+nav.main a { letter-spacing: 0.14em; font-size: 11px; }
+nav.main a[aria-current="page"] { color: var(--amber); border-color: #6b5a34; background: rgba(226, 166, 63, 0.06); }
+.theme-btn { color: var(--amber); }
+
+/* headings: the front page sets them in Spectral with a tighter measure than Space Grotesk */
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.022em; }
+h1 { font-size: clamp(2.4rem, 4.6vw, 3.5rem); line-height: 1.05; }
+h2 { font-size: clamp(1.6rem, 2.6vw, 2.15rem); }
+h4 { color: var(--dim); letter-spacing: 0.2em; }
+
+/* links and the small caps the console edition paints in cyan */
+a { color: var(--cyan); }
+.num, .mono { font-variant-numeric: tabular-nums lining-nums; }
+
+/* the same mapping for the light reading theme, on the note edition's paper tokens */
+:root[data-theme="light"] {
+  --bg:       #f6f3ea;
+  --bg-2:     #efeade;
+  --solid:    #fffdf6;
+  --panel:    rgba(255, 253, 246, 0.80);
+  --panel-2:  rgba(239, 234, 222, 0.90);
+  --line:     #dedccf;
+  --line-2:   #c7c5b4;
+  --ink:      #171a14;
+  --muted:    #565b48;
+  --dim:      #666b5b;
+  --cyan:     #8a5410;
+  --cyan-2:   #a9762f;
+  --cyan-bg:  rgba(138, 84, 16, 0.08);
+  --amber:    #8a5410;
+  --amber-bg: rgba(138, 84, 16, 0.08);
+  --red:      #a1483a;
+  --red-bg:   rgba(161, 72, 58, 0.08);
+  --green:    #4d6b3f;
+  --violet:   #6b5f74;
+  --grid:     rgba(138, 84, 16, 0.05);
+  --glow:     0 0 22px rgba(138, 84, 16, 0.10);
+  --radius:   2px;
+  --sans: "Spectral", Georgia, "Times New Roman", serif;
+  --disp: "Spectral", Georgia, "Times New Roman", serif;
+  color-scheme: light;
+}
+:root[data-theme="light"] body { background: var(--bg); color: #2b2e27; }
+:root[data-theme="light"] .brand .mark { background: var(--amber); color: #fffdf6; }
+:root[data-theme="light"] nav.main a[aria-current="page"] { color: var(--amber); border-color: #d8bd93; background: rgba(138, 84, 16, 0.07); }
+
+/* brand mark: one file, tinted to whatever the page is */
+
+/* the brand mark: one file, tinted to whatever the page is, so it survives the theme switch */
+.sigil { display: inline-block; width: 1.55em; height: 1.55em; background: currentColor;
+  -webkit-mask: url("/assets/brand-mark.svg") center / contain no-repeat;
+  mask: url("/assets/brand-mark.svg") center / contain no-repeat; vertical-align: middle; }
+html[data-ed="note"] .nhead .brand { gap: .75rem; }
+html[data-ed="note"] .nhead .brand .sigil { color: var(--amber); width: 26px; height: 26px; }
+html[data-ed="note"] .hero .sigil { color: var(--amber); width: 52px; height: 52px; margin-bottom: 1.5rem; }
+.brand .sigil { color: var(--amber); width: 26px; height: 26px; }

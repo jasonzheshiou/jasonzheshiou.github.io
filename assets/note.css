@@ -299,7 +299,7 @@ html[data-ed="note"] .cta .where {
 html[data-ed="note"] .cta .where a { color:var(--soft); }
 
 /* ── footer: the sitemap a blog does not need and a site does ─────────────────────────────── */
-html[data-ed="note"] footer.nfoot { border-top:1px solid var(--hair); background:var(--panel); padding:3rem 0 1.6rem; }
+html[data-ed="note"] footer.nfoot { border-top:1px solid var(--hair); background:none; padding:3rem 0 1.6rem; }
 html[data-ed="note"] footer.nfoot .grid {
   display:grid; grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(0,1fr)); gap:2rem;
 }
@@ -370,3 +370,12 @@ html[data-ed="note"] p.nfine {
   html[data-ed="note"] .stat { border-left:0; padding-left:0; border-top:1px solid var(--hair); }
   html[data-ed="note"] .stat:first-child { border-top:0; }
 }
+
+/* the brand mark: one file, tinted to whatever the page is, so it survives the theme switch */
+.sigil { display: inline-block; width: 1.55em; height: 1.55em; background: currentColor;
+  -webkit-mask: url("/assets/brand-mark.svg") center / contain no-repeat;
+  mask: url("/assets/brand-mark.svg") center / contain no-repeat; vertical-align: middle; }
+html[data-ed="note"] .nhead .brand { gap: .75rem; }
+html[data-ed="note"] .nhead .brand .sigil { color: var(--amber); width: 26px; height: 26px; }
+html[data-ed="note"] .hero .sigil { color: var(--amber); width: 52px; height: 52px; margin-bottom: 1.5rem; }
+.brand .sigil { color: var(--amber); width: 26px; height: 26px; }
