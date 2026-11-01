@@ -139,10 +139,4 @@ can move through.
 
 [LinkedIn](https://www.linkedin.com/in/zheshi-jason-ou-8780203a) · ouzheshi@gmail.com
 
----
-
-This repository also serves the site. Plain HTML, CSS and a little JavaScript at the root; no
-framework and no analytics. Pages is published from this branch and this folder: **Settings → Pages →
-Source: Deploy from a branch → main, root**.
-
 © 2026 Jason Ou · content MIT-licensed
