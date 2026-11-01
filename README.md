@@ -1,4 +1,4 @@
-# Jason Ou
+# Jason Ou · <sub>[jasonzheshiou.github.io](https://jasonzheshiou.github.io/)</sub>
 
 Building open-source life insurance AI ecosystems · Strategic Analytic Actuary (FIAA) · Senior Data Scientist
 
