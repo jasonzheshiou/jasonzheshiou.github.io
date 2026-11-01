@@ -105,28 +105,33 @@ The method, with its evidence: [method.html](https://jasonzheshiou.github.io/met
 **Pacific Life Re** — Senior Data Scientist / Strategic Analytic Actuary (FIAA)
 *Jun 2025 – present · Sydney*
 
-Predictive underwriting that had to survive production: a machine learning solution to increase STS
-outcomes while controlling portfolio risk across a multi-benefit suite, with decisioning at
-application level. The whole modelling lifecycle was mine to own — data processing, time-based
-validation and out-of-time testing, feature selection and tuning, threshold optimisation and
-sensitivity analysis against stated risk tolerances — and with it the approvals: underwriting,
-pricing, technology, risk, model risk, legal and privacy, information security, plus the monitoring
-plan and the different documentation each of them asked for.
+- Predictive underwriting that had to survive production — a machine learning solution to increase STS
+  outcomes while controlling portfolio risk across a multi-benefit suite, with decisioning at
+  application level.
+- The modelling lifecycle owned end to end: data processing, time-based validation and out-of-time
+  testing, feature selection and tuning, threshold optimisation, sensitivity analysis against stated
+  risk tolerances.
+- Governance and approvals across underwriting, pricing, technology, risk, model risk, legal and
+  privacy, and information security — with the monitoring plan and the different documentation each of
+  them asked for.
 
 **Resolution Life Australasia** — Data Scientist / Actuary (FIAA)
 *Apr 2020 – Jun 2025 · Sydney*
 
-Data integration and quality across Actuarial, Finance, IT and Claims in SQL and Python, which took
-standing reporting from days to hours. Interactive Power BI dashboards and Excel reporting for live
-performance, monthly performance papers written for the CEO, the CFO and external auditors, and
-automation of the work underneath them, endorsed by senior leadership as the new measures came in.
+- Data integration and quality across Actuarial, Finance, IT and Claims in SQL and Python, which took
+  standing reporting from days to hours.
+- Interactive Power BI dashboards and Excel reporting for live performance, and monthly performance
+  papers written for the CEO, the CFO and external auditors.
+- Automation of the work underneath the reporting, with the new measures endorsed by senior
+  leadership.
 
 **Zurich Financial Services Australia** — Data Analyst / Actuarial Analyst
 *May 2013 – Apr 2020 · Sydney*
 
-Financial models integrating several data sources for risk assessment and forecasting, and automation
-of multimillion-dollar monthly transactions in Excel, VBA and SQL. Python, SQL, VBA and Power BI were
-learned against the work that needed them, not before it.
+- Financial models integrating several data sources for risk assessment and forecasting.
+- Automation of multimillion-dollar monthly transactions in Excel, VBA and SQL, working alongside
+  actuarial, finance and legal teams on data integration and regulatory compliance.
+- Python, SQL, VBA and Power BI learned against the work that needed them, not before it.
 
 Fellow of the Institute of Actuaries of Australia, Actuaries Institute, Dec 2021.
 
