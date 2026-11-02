@@ -79,28 +79,6 @@ around it. Change the brain and the body has to change too.
 
 [Life_Insurance_Experience_Bench](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench) ·
 [Model and harness evolution](https://github.com/jasonzheshiou/Life_Insurance_Experience_Bench/blob/main/docs/MODEL_AND_HARNESS_EVOLUTION.md)
-
----
-
-## How the work gets done
-
-Built in broken time between a full-time job and childcare, which forced a method.
-
-- **Agent-loop execution** — delegate the loop, not the line: a written contract, an execution
-  surface, an artefact trail and a stopping rule. The underwriter's application code was written by
-  the local model it studies; the benchmark's harness was built by an agent on a third model, so no
-  model tuned the exam it sat.
-- **Behavioural verification** — one hypothesis, one edit, re-check the neighbours, keep or revert,
-  snapshot the bytes. Held-out results never feed tuning. Steering happens outside the model:
-  prompts, harness, rules, sampling settings, tool surface.
-- **Asynchronous human-in-the-loop** — write the handoff document, launch the unattended run, leave,
-  get pinged when the shared server frees up, return as the supervisor and validation checkpoint.
-  Resume is the default.
-
-The method, with its evidence: [method.html](https://jasonzheshiou.github.io/method.html).
-
----
-
 ## Working experience
 
 **Pacific Life Re** — Senior Data Scientist / Strategic Analytic Actuary (FIAA)
